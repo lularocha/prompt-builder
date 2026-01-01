@@ -9,15 +9,51 @@ interface SectionContextProps {
 }
 
 export function SectionContext({ value, onChange }: SectionContextProps) {
+    const handleEnhance = () => {
+        let enhanced = value
+
+        // Simple dictionary of enhancements
+        const enhancements: Record<string, string> = {
+            "app ": "responsive web application ",
+            "website ": "modern, high-performance website ",
+            "people ": "target users including developers and designers ",
+            "dashboard ": "analytics dashboard with real-time data visualization ",
+            "calculator ": "scientific calculator with history and unit conversion ",
+            "landing page ": "high-conversion landing page with hero section and feature grid ",
+            "blog ": "SEO-optimized blog with markdown support and categories ",
+            "user ": "authenticated user with role-based access control ",
+            "store ": "e-commerce store with cart and checkout functionality ",
+            "chat ": "real-time chat application with websocket support ",
+        }
+
+        Object.keys(enhancements).forEach(key => {
+            if (enhanced.toLowerCase().includes(key)) {
+                enhanced = enhanced.replace(new RegExp(key, 'gi'), enhancements[key])
+            }
+        })
+
+        // If no keywords found, append a generic enhancement
+        if (enhanced === value) {
+            enhanced += " targeted at specific user demographics with clear accessibility requirements."
+        }
+
+        onChange(enhanced)
+    }
+
     return (
         <Card className="glass-panel border-0 bg-opacity-50">
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>
-                        <CardTitle className="text-xl">1. Context</CardTitle>
+                        <CardTitle className="text-xl">2. Context</CardTitle>
                         <CardDescription>Describe what you are building, the problem, and the goal.</CardDescription>
                     </div>
-                    <Button variant="ghost" size="sm" className="text-xs text-primary gap-2">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs text-primary gap-2 hover:bg-primary/20"
+                        onClick={handleEnhance}
+                    >
                         <Wand2 className="w-3 h-3" />
                         Make it specific
                     </Button>

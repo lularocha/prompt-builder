@@ -34,7 +34,7 @@ export function SectionConstraints({
     return (
         <Card className="glass-panel border-0 bg-opacity-50">
             <CardHeader>
-                <CardTitle className="text-xl">2. Constraints & Tech Stack</CardTitle>
+                <CardTitle className="text-xl">3. Constraints & Tech Stack</CardTitle>
                 <CardDescription>Define the boundaries and technologies.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

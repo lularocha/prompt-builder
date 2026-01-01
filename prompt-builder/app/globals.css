@@ -5,8 +5,8 @@
 :root {
   --background: #09090b;
   --foreground: #fafafa;
-  
-  --primary: #3b82f6; 
+
+  --primary: #3b82f6;
   --primary-foreground: #ffffff;
 
   --secondary: #27272a;
@@ -23,7 +23,6 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,17 +33,17 @@ body {
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
-  
+
   .glossy-button {
-    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(4px);
     transition: all 0.3s ease;
   }
-  
+
   .glossy-button:hover {
-    background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
     border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 }

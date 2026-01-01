@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { SectionPersona } from "./section-persona"
 import { SectionContext } from "./section-context"
 import { SectionConstraints } from "./section-constraints"
 import { SectionExamples } from "./section-examples"
@@ -9,9 +10,11 @@ import { Sparkles } from "lucide-react"
 
 export function PromptBuilder() {
     // State
+    const [persona, setPersona] = useState("")
     const [context, setContext] = useState("")
     const [selectedTech, setSelectedTech] = useState<string[]>([])
     const [customConstraints, setCustomConstraints] = useState<string[]>([])
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
 
     // Handlers
     const handleToggleTech = (tech: string) => {
@@ -30,16 +33,28 @@ export function PromptBuilder() {
         setCustomConstraints(prev => prev.filter((_, i) => i !== index))
     }
 
+    const handleFilesUpload = (files: File[]) => {
+        setUploadedFiles(prev => [...prev, ...files])
+    }
+
+    const handleFileRemove = (index: number) => {
+        setUploadedFiles(prev => prev.filter((_, i) => i !== index))
+    }
+
     // Derived State: Generated Prompt
     const generatePrompt = () => {
         const parts = []
 
+        if (persona.trim()) {
+            parts.push(`## 1. Persona\n${persona.trim()}`)
+        }
+
         if (context.trim()) {
-            parts.push(`## 1. Context\n${context.trim()}`)
+            parts.push(`## 2. Context\n${context.trim()}`)
         }
 
         if (selectedTech.length > 0 || customConstraints.length > 0) {
-            parts.push(`## 2. Constraints & Tech Stack`)
+            parts.push(`## 3. Constraints & Tech Stack`)
 
             if (selectedTech.length > 0) {
                 parts.push(`**Tech Stack:**\n${selectedTech.map(t => `- ${t}`).join('\n')}`)
@@ -50,8 +65,12 @@ export function PromptBuilder() {
             }
         }
 
-        // Static example placeholder for now as we don't have real file parsing yet
-        parts.push(`## 3. Examples\n(No examples provided yet. Upload files to add specific patterns.)`)
+        // Examples section
+        if (uploadedFiles.length > 0) {
+            parts.push(`## 4. Examples\n**Uploaded Files:**\n${uploadedFiles.map(f => `- ${f.name}`).join('\n')}`)
+        } else {
+            parts.push(`## 4. Examples\n(No examples provided yet. Upload files to add specific patterns.)`)
+        }
 
         return parts.join('\n\n')
     }
@@ -60,7 +79,7 @@ export function PromptBuilder() {
 
     useEffect(() => {
         setFinalPrompt(generatePrompt())
-    }, [context, selectedTech, customConstraints])
+    }, [persona, context, selectedTech, customConstraints, uploadedFiles])
 
 
     return (
@@ -76,6 +95,11 @@ export function PromptBuilder() {
                     <h2 className="text-xl font-semibold tracking-tight">Builder Configuration</h2>
                 </div>
 
+                <SectionPersona
+                    value={persona}
+                    onChange={setPersona}
+                />
+
                 <SectionContext
                     value={context}
                     onChange={setContext}
@@ -89,16 +113,24 @@ export function PromptBuilder() {
                     onRemoveConstraint={handleRemoveConstraint}
                 />
 
-                <SectionExamples />
+                <SectionExamples
+                    uploadedFiles={uploadedFiles}
+                    onFilesUpload={handleFilesUpload}
+                    onFileRemove={handleFileRemove}
+                />
 
             </div>
 
             {/* Right Column: Preview */}
-            <div className="lg:sticky lg:top-8 h-fit">
-                <div className="flex items-center space-x-2 mb-8 lg:mb-2">
-                    {/* Spacer for alignment on desktop, title on mobile */}
-                    <h2 className="text-xl font-semibold tracking-tight lg:hidden">Output</h2>
+            <div className="lg:sticky lg:top-8 h-fit space-y-6">
+
+                <div className="flex items-center space-x-2 mb-2">
+                    <div className="p-2 bg-primary/20 rounded-lg">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                    </div>
+                    <h2 className="text-xl font-semibold tracking-tight">Output</h2>
                 </div>
+
                 <GeneratedPrompt prompt={finalPrompt} />
             </div>
 
