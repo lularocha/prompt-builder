@@ -27,6 +27,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@layer base {
+  h3 {
+    @apply font-black;
+  }
+
+  p {
+    @apply font-semibold;
+  }
+}
+
 @layer utilities {
   .glass-panel {
     background: rgba(24, 24, 27, 0.6);

@@ -47,6 +47,17 @@ This document outlines the roadmap for advanced features to elevate the Prompt B
     *   **Project Type Dropdown:**
         *   A manual override at the top of the Constraints section (e.g., "Template: Full Stack Next.js"). Selecting this pre-fills Next.js, Tailwind, Postgres, etc.
 
+## Feature 4: Multimodal Vision Integration (Agent Analysis)
+**Goal:** Automatically analyze uploaded design screenshots or wireframes to extract context and constraints.
+
+### Implementation Plan
+1.  **Vision Prompting:** Develop a specialized system prompt for analyzing UI screenshots (identifying colors, spacing, component types, and architectural patterns).
+2.  **API Integration:** Use a Vision-capable model (e.g., Gemini 1.5 Pro) in the `app/api/analyze-image` route.
+3.  **UI Feedback:**
+    *   Show a "Scanning..." animation on the uploaded image thumbnail.
+    *   Automatically populate a "Visual Context" summary in the Examples section after the analysis is complete.
+    *   Include this visual summary in the final generated prompt.
+
 ## UI/UX Design Recommendation
 For the best balance of speed and control, I recommend a **Hybrid Interface**:
 

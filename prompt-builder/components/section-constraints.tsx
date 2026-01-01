@@ -35,7 +35,7 @@ export function SectionConstraints({
         <Card className="glass-panel border-0 bg-opacity-50">
             <CardHeader>
                 <CardTitle className="text-xl">3. Constraints & Tech Stack</CardTitle>
-                <CardDescription>Define the boundaries and technologies.</CardDescription>
+                <CardDescription>Define the boundaries and technologies by selecting the options below and defining your custom constraints</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
 
@@ -58,7 +58,11 @@ export function SectionConstraints({
 
                 {/* Custom Constraints */}
                 <div className="space-y-3">
-                    <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Custom Constraints</span>
+                    <div className="flex flex-col gap-1">
+                        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Custom Constraints</span>
+                        <p className="text-sm text-muted-foreground">Set limitations and/or define requirements</p>
+                        <p className="text-sm text-white italic">E.g. Keep responses under 200 words, avoid deprecated methods and use local storage for persistence</p>
+                    </div>
                     <div className="flex gap-2">
                         <Input
                             placeholder="E.g. Use localStorage for persistence..."

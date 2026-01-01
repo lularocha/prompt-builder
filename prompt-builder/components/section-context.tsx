@@ -46,7 +46,10 @@ export function SectionContext({ value, onChange }: SectionContextProps) {
                 <div className="flex items-center justify-between">
                     <div>
                         <CardTitle className="text-xl">2. Context</CardTitle>
-                        <CardDescription>Describe what you are building, the problem, and the goal.</CardDescription>
+                        <CardDescription className="space-y-2">
+                            <p>Describe what you are building, the problem, and the goal.</p>
+                            <p className="text-sm text-white italic">E.g. I want to build a responsive admin dashboard for a SaaS platform using Next.js...</p>
+                        </CardDescription>
                     </div>
                     <Button
                         variant="ghost"
