@@ -25,7 +25,7 @@ export default function Home() {
                         href="https://sugiro.io/ia/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-primary transition-colors [font-variant:small-caps]"
+                        className="text-blue-500 hover:text-blue-400 hover:underline transition-colors font-inherit"
                     >
                         sugiro.io
                     </a>
