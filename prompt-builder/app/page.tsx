@@ -18,6 +18,19 @@ export default function Home() {
                 {/* Builder Interface */}
                 <PromptBuilder />
 
+                {/* Footer */}
+                <footer className="text-center text-sm text-muted-foreground mt-4 pb-8">
+                    Created by Lula Rocha |{" "}
+                    <a
+                        href="https://sugiro.io/ia/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-primary transition-colors [font-variant:small-caps]"
+                    >
+                        sugiro.io
+                    </a>
+                </footer>
+
             </div>
         </main>
     );
