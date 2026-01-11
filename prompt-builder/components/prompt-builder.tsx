@@ -8,13 +8,18 @@ import { SectionExamples } from "./section-examples"
 import { GeneratedPrompt } from "./generated-prompt"
 import { Sparkles } from "lucide-react"
 
+interface FileMetadata {
+    name: string
+    size: number
+}
+
 export function PromptBuilder() {
     // State
     const [persona, setPersona] = useState("")
     const [context, setContext] = useState("")
     const [selectedTech, setSelectedTech] = useState<string[]>([])
     const [customConstraints, setCustomConstraints] = useState<string[]>([])
-    const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+    const [uploadedFiles, setUploadedFiles] = useState<FileMetadata[]>([])
     const [customExamples, setCustomExamples] = useState("")
 
     // Handlers
@@ -35,7 +40,8 @@ export function PromptBuilder() {
     }
 
     const handleFilesUpload = (files: File[]) => {
-        setUploadedFiles(prev => [...prev, ...files])
+        const fileMetadata = files.map(f => ({ name: f.name, size: f.size }))
+        setUploadedFiles(prev => [...prev, ...fileMetadata])
     }
 
     const handleFileRemove = (index: number) => {

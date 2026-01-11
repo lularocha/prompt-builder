@@ -7,8 +7,13 @@ import { Badge } from "./ui/badge"
 import { Upload, FileText, BrainCircuit, X } from "lucide-react"
 import { useRef, useState } from "react"
 
+interface FileMetadata {
+    name: string
+    size: number
+}
+
 interface SectionExamplesProps {
-    uploadedFiles: File[]
+    uploadedFiles: FileMetadata[]
     onFilesUpload: (files: File[]) => void
     onFileRemove: (index: number) => void
     customExamples: string
