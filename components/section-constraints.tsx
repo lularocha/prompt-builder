@@ -32,7 +32,7 @@ export function SectionConstraints({
     }
 
     return (
-        <Card className="glass-panel border-0 bg-opacity-50">
+        <Card>
             <CardHeader>
                 <CardTitle className="text-xl">3. Constraints & Tech Stack</CardTitle>
                 <CardDescription>Define the boundaries and technologies by selecting the options below and defining your custom constraints.</CardDescription>

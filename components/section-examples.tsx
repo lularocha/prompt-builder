@@ -41,7 +41,7 @@ export function SectionExamples({
     }
 
     return (
-        <Card className="glass-panel border-0 bg-opacity-50">
+        <Card>
             <CardHeader>
                 <CardTitle className="text-xl">4. Examples</CardTitle>
                 <CardDescription>
@@ -62,27 +62,13 @@ export function SectionExamples({
 
                 <div
                     onClick={handleUploadClick}
-                    className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors hover:border-primary/30 hover:bg-white/5 cursor-pointer group"
+                    className="border-2 border-dashed border-white/10 rounded-xl p-8 mb-12 flex flex-col items-center justify-center text-center transition-colors hover:border-primary/30 hover:bg-white/5 cursor-pointer group"
                 >
                     <div className="p-4 rounded-full bg-white/5 mb-4 group-hover:scale-110 transition-transform duration-300">
                         <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary" />
                     </div>
                     <h4 className="text-sm font-medium mb-1">Upload Reference Files</h4>
                     <p className="text-xs text-muted-foreground">Images (PNG, JPG), PDFs, Code files, or Text files</p>
-                </div>
-
-                <div className="space-y-3">
-                    <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Paste Code Snippets</span>
-                        <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
-                        <span className="block text-sm text-white italic">E.g. Paste a snippet of your existing API response or a specific utility function...</span>
-                    </div>
-                    <Textarea
-                        placeholder="Paste your code or text examples here..."
-                        className="min-h-[120px] resize-none focus-visible:ring-primary/50 font-mono text-xs"
-                        value={customExamples}
-                        onChange={(e) => onCustomExamplesChange(e.target.value)}
-                    />
                 </div>
 
                 {uploadedFiles.length > 0 && (
@@ -130,11 +116,25 @@ export function SectionExamples({
                     </div>
                 </div>
 
-                <div className="p-4 rounded-lg bg-white/5 space-y-3">
+                <div className="p-4 rounded-lg bg-blue-500/5 space-y-3">
                     <h4 className="text-sm font-bold text-white">Visual Context:</h4>
                     <p className="text-sm text-muted-foreground font-normal italic">
                         Suggestions will appear here once AI analysis is implemented. The agent will extract patterns from uploaded images and offer recommendations for Context, Persona, and Tech Stack.
                     </p>
+                </div>
+
+                <div className="space-y-3">
+                    <div className="flex flex-col gap-1">
+                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Paste Code Snippets</span>
+                        <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
+                        <span className="block text-sm text-white italic">E.g. Paste a snippet of your existing API response or a specific utility function...</span>
+                    </div>
+                    <Textarea
+                        placeholder="Paste your code or text examples here..."
+                        className="min-h-[120px] resize-none focus-visible:ring-primary/50 font-mono text-xs"
+                        value={customExamples}
+                        onChange={(e) => onCustomExamplesChange(e.target.value)}
+                    />
                 </div>
 
             </CardContent>

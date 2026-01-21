@@ -14,7 +14,7 @@ export function SectionPersona({ value, onChange }: SectionPersonaProps) {
     }
 
     return (
-        <Card className="glass-panel border-0 bg-opacity-50">
+        <Card>
             <CardHeader>
                 <CardTitle className="text-xl">2. Persona</CardTitle>
                 <CardDescription>

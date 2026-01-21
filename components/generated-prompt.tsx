@@ -34,7 +34,7 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
     }
 
     return (
-        <Card className="glass-panel border-0 bg-opacity-50 min-h-[400px] resize-y overflow-auto flex flex-col bg-black/40">
+        <Card className="min-h-[400px] resize-y overflow-auto flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-xl tracking-tight">Generated Prompt</CardTitle>
                 <div className="flex gap-2">
