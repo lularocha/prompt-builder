@@ -13,6 +13,28 @@ interface FileMetadata {
     size: number
 }
 
+interface VisualContextSuggestions {
+    context: string[]
+    persona: string[]
+    techStack: string[]
+}
+
+const MOCK_SUGGESTIONS: VisualContextSuggestions = {
+    context: [
+        "Building a dashboard interface with data visualization components",
+        "Using a card-based layout with consistent spacing"
+    ],
+    persona: [
+        "Senior frontend developer familiar with React and TypeScript",
+        "Prefers functional components with hooks"
+    ],
+    techStack: [
+        "React with TypeScript",
+        "Tailwind CSS for styling",
+        "Recharts or similar for data visualization"
+    ]
+}
+
 export function PromptBuilder() {
     // State
     const [persona, setPersona] = useState("")
@@ -21,6 +43,8 @@ export function PromptBuilder() {
     const [customConstraints, setCustomConstraints] = useState<string[]>([])
     const [uploadedFiles, setUploadedFiles] = useState<FileMetadata[]>([])
     const [customExamples, setCustomExamples] = useState("")
+    const [analysisStatus, setAnalysisStatus] = useState<'idle' | 'analyzing' | 'complete'>('idle')
+    const [visualContextSuggestions, setVisualContextSuggestions] = useState<VisualContextSuggestions | null>(null)
 
     // Handlers
     const handleToggleTech = (tech: string) => {
@@ -42,6 +66,15 @@ export function PromptBuilder() {
     const handleFilesUpload = (files: File[]) => {
         const fileMetadata = files.map(f => ({ name: f.name, size: f.size }))
         setUploadedFiles(prev => [...prev, ...fileMetadata])
+
+        // Start analysis simulation
+        setAnalysisStatus('analyzing')
+        setVisualContextSuggestions(null)
+
+        setTimeout(() => {
+            setAnalysisStatus('complete')
+            setVisualContextSuggestions(MOCK_SUGGESTIONS)
+        }, 4500)
     }
 
     const handleFileRemove = (index: number) => {
@@ -135,6 +168,8 @@ export function PromptBuilder() {
                     onFileRemove={handleFileRemove}
                     customExamples={customExamples}
                     onCustomExamplesChange={setCustomExamples}
+                    analysisStatus={analysisStatus}
+                    visualContextSuggestions={visualContextSuggestions}
                 />
 
             </div>

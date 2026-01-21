@@ -2,14 +2,19 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Textarea } from "./ui/textarea"
-import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { Upload, FileText, BrainCircuit, X } from "lucide-react"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 
 interface FileMetadata {
     name: string
     size: number
+}
+
+interface VisualContextSuggestions {
+    context: string[]
+    persona: string[]
+    techStack: string[]
 }
 
 interface SectionExamplesProps {
@@ -18,6 +23,8 @@ interface SectionExamplesProps {
     onFileRemove: (index: number) => void
     customExamples: string
     onCustomExamplesChange: (value: string) => void
+    analysisStatus: 'idle' | 'analyzing' | 'complete'
+    visualContextSuggestions: VisualContextSuggestions | null
 }
 
 export function SectionExamples({
@@ -25,7 +32,9 @@ export function SectionExamples({
     onFilesUpload,
     onFileRemove,
     customExamples,
-    onCustomExamplesChange
+    onCustomExamplesChange,
+    analysisStatus,
+    visualContextSuggestions
 }: SectionExamplesProps) {
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -43,11 +52,7 @@ export function SectionExamples({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-xl">4. Examples</CardTitle>
-                <CardDescription>
-                    Show, don't tell - Upload files or paste code snippets to demonstrate usage.
-                    <span className="block text-white italic mt-1">Note: Automatic extraction of patterns from visual files (images, screenshots) is not yet implemented.</span>
-                </CardDescription>
+                <CardTitle className="text-xl -mb-4">4. Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
 
@@ -62,7 +67,7 @@ export function SectionExamples({
 
                 <div
                     onClick={handleUploadClick}
-                    className="border-2 border-dashed border-white/10 rounded-xl p-8 mb-12 flex flex-col items-center justify-center text-center transition-colors hover:border-primary/30 hover:bg-white/5 cursor-pointer group"
+                    className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors hover:border-primary/30 hover:bg-white/5 cursor-pointer group"
                 >
                     <div className="p-4 rounded-full bg-white/5 mb-4 group-hover:scale-110 transition-transform duration-300">
                         <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary" />
@@ -92,40 +97,70 @@ export function SectionExamples({
                     </div>
                 )}
 
-                {/*
-                    Badge states (for future implementation):
-                    - idle: bg-gray-600 text-white
-                    - analyzing: bg-yellow-500 text-black
-                    - complete: bg-green-600 text-white
-                    - error: bg-red-600 text-white
-                */}
-                <Badge variant="secondary" className="bg-gray-600 text-white border-0 w-fit">
-                    <BrainCircuit className="w-3 h-3 mr-1" />
-                    AI Analysis Idle
-                </Badge>
-
-                <div className="p-4 rounded-lg bg-blue-500/5 flex gap-3">
-                    <div className="shrink-0 mt-0.5">
-                        <BrainCircuit className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div className="space-y-1">
-                        <h4 className="text-sm font-medium text-blue-300">Agent Analysis</h4>
-                        <p className="text-xs text-blue-200/60">
-                            Upload an example to have the agent extract patterns and suggest improvements.
-                        </p>
-                    </div>
-                </div>
-
                 <div className="p-4 rounded-lg bg-blue-500/5 space-y-3">
-                    <h4 className="text-sm font-bold text-white">Visual Context:</h4>
-                    <p className="text-sm text-muted-foreground font-normal italic">
-                        Suggestions will appear here once AI analysis is implemented. The agent will extract patterns from uploaded images and offer recommendations for Context, Persona, and Tech Stack.
-                    </p>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <BrainCircuit className="w-5 h-5 text-blue-400" />
+                            <h4 className="text-sm font-medium text-blue-300">Agent Analysis</h4>
+                        </div>
+                        {analysisStatus === 'idle' && (
+                            <Badge variant="secondary" className="bg-gray-600 text-white border-0">
+                                <BrainCircuit className="w-3 h-3 mr-1" />
+                                Idle
+                            </Badge>
+                        )}
+                        {analysisStatus === 'analyzing' && (
+                            <Badge variant="secondary" className="bg-yellow-500 text-black border-0 animate-pulse">
+                                <BrainCircuit className="w-3 h-3 mr-1" />
+                                Analyzing...
+                            </Badge>
+                        )}
+                        {analysisStatus === 'complete' && (
+                            <Badge variant="secondary" className="bg-green-600 text-white border-0">
+                                <BrainCircuit className="w-3 h-3 mr-1" />
+                                Complete
+                            </Badge>
+                        )}
+                    </div>
+                    <div className="text-sm text-white">
+                        Upload examples to have the agent extract patterns and suggest improvements for Context, Persona, and Tech Stack.
+                    </div>
+                    <div className="text-sm text-muted-foreground italic">
+                        Suggestions will appear here once AI analysis is implemented.
+                    </div>
+                    {visualContextSuggestions && (
+                        <div className="space-y-4 pt-2">
+                            <div>
+                                <h5 className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-1">Context</h5>
+                                <ul className="text-sm text-muted-foreground space-y-1">
+                                    {visualContextSuggestions.context.map((s, i) => (
+                                        <li key={i}>• {s}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-1">Persona</h5>
+                                <ul className="text-sm text-muted-foreground space-y-1">
+                                    {visualContextSuggestions.persona.map((s, i) => (
+                                        <li key={i}>• {s}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-1">Tech Stack</h5>
+                                <ul className="text-sm text-muted-foreground space-y-1">
+                                    {visualContextSuggestions.techStack.map((s, i) => (
+                                        <li key={i}>• {s}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Paste Code Snippets</span>
+                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-12 block">Paste Code Snippets</span>
                         <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
                         <span className="block text-sm text-white italic">E.g. Paste a snippet of your existing API response or a specific utility function...</span>
                     </div>
