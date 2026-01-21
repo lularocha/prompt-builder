@@ -1,76 +1,133 @@
-# Product Backlog & Implementation Plan
+# Product Roadmap & Feature Status
 
-This document outlines the roadmap for advanced features to elevate the Prompt Builder from a static tool to a "smart" assistant.
+This document tracks the implementation status and future roadmap for the Prompt Builder application.
 
-## Feature 1: Persona Presets
-**Goal:** Allow users to quickly assume expert roles tailored to their specific task.
+---
 
-### Implementation Plan
-1.  **Data Structure:** Create a `lib/personas.ts` constant file containing preset objects.
-    *   *Structure:* `{ id, name, description, systemPrompt }`
-    *   *Examples:* "Senior Frontend Architect", "Data Scientist", "DevOps Engineer", "Technical Writer".
-2.  **UI Component:**
-    *   Add a "Quick Select" mechanism above the Persona text area.
-    *   **Recommendation:** Use a **Combobox (Autocomplete Dropdown)**. This is cleaner than a massive list of buttons and allows for many presets.
-    *   *Alternative:* A row of clickable "Chips" for the top 3-5 most common personas, plus a "More..." dropdown.
-3.  **App Logic:**
-    *   Selecting a preset fills the Persona text area.
-    *   Allow the user to edit the text after selection (don't lock it).
+## Current Implementation Status
 
-## Feature 2: AI-Powered "Make it Specific" (Context)
-**Goal:** Replace the mock dictionary with real Generative AI to truly refine user input.
+### Completed (MVP)
+- **Premium UI**: Glassmorphism design, dark theme, responsive layout
+- **4-Section Prompt Strategy**: Persona + Context + Constraints & Tech + Examples
+- **Prompt Generation**: Real-time assembly of inputs into formatted prompt
+- **Copy & Download**: Export generated prompts as text
+- **File Upload**: Drag & drop zone for reference files (images, PDFs, code)
+- **Code Snippets**: Textarea for pasting example code
+- **Tech Stack Selector**: Preset options and custom constraint badges
+- **Basic "Make it Specific" (Context)**: Dictionary-based keyword enhancement
 
-### Implementation Plan
-1.  **Backend (Next.js API Route):**
-    *   Create `app/api/enhance/route.ts`.
-    *   Integrate an LLM SDK (e.g., Google Generative AI SDK or OpenAI SDK).
-    *   *Prompt logic:* "You are an expert PM. Rewrite this vague requirement to be specific, actionable, and technical: [User Input]"
-2.  **Security:**
-    *   Use `.env.local` to store API keys. Do NOT expose keys on the client side.
-3.  **Frontend:**
-    *   Update `handleEnhance` in `section-context.tsx` to `fetch` from the new API endpoint.
-    *   Add a "Loading" state (spinner) to the button while waiting for the AI response.
+### UI Placeholders (Not Functional)
+These elements exist in the UI but have no backend implementation:
 
-## Feature 3: Smart Constraints & Tech Presets
-**Goal:** Suggest technologies based on the project goal (Context) and role (Persona).
+| Element | Location | Current Behavior |
+|---------|----------|------------------|
+| "Make it Specific" button | Persona section | Does nothing (mockup) |
+| "Agent Analysis" info box | Examples section | Static informational text |
+| "AI Analysis Ready" badge | Examples section | Static badge display |
 
-### Implementation Plan
-1.  **Inference Engine (Rule-based first, then AI):**
-    *   *Phase 1 (Rules):* Map keywords in Context to constraints.
-        *   If Context contains "mobile" -> Suggest "React Native", "Expo", "iOS/Android".
-        *   If Context contains "data" -> Suggest "Python", "Pandas", "SQL".
-    *   *Phase 2 (AI):* Send Context to an API that returns a JSON list of recommended tech stacks.
-2.  **UI Interaction (Hybrid Approach):**
-    *   **"Smart Suggestions" Panel:**
-        *   Instead of auto-filling (which might annoy users), display a "Recommended Stack" panel that appears dynamically.
-        *   Users click a "+" button next to a suggestion to add it to their constraints.
-    *   **Project Type Dropdown:**
-        *   A manual override at the top of the Constraints section (e.g., "Template: Full Stack Next.js"). Selecting this pre-fills Next.js, Tailwind, Postgres, etc.
+---
 
-## Feature 4: Multimodal Vision Integration (Agent Analysis)
-**Goal:** Automatically analyze uploaded design screenshots or wireframes to extract context and constraints.
+## Why AI Features Require Backend Integration
 
-### Implementation Plan
-1.  **Vision Prompting:** Develop a specialized system prompt for analyzing UI screenshots (identifying colors, spacing, component types, and architectural patterns).
-2.  **API Integration:** Use a Vision-capable model (e.g., Gemini 1.5 Pro) in the `app/api/analyze-image` route.
-3.  **UI Feedback:**
-    *   Show a "Scanning..." animation on the uploaded image thumbnail.
-    *   Automatically populate a "Visual Context" summary in the Examples section after the analysis is complete.
-    *   Include this visual summary in the final generated prompt.
+> **Important**: The current app is fully functional as a static prompt builder. The features below require API integration with AI services, which means:
 
-## UI/UX Design Recommendation
-For the best balance of speed and control, I recommend a **Hybrid Interface**:
+1. **API Key Security**: AI APIs (OpenAI, Gemini, etc.) require secret keys that cannot be exposed in client-side JavaScript. Anyone viewing browser dev tools could steal exposed keys.
 
-1.  **For Personas:**
-    *   **Dropdown Menu with Search:** Best for selecting from a potentially long list of roles.
-    *   *Behavior:* "Select a generic role..." -> Fills text area -> User tweaks the details.
+2. **Server-Side Layer**: Next.js API routes (`app/api/*`) provide a secure way to call AI services while keeping keys hidden on the server.
 
-2.  **For Constraints:**
-    *   **"As-you-type" Suggestions:** As the user types in the Context field, analyze the text 500ms after they stop typing (debounce).
-    *   **Visual Feedback:** A small "Sparkles" icon appears near the Constraints section title: *"Based on your context, we recommend..."*
-    *   **One-Click Add:** The suggestions appear as "ghost" badges that become solid/active when clicked.
+3. **Cost**: AI API calls have usage costs that require an account with credits.
 
-## Next Steps (Technical)
-1.  Set up the **Next.js API Routes** infrastructure to prepare for server-side logic (required for Feature 2).
-2.  Define the **Persona JSON schema** and populate it with 5-10 high-quality starting roles.
-3.  Design the **Auto-Suggestion UI component** for the Constraints section.
+**Bottom Line**: The MVP works perfectly as a prompt-building tool. AI-powered enhancements are a future upgrade that requires backend setup and API credits.
+
+---
+
+## Future Features
+
+### Feature 1: Persona Presets
+**Status**: Not Started
+**Complexity**: Low (no API required)
+
+**Goal**: Quick-select common expert roles instead of writing from scratch.
+
+**Implementation**:
+1. Create `lib/personas.ts` with preset objects: `{ id, name, description, systemPrompt }`
+2. Add a dropdown/combobox above the Persona textarea
+3. Selecting a preset fills the textarea (user can still edit)
+
+**Example Presets**: "Senior Frontend Architect", "Data Scientist", "DevOps Engineer", "Technical Writer"
+
+---
+
+### Feature 2: AI-Powered "Make it Specific"
+**Status**: Partial (Context has dictionary fallback, Persona is mockup)
+**Complexity**: Medium (requires API)
+
+**Goal**: Use an LLM to intelligently refine vague user input.
+
+**Implementation**:
+1. Create `app/api/enhance/route.ts`
+2. Integrate LLM SDK (OpenAI or Google Generative AI)
+3. Prompt: "You are an expert PM. Rewrite this vague requirement to be specific, actionable, and technical: [User Input]"
+4. Update frontend to call API with loading state
+
+**Security**: API keys stored in `.env.local`, never exposed to client.
+
+---
+
+### Feature 3: Smart Constraints & Tech Suggestions
+**Status**: Not Started
+**Complexity**: Medium
+
+**Goal**: Suggest technologies based on project context and persona.
+
+**Implementation (Phased)**:
+- **Phase 1 (Rules)**: Keyword mapping (e.g., "mobile" -> suggest React Native, Expo)
+- **Phase 2 (AI)**: Send context to API that returns recommended stack as JSON
+
+**UI**: "Recommended Stack" panel with one-click add buttons.
+
+---
+
+### Feature 4: Agent Analysis (Multimodal Vision)
+**Status**: UI Placeholder Only
+**Complexity**: High (requires Vision API)
+
+**Goal**: Automatically analyze uploaded design screenshots/wireframes to extract visual context.
+
+**What It Would Do**:
+1. User uploads a design screenshot or wireframe
+2. Vision AI (e.g., Gemini 1.5 Pro) analyzes the image
+3. Extracts: colors, spacing, component types, layout patterns
+4. Auto-populates a "Visual Context" summary
+5. Includes analysis in the generated prompt
+
+**Current State**:
+- The blue "Agent Analysis" info box and "AI Analysis Ready" badge are **static UI elements**
+- They indicate the feature is designed but awaiting implementation
+- No image processing or AI calls occur
+
+**Implementation Required**:
+1. Create `app/api/analyze-image/route.ts`
+2. Integrate Vision-capable model
+3. Add "Scanning..." loading animation
+4. Parse and display analysis results
+
+---
+
+## Implementation Priority
+
+For someone wanting to add AI features, recommended order:
+
+1. **Persona Presets** - No API needed, improves UX immediately
+2. **AI "Make it Specific"** - Single API route, high value
+3. **Smart Suggestions** - Can start with rule-based (no API)
+4. **Agent Analysis** - Most complex, requires Vision API
+
+---
+
+## Technical Notes
+
+- **Framework**: Next.js 14+ with App Router
+- **API Routes**: Use `app/api/` directory for server-side endpoints
+- **Environment Variables**: Store keys in `.env.local` (gitignored)
+- **State Management**: React hooks in PromptBuilder component

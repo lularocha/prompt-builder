@@ -1,30 +1,30 @@
-# Project Tech Stack Summary
+# Tech Stack Summary
 
-This document outlines the technologies and languages used in the Prompt Builder project.
+Quick reference for all technologies used in the Prompt Builder project.
 
-1. **JSON**
-For project configuration, dependency management (`package.json`), and compiler settings (`tsconfig.json`).
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 14+** | App Router framework, server-side capabilities |
+| **React** | Component-based UI, state management |
+| **TypeScript** | Type safety across components |
+| **Tailwind CSS** | Utility-first styling, responsive layout |
+| **Custom CSS** | Glassmorphism effects, animations (`globals.css`) |
+| **Lucide React** | Icon system (Copy, Download, Wand, etc.) |
 
-2. **TypeScript**
-For adding static type definitions to the codebase, ensuring type safety in components like `PromptBuilder` and `GeneratedPrompt` to prevent runtime errors.
+## Dependencies
 
-3. **JavaScript**
-For the core logic of the application and the Node.js runtime that executes the Next.js framework scripts.
+From `package.json`:
+- `next`, `react`, `react-dom` - Core framework
+- `lucide-react` - Icons
+- `clsx`, `tailwind-merge` - Class name utilities
+- `typescript` - Type checking
 
-4. **Next.js (App Router)**
-For the overarching framework, managing page routing, professional-grade performance, and providing the secure "Server-Side" layer needed for future AI API integrations.
+## Key Files
 
-5. **React**
-For the component-based user interface and managing the complex state transitions (like when the prompt updates in real-time as you type).
-
-6. **Tailwind CSS**
-For high-speed, utility-first styling that handles the entire layout, responsive behavior, and consistent spacing.
-
-7. **Vanilla CSS**
-For specific "premium" customizations in `globals.css`, such as our custom glassmorphism effects, background blurs, and global typography rules.
-
-8. **Lucide React**
-For the consistent, high-quality icon system used for actions like "Copy", "Download", and the "Magic" enhancement button.
-
-9. **Markdown**
-For maintaining all our project documentation, the feature backlog, and the implementation roadmap inside the `backlog/` directory.
+| File | Purpose |
+|------|---------|
+| `app/layout.tsx` | Root layout, dark theme |
+| `app/page.tsx` | Main page with PromptBuilder |
+| `app/globals.css` | CSS variables, glassmorphism utilities |
+| `components/prompt-builder.tsx` | Main state container |
+| `lib/utils.ts` | `cn()` helper for class merging |
