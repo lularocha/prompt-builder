@@ -52,18 +52,18 @@ export function PromptBuilder() {
     const finalPrompt = useMemo(() => {
         const parts = []
 
-        // Section 1: Persona
-        if (persona.trim()) {
-            parts.push(`## 1. Persona\n${persona.trim()}`)
+        // Section 1: Context
+        if (context.trim()) {
+            parts.push(`## 1. Context\n${context.trim()}`)
         } else {
-            parts.push(`## 1. Persona\n(No information provided yet)`)
+            parts.push(`## 1. Context\n(No information provided yet)`)
         }
 
-        // Section 2: Context
-        if (context.trim()) {
-            parts.push(`## 2. Context\n${context.trim()}`)
+        // Section 2: Persona
+        if (persona.trim()) {
+            parts.push(`## 2. Persona\n${persona.trim()}`)
         } else {
-            parts.push(`## 2. Context\n(No information provided yet)`)
+            parts.push(`## 2. Persona\n(No information provided yet)`)
         }
 
         // Section 3: Constraints & Tech Stack
@@ -111,14 +111,14 @@ export function PromptBuilder() {
                     <h2 className="text-xl font-bold tracking-tight">Builder Configuration</h2>
                 </div>
 
-                <SectionPersona
-                    value={persona}
-                    onChange={setPersona}
-                />
-
                 <SectionContext
                     value={context}
                     onChange={setContext}
+                />
+
+                <SectionPersona
+                    value={persona}
+                    onChange={setPersona}
                 />
 
                 <SectionConstraints

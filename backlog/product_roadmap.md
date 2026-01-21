@@ -8,7 +8,7 @@ This document tracks the implementation status and future roadmap for the Prompt
 
 ### Completed (MVP)
 - **Premium UI**: Glassmorphism design, dark theme, responsive layout
-- **4-Section Prompt Strategy**: Persona + Context + Constraints & Tech + Examples
+- **4-Section Prompt Strategy**: Context + Persona + Constraints & Tech + Examples
 - **Prompt Generation**: Real-time assembly of inputs into formatted prompt
 - **Copy & Download**: Export generated prompts as text
 - **File Upload**: Drag & drop zone for reference files (images, PDFs, code)

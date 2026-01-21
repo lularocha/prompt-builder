@@ -11,7 +11,7 @@ export default function Home() {
                         Prompt Builder
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
-                        Create high-quality AI prompts with the strategy: Persona + Context + Constraints & Tech + Examples.
+                        Create high-quality AI prompts with the strategy: Context + Persona + Constraints & Tech + Examples.
                     </p>
                     <p className="text-sm text-white italic !mt-1">
                         AI features that require API were not implemented yet.

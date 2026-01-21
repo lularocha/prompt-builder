@@ -44,7 +44,7 @@ export function SectionContext({ value, onChange }: SectionContextProps) {
         <Card className="glass-panel border-0 bg-opacity-50">
             <CardHeader>
                 <div>
-                    <CardTitle className="text-xl">2. Context</CardTitle>
+                    <CardTitle className="text-xl">1. Context</CardTitle>
                     <CardDescription className="space-y-2">
                         <div>Describe what you are building, the problem, and the goal.</div>
                         <div className="text-sm text-white italic">E.g. I want to build a responsive admin dashboard for a SaaS platform using Next.js...</div>
