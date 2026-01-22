@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Prompt Builder",
     description: "Create high-quality AI prompts with the strategy: Persona + Context + Constraints & Tech + Examples.",
+    icons: {
+        icon: "/favicon-pb.png",
+    },
 };
 
 export default function RootLayout({
