@@ -6,7 +6,6 @@ import { SectionContext } from "./section-context"
 import { SectionConstraints } from "./section-constraints"
 import { SectionExamples } from "./section-examples"
 import { GeneratedPrompt } from "./generated-prompt"
-import { Sparkles } from "lucide-react"
 
 interface FileMetadata {
     name: string
@@ -138,10 +137,10 @@ export function PromptBuilder() {
             <div className="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
 
                 <div className="flex items-center space-x-2 mb-2">
-                    <div className="p-2 bg-primary/20 rounded-lg">
-                        <Sparkles className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary/20 rounded-lg flex items-center">
+                        <span className="material-icons text-white rotate-90 leading-none" style={{ fontSize: '32px', verticalAlign: 'baseline' }}>arrow_outward</span>
                     </div>
-                    <h2 className="text-xl font-bold tracking-tight">Builder Configuration</h2>
+                    <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Input</h2>
                 </div>
 
                 <SectionContext
@@ -178,10 +177,10 @@ export function PromptBuilder() {
             <div className="lg:sticky lg:top-8 h-fit space-y-6">
 
                 <div className="flex items-center space-x-2 mb-2">
-                    <div className="p-2 bg-primary/20 rounded-lg">
-                        <Sparkles className="w-5 h-5 text-primary" />
+                    <div className="p-2 bg-primary/20 rounded-lg flex items-center">
+                        <span className="material-icons text-white leading-none" style={{ fontSize: '32px', verticalAlign: 'baseline' }}>arrow_outward</span>
                     </div>
-                    <h2 className="text-xl font-bold tracking-tight">Output</h2>
+                    <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Output</h2>
                 </div>
 
                 <GeneratedPrompt prompt={finalPrompt} />
