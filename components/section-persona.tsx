@@ -32,7 +32,7 @@ export function SectionPersona({ value, onChange }: SectionPersonaProps) {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="text-xs text-primary gap-2 hover:bg-primary/20"
+                    className="text-xs text-blue-400 gap-2 hover:bg-primary/20"
                     onClick={handleEnhance}
                 >
                     <Wand2 className="w-3 h-3" />

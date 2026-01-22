@@ -41,7 +41,7 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
                     <Button
                         size="sm"
                         variant="ghost"
-                        className="hover:bg-primary/20 hover:text-primary"
+                        className="hover:bg-primary/20 hover:text-blue-400"
                         onClick={handleDownload}
                     >
                         <Download className="w-4 h-4 mr-2" />
@@ -50,7 +50,7 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
                     <Button
                         size="sm"
                         variant="ghost"
-                        className="hover:bg-primary/20 hover:text-primary"
+                        className="hover:bg-primary/20 hover:text-blue-400"
                         onClick={handleCopy}
                     >
                         {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
