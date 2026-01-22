@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { SectionPersona } from "./section-persona"
 import { SectionContext } from "./section-context"
 import { SectionConstraints } from "./section-constraints"
@@ -138,7 +139,7 @@ export function PromptBuilder() {
 
                 <div className="flex items-center space-x-2 mb-2">
                     <div className="p-0 bg-primary/20 rounded-lg flex items-center">
-                        <span className="material-icons text-white rotate-90 leading-none" style={{ fontSize: '32px', verticalAlign: 'baseline' }}>arrow_outward</span>
+                        <ArrowUpRight className="w-8 h-8 text-white rotate-90" />
                     </div>
                     <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Input</h2>
                 </div>
@@ -178,7 +179,7 @@ export function PromptBuilder() {
 
                 <div className="flex items-center space-x-2 mb-2">
                     <div className="p-0 bg-primary/20 rounded-lg flex items-center">
-                        <span className="material-icons text-white leading-none" style={{ fontSize: '32px', verticalAlign: 'baseline' }}>arrow_outward</span>
+                        <ArrowDownRight className="w-8 h-8 text-white" />
                     </div>
                     <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Output</h2>
                 </div>
