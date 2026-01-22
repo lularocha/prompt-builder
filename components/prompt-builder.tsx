@@ -139,7 +139,7 @@ export function PromptBuilder() {
 
                 <div className="flex items-center space-x-2 mb-2">
                     <div className="p-0 bg-primary/20 rounded-lg flex items-center">
-                        <ArrowUpRight className="w-8 h-8 text-white rotate-90" />
+                        <ArrowDownRight className="w-8 h-8 text-white" />
                     </div>
                     <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Input</h2>
                 </div>
@@ -179,7 +179,7 @@ export function PromptBuilder() {
 
                 <div className="flex items-center space-x-2 mb-2">
                     <div className="p-0 bg-primary/20 rounded-lg flex items-center">
-                        <ArrowDownRight className="w-8 h-8 text-white" />
+                        <ArrowUpRight className="w-8 h-8 text-white" />
                     </div>
                     <h2 className="text-[1.75rem] font-bold tracking-tight leading-none">Output</h2>
                 </div>
