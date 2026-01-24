@@ -19,22 +19,6 @@ interface VisualContextSuggestions {
     techStack: string[]
 }
 
-const MOCK_SUGGESTIONS: VisualContextSuggestions = {
-    context: [
-        "Building a dashboard interface with data visualization components",
-        "Using a card-based layout with consistent spacing"
-    ],
-    persona: [
-        "Senior frontend developer familiar with React and TypeScript",
-        "Prefers functional components with hooks"
-    ],
-    techStack: [
-        "React with TypeScript",
-        "Tailwind CSS for styling",
-        "Recharts or similar for data visualization"
-    ]
-}
-
 export function PromptBuilder() {
     // State
     const [persona, setPersona] = useState("")
@@ -72,18 +56,64 @@ export function PromptBuilder() {
         setCustomConstraints(prev => prev.filter((_, i) => i !== index))
     }
 
-    const handleFilesUpload = (files: File[]) => {
+    const handleFilesUpload = async (files: File[]) => {
         const fileMetadata = files.map(f => ({ name: f.name, size: f.size }))
         setUploadedFiles(prev => [...prev, ...fileMetadata])
 
-        // Start analysis simulation
+        // Find the first image file for analysis
+        const imageFile = files.find(f => f.type.startsWith('image/'))
+
+        if (!imageFile) {
+            // No image to analyze, skip API call
+            return
+        }
+
+        // Start analysis
         setAnalysisStatus('analyzing')
         setVisualContextSuggestions(null)
+        setSelectedSuggestions({
+            context: new Set(),
+            persona: new Set(),
+            techStack: new Set()
+        })
 
-        setTimeout(() => {
+        try {
+            // Read image as base64
+            const base64 = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    const result = reader.result as string
+                    // Remove data URL prefix (e.g., "data:image/png;base64,")
+                    const base64Data = result.split(',')[1]
+                    resolve(base64Data)
+                }
+                reader.onerror = reject
+                reader.readAsDataURL(imageFile)
+            })
+
+            // Call API
+            const response = await fetch('/api/analyze-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    image: base64,
+                    mediaType: imageFile.type
+                })
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.error || 'Analysis failed')
+            }
+
+            const suggestions = await response.json()
             setAnalysisStatus('complete')
-            setVisualContextSuggestions(MOCK_SUGGESTIONS)
-        }, 4500)
+            setVisualContextSuggestions(suggestions)
+        } catch (error) {
+            console.error('Analysis error:', error)
+            setAnalysisStatus('idle')
+            // Optionally show error to user - for now just log it
+        }
     }
 
     const handleFileRemove = (index: number) => {
