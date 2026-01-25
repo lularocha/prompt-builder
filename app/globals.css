@@ -26,3 +26,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@keyframes glow-orange-yellow {
+  0%, 100% {
+    background-color: #ff5500;
+  }
+  50% {
+    background-color: #ffbb00;
+  }
+}
+
+.animate-glow-orange {
+  animation: glow-orange-yellow 2s ease-in-out infinite;
+}

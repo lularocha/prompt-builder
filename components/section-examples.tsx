@@ -109,22 +109,22 @@ export function SectionExamples({
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <BrainCircuit className="w-5 h-5 text-blue-400" />
-                            <h4 className="text-sm font-medium text-blue-300">Agent Analysis</h4>
+                            <h4 className="text-base font-bold text-blue-300">Agent Analysis</h4>
                         </div>
                         {analysisStatus === 'idle' && (
-                            <Badge variant="secondary" className="bg-gray-600 text-white border-0">
+                            <Badge variant="secondary" className="bg-gray-600 text-white border-0 text-sm px-3.5 py-1">
                                 <BrainCircuit className="w-3 h-3 mr-1" />
                                 Idle
                             </Badge>
                         )}
                         {analysisStatus === 'analyzing' && (
-                            <Badge variant="secondary" className="bg-yellow-500 text-black border-0 animate-pulse">
+                            <Badge variant="secondary" className="border-0 text-black text-sm px-3.5 py-1 animate-glow-orange">
                                 <BrainCircuit className="w-3 h-3 mr-1" />
                                 Analyzing...
                             </Badge>
                         )}
                         {analysisStatus === 'complete' && (
-                            <Badge variant="secondary" className="bg-green-600 text-white border-0">
+                            <Badge variant="secondary" className="bg-green-600 text-white border-0 text-sm px-3.5 py-1">
                                 <BrainCircuit className="w-3 h-3 mr-1" />
                                 Complete
                             </Badge>
@@ -158,7 +158,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.context.has(i)}
                                                 onChange={() => onToggleSuggestion('context', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 text-primary focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 accent-primary/80 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
@@ -174,7 +174,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.persona.has(i)}
                                                 onChange={() => onToggleSuggestion('persona', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 text-primary focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 accent-primary/80 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
@@ -190,7 +190,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.techStack.has(i)}
                                                 onChange={() => onToggleSuggestion('techStack', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 text-primary focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 accent-primary/80 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
