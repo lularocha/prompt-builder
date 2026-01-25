@@ -39,3 +39,7 @@ body {
 .animate-glow-orange {
   animation: glow-orange-yellow 2s ease-in-out infinite;
 }
+
+.checkbox-blue {
+  accent-color: #7fa9db;
+}
