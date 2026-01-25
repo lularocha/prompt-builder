@@ -197,11 +197,6 @@ export function SectionExamples({
                                     ))}
                                 </div>
                             </div>
-                            <div className="pt-3 mt-3 border-t border-white/10">
-                                <p className="text-sm text-white italic">
-                                    Note: Displaying sample data for demonstration. Real AI analysis functionality is not yet implemented.
-                                </p>
-                            </div>
                         </div>
                     )}
                 </div>

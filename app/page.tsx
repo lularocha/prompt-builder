@@ -11,13 +11,10 @@ export default function Home() {
                         Prompt Builder
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
-                        Create high-quality AI prompts with the strategy: Context + Persona + Constraints & Tech + Examples.
-                    </p>
-                    <p className="text-sm text-white italic !mt-1">
-                        AI features that require API were not implemented yet.
+                        Create high-quality AI prompts with the strategy: Context + Persona + Tech Stack & Constraints + Examples.
                     </p>
                     <p className="text-sm text-[#ffaa00] !mt-2">
-                        Latest update: January 22, 2026
+                        Latest update: January 25, 2026
                     </p>
                 </div>
 

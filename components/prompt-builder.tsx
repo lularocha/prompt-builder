@@ -203,9 +203,9 @@ export function PromptBuilder() {
             parts.push(`## 2. Persona\n(No information provided yet)`)
         }
 
-        // Section 3: Constraints & Tech Stack
+        // Section 3: Tech Stack & Constraints
         if (selectedTech.length > 0 || customConstraints.length > 0) {
-            parts.push(`## 3. Constraints & Tech Stack`)
+            parts.push(`## 3. Tech Stack & Constraints`)
             if (selectedTech.length > 0) {
                 parts.push(`**Tech Stack:**\n${selectedTech.map(t => `- ${t}`).join('\n')}`)
             }
@@ -214,7 +214,7 @@ export function PromptBuilder() {
                 parts.push(`**Requirements:**\n${customConstraints.map(c => `- ${c}`).join('\n')}`)
             }
         } else {
-            parts.push(`## 3. Constraints & Tech Stack\n(No information provided yet)`)
+            parts.push(`## 3. Tech Stack & Constraints\n(No information provided yet)`)
         }
 
         // Section 4: Examples

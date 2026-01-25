@@ -56,7 +56,7 @@ export function SectionContext({ value, onChange }: SectionContextProps) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                 />
-                <Button
+                {/* <Button
                     variant="ghost"
                     size="sm"
                     className="text-xs text-blue-400 gap-2 hover:bg-primary/20"
@@ -64,7 +64,7 @@ export function SectionContext({ value, onChange }: SectionContextProps) {
                 >
                     <Wand2 className="w-3 h-3" />
                     Make it specific
-                </Button>
+                </Button> */}
             </CardContent>
         </Card>
     )
