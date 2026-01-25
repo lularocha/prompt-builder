@@ -50,13 +50,16 @@ export async function POST(request: NextRequest) {
 
 Return ONLY a valid JSON object (no markdown, no code blocks) with this exact structure:
 {
-  "context": ["suggestion 1", "suggestion 2"],
+  "context": ["suggestion 1", "suggestion 2", "suggestion 3", "suggestion 4"],
   "persona": ["suggestion 1", "suggestion 2"],
   "techStack": ["suggestion 1", "suggestion 2", "suggestion 3"]
 }
 
 Guidelines:
-- context: 2 suggestions describing what is being built (e.g., "Building a dashboard with data cards", "E-commerce product listing page")
+- context: 4 suggestions total:
+  - 2 describing what is being built (e.g., "Building a dashboard with data cards", "E-commerce product listing page")
+  - 1 describing the visual style/look and feel (e.g., "Modern minimalist design", "Clean corporate aesthetic", "Bold colorful interface")
+  - 1 describing layout patterns observed (e.g., "Card-based grid layout", "Sidebar navigation with main content area")
 - persona: 2 suggestions for the ideal developer profile (e.g., "Frontend developer experienced with React", "UI/UX focused developer")
 - techStack: 2-3 specific technologies visible or recommended (e.g., "React", "Tailwind CSS", "Chart.js")
 

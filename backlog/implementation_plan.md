@@ -14,11 +14,15 @@ Build a premium, responsive web application that helps users generate high-quali
 - **Styling**: Tailwind CSS + Custom CSS (glassmorphism effects)
 - **Icons**: Lucide React
 - **Language**: TypeScript
+- **AI Integration**: Anthropic SDK (Claude Sonnet 4 Vision API)
 
 ### Directory Structure (Actual)
 ```
 prompt-builder/
   ├── app/
+  │   ├── api/
+  │   │   └── analyze-image/
+  │   │       └── route.ts   # Vision API endpoint (Claude Sonnet)
   │   ├── layout.tsx         # Root layout with dark theme
   │   ├── page.tsx           # Main application view
   │   └── globals.css        # Global styles, CSS variables
@@ -46,12 +50,13 @@ prompt-builder/
 
 | Component | Features |
 |-----------|----------|
-| `prompt-builder.tsx` | State management for all sections, prompt assembly, suggestion checkbox handlers |
+| `prompt-builder.tsx` | State management for all sections, prompt assembly, suggestion checkbox handlers, Vision API integration |
 | `section-persona.tsx` | Textarea + "Make it specific" button (mockup) |
 | `section-context.tsx` | Textarea + dictionary-based enhancement |
 | `section-constraints.tsx` | Tech stack badges + custom constraints |
-| `section-examples.tsx` | File upload + code snippets + Agent Analysis UI with interactive suggestion checkboxes |
+| `section-examples.tsx` | File upload + code snippets + Agent Analysis UI with real Vision API integration |
 | `generated-prompt.tsx` | Formatted output + copy/download buttons |
+| `api/analyze-image/route.ts` | Server-side Vision API endpoint using Claude Sonnet 4 |
 
 ---
 
@@ -64,10 +69,16 @@ prompt-builder/
 - File upload (drag & drop)
 - Tech stack selector with presets
 - Responsive design (mobile-friendly)
-- Placeholder UI for future AI features
-- Interactive suggestion system:
-  - Mock AI suggestions grouped by Context, Persona, and Tech Stack
+- **AI-Powered Agent Analysis (Vision API)**:
+  - Real-time image analysis using Claude Sonnet 4 Vision
+  - AI-generated suggestions grouped by Context, Persona, and Tech Stack
+  - **Context suggestions (4 total)**:
+    - 2 describing what is being built
+    - 1 for visual style/look and feel (modern, clean, bold, etc.)
+    - 1 for layout patterns observed
   - Checkbox selection for each suggestion
   - Auto-population of corresponding cards when checked
   - Duplicate prevention when adding suggestions
   - Automatic removal from cards when unchecked
+  - Server-side API integration with secure key management
+  - Loading states and error handling

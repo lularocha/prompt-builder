@@ -2,6 +2,8 @@
 
 This document tracks the implementation status and future roadmap for the Prompt Builder application.
 
+**Latest update**: Enhanced Agent Analysis to provide 4 context suggestions (up from 2), now including dedicated suggestions for visual style/look and feel and layout patterns.
+
 ---
 
 ## Current Implementation Status
@@ -15,7 +17,12 @@ This document tracks the implementation status and future roadmap for the Prompt
 - **Code Snippets**: Textarea for pasting example code
 - **Tech Stack Selector**: Preset options and custom constraint badges
 - **Basic "Make it Specific" (Context)**: Dictionary-based keyword enhancement
-- **Agent Suggestions UI**: Interactive checkboxes for mock AI suggestions with automatic card population
+- **Agent Analysis (Vision API)**: AI-powered image analysis with Claude Sonnet Vision
+  - Upload design screenshots or wireframes
+  - Automatic extraction of visual patterns (layout, components, context)
+  - Interactive suggestion checkboxes for Context, Persona, and Tech Stack
+  - One-click population of corresponding card sections
+  - Real-time analysis status badges (Idle → Analyzing → Complete)
 
 ### UI Placeholders (Not Functional)
 These elements exist in the UI but have no backend implementation:
@@ -23,8 +30,6 @@ These elements exist in the UI but have no backend implementation:
 | Element | Location | Current Behavior |
 |---------|----------|------------------|
 | "Make it Specific" button | Persona section | Does nothing (mockup) |
-| "Agent Analysis" info box | Examples section | Shows mock suggestions with interactive checkboxes |
-| "AI Analysis Ready" badge | Examples section | Static badge display |
 
 ---
 
@@ -89,47 +94,47 @@ These elements exist in the UI but have no backend implementation:
 
 ---
 
-### Feature 4: Agent Analysis (Multimodal Vision)
-**Status**: UI Complete with Mock Data
-**Complexity**: High (requires Vision API)
+### Feature 4: Agent Analysis (Multimodal Vision) ✅ COMPLETED
+**Status**: Fully Implemented
+**Complexity**: High (Vision API)
 
 **Goal**: Automatically analyze uploaded design screenshots/wireframes to extract visual context.
 
-**What It Would Do**:
-1. User uploads a design screenshot or wireframe
-2. Vision AI (e.g., Gemini 1.5 Pro) analyzes the image
-3. Extracts: colors, spacing, component types, layout patterns
-4. Auto-populates a "Visual Context" summary
-5. Includes analysis in the generated prompt
+**What It Does**:
+1. User uploads a design screenshot or wireframe (PNG, JPG, etc.)
+2. Claude Sonnet Vision API analyzes the image
+3. Extracts patterns: layout structure, component types, visual context
+4. Returns AI-generated suggestions in three categories:
+   - **Context** (4 suggestions):
+     - 2 describing what is being built (e.g., "Dashboard with data cards")
+     - 1 for visual style/look and feel (e.g., "Modern minimalist design", "Clean corporate aesthetic")
+     - 1 for layout patterns (e.g., "Card-based grid layout", "Sidebar navigation")
+   - **Persona**: Ideal developer profile (2 suggestions, e.g., "React developer with TypeScript experience")
+   - **Tech Stack**: Recommended technologies (2-3 suggestions, e.g., "React", "Tailwind CSS")
+5. Interactive checkboxes allow users to select which suggestions to add
+6. Selected suggestions automatically populate corresponding card sections
 
-**Current State**:
-- The blue "Agent Analysis" info box displays mock suggestions in three categories: Context, Persona, and Tech Stack
-- Users can check/uncheck suggestion checkboxes to add/remove them from corresponding cards
-- Checked suggestions automatically populate:
-  - Context suggestions → Context textarea
-  - Persona suggestions → Persona textarea
-  - Tech Stack suggestions → Tech badges or custom constraints
-- Prevents duplicate entries when adding suggestions
-- The "AI Analysis Ready" badge shows analysis state (Idle → Analyzing → Complete)
-- Uses mock data for demonstration (4.5 second simulated analysis delay)
-- No actual image processing or AI calls occur
+**Technical Implementation**:
+- Server-side API route: `app/api/analyze-image/route.ts`
+- Uses `@anthropic-ai/sdk` with Claude Sonnet 4
+- Client converts images to base64 and sends to API
+- Structured JSON response matching `VisualContextSuggestions` interface
+- Loading states: Idle → Analyzing → Complete
+- Duplicate prevention when adding suggestions
+- Environment variable: `ANTHROPIC_API_KEY` (secured in `.env.local` and Vercel)
 
-**Implementation Required**:
-1. Create `app/api/analyze-image/route.ts`
-2. Integrate Vision-capable model (e.g., GPT-4 Vision, Gemini 1.5 Pro)
-3. Replace mock suggestions with real AI-generated analysis
-4. Parse and display real analysis results
+**Cost**: ~$0.01-0.02 per image analysis
 
 ---
 
 ## Implementation Priority
 
-For someone wanting to add AI features, recommended order:
+For someone wanting to add remaining AI features, recommended order:
 
 1. **Persona Presets** - No API needed, improves UX immediately
 2. **AI "Make it Specific"** - Single API route, high value
 3. **Smart Suggestions** - Can start with rule-based (no API)
-4. **Agent Analysis** - Most complex, requires Vision API
+4. ~~**Agent Analysis**~~ - ✅ **COMPLETED**
 
 ---
 
@@ -137,5 +142,7 @@ For someone wanting to add AI features, recommended order:
 
 - **Framework**: Next.js 14+ with App Router
 - **API Routes**: Use `app/api/` directory for server-side endpoints
-- **Environment Variables**: Store keys in `.env.local` (gitignored)
+- **AI Provider**: Anthropic (Claude Sonnet 4) for Vision API
+- **Environment Variables**: Store keys in `.env.local` (gitignored) and Vercel
 - **State Management**: React hooks in PromptBuilder component
+- **Image Processing**: Client-side base64 conversion, server-side API calls
