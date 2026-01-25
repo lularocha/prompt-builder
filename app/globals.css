@@ -42,4 +42,5 @@ body {
 
 input[type="checkbox"].checkbox-blue {
   border-color: #7fa9db;
+  background-color: #7fa9db;
 }
