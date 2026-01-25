@@ -40,6 +40,12 @@ body {
   animation: glow-orange-yellow 2s ease-in-out infinite;
 }
 
-.checkbox-blue {
+input[type="checkbox"].checkbox-blue {
   accent-color: #7fa9db;
+  background-color: transparent;
+}
+
+input[type="checkbox"].checkbox-blue:checked {
+  background-color: #7fa9db;
+  border-color: #7fa9db;
 }

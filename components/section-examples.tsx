@@ -158,7 +158,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.context.has(i)}
                                                 onChange={() => onToggleSuggestion('context', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
@@ -174,7 +174,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.persona.has(i)}
                                                 onChange={() => onToggleSuggestion('persona', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
@@ -190,7 +190,7 @@ export function SectionExamples({
                                                 type="checkbox"
                                                 checked={selectedSuggestions.techStack.has(i)}
                                                 onChange={() => onToggleSuggestion('techStack', i, s)}
-                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 bg-white/10 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
+                                                className="mt-0.5 w-4 h-4 rounded border-gray-600 focus:ring-primary/50 focus:ring-offset-0 cursor-pointer checkbox-blue"
                                             />
                                             <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">{s}</span>
                                         </label>
