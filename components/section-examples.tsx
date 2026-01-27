@@ -68,7 +68,7 @@ export function SectionExamples({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem] -mb-4">3. Examples</CardTitle>
+                <CardTitle className="text-[1.5rem] -mb-4">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
 

@@ -36,7 +36,7 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
     return (
         <Card className="min-h-[400px] resize-y overflow-auto flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-[1.5rem] tracking-tight">Generated Prompt</CardTitle>
+                <CardTitle className="text-[1.5rem] tracking-tight">Generated Prompts</CardTitle>
                 <div className="flex gap-2">
                     <Button
                         size="sm"
@@ -60,14 +60,14 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
             </CardHeader>
             <CardContent className="flex-1 overflow-hidden pt-4 space-y-3">
                 <Input
-                    placeholder="Name your prompt"
+                    placeholder="Name your Project"
                     value={promptTitle}
                     onChange={(e) => setPromptTitle(e.target.value)}
                     className="focus-visible:ring-primary/50"
                 />
                 <div className="h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-sm leading-relaxed text-white">
                     <pre className="whitespace-pre-wrap">
-{prompt ? `# ${promptTitle.trim() || "Generated Prompt"}\n\n${prompt}` : "Complete the sections on the left to generate your prompt..."}
+{prompt ? `# ${promptTitle.trim() || "Project Title"}\n\n${prompt}` : "Complete the sections on the left to generate your prompt..."}
                     </pre>
                 </div>
             </CardContent>

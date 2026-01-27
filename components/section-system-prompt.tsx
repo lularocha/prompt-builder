@@ -31,7 +31,7 @@ export function SectionSystemPrompt({
                         <span className="block text-sm text-muted-foreground">Define AI domain expertise, role, and perspective.</span>
                     </div>
                     <Textarea
-                        placeholder="You are a senior frontend developer specializing in React and TypeScript..."
+                        placeholder="Example: You are a senior frontend developer specializing in React and TypeScript..."
                         className="min-h-[100px] resize-none focus-visible:ring-primary/50"
                         value={persona}
                         onChange={(e) => onPersonaChange(e.target.value)}
@@ -45,7 +45,7 @@ export function SectionSystemPrompt({
                         <span className="block text-sm text-muted-foreground">Define behavioral rules, quality standards, things to always/never do.</span>
                     </div>
                     <Textarea
-                        placeholder="- Prioritize readability and accessibility&#10;- Handle errors gracefully&#10;- Follow WCAG 2.1 AA standards"
+                        placeholder="Example: - Prioritize readability and accessibility&#10;- Handle errors gracefully&#10;- Follow WCAG 2.1 AA standards"
                         className="min-h-[100px] resize-none focus-visible:ring-primary/50"
                         value={constraints}
                         onChange={(e) => onConstraintsChange(e.target.value)}
