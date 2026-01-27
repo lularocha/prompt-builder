@@ -27,7 +27,7 @@ export function SectionSystemPrompt({
                 {/* Persona */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground">Persona</h4>
+                        <h4 className="text-xl font-bold text-blue-300">Persona</h4>
                         <span className="block text-sm text-muted-foreground">Define AI domain expertise, role, and perspective.</span>
                     </div>
                     <Textarea
@@ -41,7 +41,7 @@ export function SectionSystemPrompt({
                 {/* Constraints */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground">Constraints</h4>
+                        <h4 className="text-xl font-bold text-blue-300">Constraints</h4>
                         <span className="block text-sm text-muted-foreground">Define behavioral rules, quality standards, things to always/never do.</span>
                     </div>
                     <Textarea

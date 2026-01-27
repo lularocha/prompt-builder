@@ -181,7 +181,7 @@ export function SectionExamples({
 
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground mt-12 block">Paste Code Snippets</h4>
+                        <h4 className="text-xl font-bold text-blue-300 mt-12 block">Paste Code Snippets</h4>
                         <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
                     </div>
                     <Textarea

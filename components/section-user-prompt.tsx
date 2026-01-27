@@ -31,7 +31,7 @@ export function SectionUserPrompt({
                 {/* Task */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground">Task</h4>
+                        <h4 className="text-xl font-bold text-blue-300">Task</h4>
                         <span className="block text-sm text-muted-foreground">Tell AI what you want to build.</span>
                     </div>
                     <Textarea
@@ -45,7 +45,7 @@ export function SectionUserPrompt({
                 {/* Requirements */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground">Requirements</h4>
+                        <h4 className="text-xl font-bold text-blue-300">Requirements</h4>
                         <span className="block text-sm text-muted-foreground">List functional specifications, features, and behavior.</span>
                     </div>
                     <Textarea
@@ -59,7 +59,7 @@ export function SectionUserPrompt({
                 {/* Tech */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-semibold text-muted-foreground">Tech</h4>
+                        <h4 className="text-xl font-bold text-blue-300">Tech</h4>
                         <span className="block text-sm text-muted-foreground">List stack, frameworks, libraries, APIs.</span>
                     </div>
                     <Textarea
