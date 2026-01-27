@@ -13,7 +13,9 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
     const [promptTitle, setPromptTitle] = useState("")
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(prompt)
+        const title = promptTitle.trim() || "Project Title"
+        const content = `# ${title}\n\n${prompt}`
+        navigator.clipboard.writeText(content)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
     }
