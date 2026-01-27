@@ -19,7 +19,9 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
     }
 
     const handleDownload = () => {
-        const blob = new Blob([prompt], { type: 'text/markdown' })
+        const title = promptTitle.trim() || "Project Title"
+        const content = `# ${title}\n\n${prompt}`
+        const blob = new Blob([content], { type: 'text/markdown' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
