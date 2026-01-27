@@ -21,7 +21,7 @@ export function SectionUserPrompt({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-xl">2. User Prompt</CardTitle>
+                <CardTitle className="text-[1.5rem]">2. User Prompt</CardTitle>
                 <CardDescription>
                     Define the specific task, requirements, and technologies.
                 </CardDescription>
@@ -31,7 +31,7 @@ export function SectionUserPrompt({
                 {/* Task */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Task</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground">Task</h4>
                         <span className="block text-sm text-muted-foreground">Tell AI what you want to build.</span>
                     </div>
                     <Textarea
@@ -45,7 +45,7 @@ export function SectionUserPrompt({
                 {/* Requirements */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Requirements</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground">Requirements</h4>
                         <span className="block text-sm text-muted-foreground">List functional specifications, features, and behavior.</span>
                     </div>
                     <Textarea
@@ -59,7 +59,7 @@ export function SectionUserPrompt({
                 {/* Tech */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Tech</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground">Tech</h4>
                         <span className="block text-sm text-muted-foreground">List stack, frameworks, libraries, APIs.</span>
                     </div>
                     <Textarea

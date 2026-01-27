@@ -68,7 +68,7 @@ export function SectionExamples({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-xl -mb-4">3. Examples</CardTitle>
+                <CardTitle className="text-[1.5rem] -mb-4">3. Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
 
@@ -159,7 +159,7 @@ export function SectionExamples({
                         <div className="space-y-4 pt-2">
                             {SUGGESTION_GROUPS.map(({ key, label }) => (
                                 <div key={key}>
-                                    <h5 className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-2">{label}</h5>
+                                    <h4 className="text-xl font-semibold text-blue-300 mb-2">{label}</h4>
                                     <div className="space-y-2">
                                         {visualContextSuggestions[key].map((s, i) => (
                                             <label key={i} className="flex items-start gap-2 cursor-pointer group">
@@ -181,7 +181,7 @@ export function SectionExamples({
 
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-12 block">Paste Code Snippets</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground mt-12 block">Paste Code Snippets</h4>
                         <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
                     </div>
                     <Textarea

@@ -17,7 +17,7 @@ export function SectionSystemPrompt({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-xl">1. System Prompt</CardTitle>
+                <CardTitle className="text-[1.5rem]">1. System Prompt</CardTitle>
                 <CardDescription>
                     Define reusable AI behavior: expertise and rules that apply across tasks.
                 </CardDescription>
@@ -27,7 +27,7 @@ export function SectionSystemPrompt({
                 {/* Persona */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Persona</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground">Persona</h4>
                         <span className="block text-sm text-muted-foreground">Define AI domain expertise, role, and perspective.</span>
                     </div>
                     <Textarea
@@ -41,7 +41,7 @@ export function SectionSystemPrompt({
                 {/* Constraints */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Constraints</span>
+                        <h4 className="text-xl font-semibold text-muted-foreground">Constraints</h4>
                         <span className="block text-sm text-muted-foreground">Define behavioral rules, quality standards, things to always/never do.</span>
                     </div>
                     <Textarea
