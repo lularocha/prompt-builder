@@ -212,9 +212,9 @@ export function PromptBuilder() {
 
         // Assemble final prompt
         const parts: string[] = []
-        parts.push(`# System Prompt\n\n${systemParts.join('\n\n')}`)
+        parts.push(`# 1. System Prompt\n\n${systemParts.join('\n\n')}`)
         parts.push(`---`)
-        parts.push(`# User Prompt\n\n${userParts.join('\n\n')}`)
+        parts.push(`# 2. User Prompt\n\n${userParts.join('\n\n')}`)
 
         return parts.join('\n\n')
     }, [persona, constraints, task, requirements, tech, uploadedFiles, customExamples])
