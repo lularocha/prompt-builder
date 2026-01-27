@@ -5,7 +5,7 @@
 ---
 
 ## Goal Description
-Build a premium, responsive web application that helps users generate high-quality AI prompts based on the "Context + Persona + Constraints + Examples" strategy.
+Build a premium, responsive web application that helps users generate high-quality AI prompts based on a 2-part strategy: System Prompt (Persona + Constraints) + User Prompt (Task + Requirements + Tech + Examples), with AI-powered image analysis capabilities.
 
 ## Implementation Summary
 
@@ -50,35 +50,41 @@ prompt-builder/
 
 | Component | Features |
 |-----------|----------|
-| `prompt-builder.tsx` | State management for all sections, prompt assembly, suggestion checkbox handlers, Vision API integration |
-| `section-persona.tsx` | Textarea + "Make it specific" button (mockup) |
-| `section-context.tsx` | Textarea + dictionary-based enhancement |
-| `section-constraints.tsx` | Tech stack badges + custom constraints |
+| `prompt-builder.tsx` | State management for all sections, numbered prompt assembly, suggestion checkbox handlers, Vision API integration |
+| `section-system-prompt.tsx` | Persona and Constraints inputs for system-level instructions |
+| `section-user-prompt.tsx` | Task, Requirements, and Tech inputs for user-level instructions |
 | `section-examples.tsx` | File upload + code snippets + Agent Analysis UI with real Vision API integration |
-| `generated-prompt.tsx` | Formatted output + copy/download buttons |
-| `api/analyze-image/route.ts` | Server-side Vision API endpoint using Claude Sonnet 4 |
+| `generated-prompt.tsx` | Project title input + formatted output with numbering + copy/download as markdown |
+| `api/analyze-image/route.ts` | Server-side Vision API endpoint using Claude Sonnet 4 with comprehensive suggestion generation |
 
 ---
 
 ## What Was Delivered
 
 - Premium dark theme with glassmorphism effects
-- 4-section prompt building interface
+- 2-part prompt building interface (System + User Prompt)
+- Numbered prompt structure ("1. System Prompt", "2. User Prompt")
+- Project title feature with automatic inclusion in exports
 - Real-time prompt generation
-- Copy to clipboard and download as .txt
+- Copy to clipboard and download as markdown (.md)
 - File upload (drag & drop)
-- Tech stack selector with presets
 - Responsive design (mobile-friendly)
 - **AI-Powered Agent Analysis (Vision API)**:
   - Real-time image analysis using Claude Sonnet 4 Vision
-  - AI-generated suggestions grouped by Context, Persona, and Tech Stack
-  - **Context suggestions (4 total)**:
-    - 2 describing what is being built
-    - 1 for visual style/look and feel (modern, clean, bold, etc.)
-    - 1 for layout patterns observed
+  - AI-generated suggestions grouped into 5 categories (15 total suggestions):
+    - **Persona**: 2 suggestions for ideal developer profile
+    - **Constraints**: 3 suggestions for quality standards and behavioral rules
+    - **Task**: 2 suggestions describing what is being built
+    - **Requirements**: 5 comprehensive suggestions:
+      - 2 describing specific features visible in the design
+      - 1 describing visual style/look and feel
+      - 1 describing layout patterns observed
+      - 1 describing interactions or behavior
+    - **Tech**: 3 specific technology recommendations
   - Checkbox selection for each suggestion
-  - Auto-population of corresponding cards when checked
-  - Duplicate prevention when adding suggestions
-  - Automatic removal from cards when unchecked
+  - Auto-population of corresponding sections when checked
+  - Smart duplicate prevention when adding suggestions
+  - Automatic removal from sections when unchecked
   - Server-side API integration with secure key management
   - Loading states and error handling
+  - Concise suggestions (under 80 characters each)

@@ -2,7 +2,14 @@
 
 This document tracks the implementation status and future roadmap for the Prompt Builder application.
 
-**Latest update**: Enhanced Agent Analysis to provide 4 context suggestions (up from 2), now including dedicated suggestions for visual style/look and feel and layout patterns.
+**Latest update**: Enhanced Agent Analysis with comprehensive suggestion system:
+- Persona: 2 suggestions for developer profile
+- Constraints: 3 suggestions for quality standards
+- Task: 2 suggestions describing what's being built
+- Requirements: 5 suggestions (2 features + 1 visual style + 1 layout + 1 interactions)
+- Tech: 3 technology recommendations
+
+Also added project title feature with numbered prompt structure (1. System Prompt, 2. User Prompt).
 
 ---
 
@@ -10,18 +17,25 @@ This document tracks the implementation status and future roadmap for the Prompt
 
 ### Completed (MVP)
 - **Premium UI**: Glassmorphism design, dark theme, responsive layout
-- **4-Section Prompt Strategy**: Context + Persona + Constraints & Tech + Examples
-- **Prompt Generation**: Real-time assembly of inputs into formatted prompt
-- **Copy & Download**: Export generated prompts as text
+- **2-Part Prompt Strategy**: System Prompt (Persona + Constraints) + User Prompt (Task + Requirements + Tech + Examples)
+- **Numbered Prompt Structure**: Generated prompts organized as "1. System Prompt" and "2. User Prompt"
+- **Project Title**: Custom naming with automatic inclusion in exports and display
+- **Prompt Generation**: Real-time assembly of inputs into formatted markdown
+- **Copy & Download**: Export generated prompts as markdown with project title
 - **File Upload**: Drag & drop zone for reference files (images, PDFs, code)
 - **Code Snippets**: Textarea for pasting example code
-- **Tech Stack Selector**: Preset options and custom constraint badges
-- **Basic "Make it Specific" (Context)**: Dictionary-based keyword enhancement
-- **Agent Analysis (Vision API)**: AI-powered image analysis with Claude Sonnet Vision
+- **Agent Analysis (Vision API)**: AI-powered image analysis with Claude Sonnet 4
   - Upload design screenshots or wireframes
-  - Automatic extraction of visual patterns (layout, components, context)
-  - Interactive suggestion checkboxes for Context, Persona, and Tech Stack
-  - One-click population of corresponding card sections
+  - Automatic extraction of visual patterns using Claude Vision
+  - Comprehensive suggestion system:
+    - **Persona**: 2 suggestions for ideal developer profile
+    - **Constraints**: 3 suggestions for behavioral rules and quality standards
+    - **Task**: 2 suggestions describing what is being built
+    - **Requirements**: 5 suggestions covering features (2), visual style (1), layout patterns (1), and interactions (1)
+    - **Tech**: 3 specific technology recommendations
+  - Interactive checkboxes for each suggestion
+  - One-click population of corresponding sections
+  - Automatic duplicate prevention
   - Real-time analysis status badges (Idle → Analyzing → Complete)
 
 ### UI Placeholders (Not Functional)
@@ -102,26 +116,31 @@ These elements exist in the UI but have no backend implementation:
 
 **What It Does**:
 1. User uploads a design screenshot or wireframe (PNG, JPG, etc.)
-2. Claude Sonnet Vision API analyzes the image
-3. Extracts patterns: layout structure, component types, visual context
-4. Returns AI-generated suggestions in three categories:
-   - **Context** (4 suggestions):
-     - 2 describing what is being built (e.g., "Dashboard with data cards")
-     - 1 for visual style/look and feel (e.g., "Modern minimalist design", "Clean corporate aesthetic")
-     - 1 for layout patterns (e.g., "Card-based grid layout", "Sidebar navigation")
-   - **Persona**: Ideal developer profile (2 suggestions, e.g., "React developer with TypeScript experience")
-   - **Tech Stack**: Recommended technologies (2-3 suggestions, e.g., "React", "Tailwind CSS")
+2. Claude Sonnet 4 Vision API analyzes the image
+3. Extracts patterns: layout structure, component types, visual context, interactions
+4. Returns AI-generated suggestions in five categories:
+   - **Persona**: 2 suggestions for ideal developer profile (e.g., "Senior frontend developer with React and data visualization experience")
+   - **Constraints**: 3 suggestions for behavioral rules or quality standards (e.g., "Follow accessibility standards for data-heavy interfaces")
+   - **Task**: 2 suggestions describing what is being built (e.g., "Build a real-time analytics dashboard")
+   - **Requirements**: 5 comprehensive suggestions:
+     - 2 describing specific features visible in the design (e.g., "Display metrics in card grid layout")
+     - 1 describing the visual style/look and feel (e.g., "Modern minimalist design with subtle shadows")
+     - 1 describing layout patterns observed (e.g., "Sidebar navigation with main content area")
+     - 1 describing interactions or behavior (e.g., "Hover states on interactive elements")
+   - **Tech**: 3 specific technology recommendations (e.g., "React", "Tailwind CSS", "Chart.js")
 5. Interactive checkboxes allow users to select which suggestions to add
-6. Selected suggestions automatically populate corresponding card sections
+6. Selected suggestions automatically populate corresponding sections
+7. Automatic duplicate prevention and removal when unchecked
 
 **Technical Implementation**:
 - Server-side API route: `app/api/analyze-image/route.ts`
-- Uses `@anthropic-ai/sdk` with Claude Sonnet 4
+- Uses `@anthropic-ai/sdk` with Claude Sonnet 4 (model: claude-sonnet-4-20250514)
 - Client converts images to base64 and sends to API
-- Structured JSON response matching `VisualContextSuggestions` interface
+- Structured JSON response with 15 total suggestions across 5 categories
 - Loading states: Idle → Analyzing → Complete
-- Duplicate prevention when adding suggestions
+- Smart duplicate prevention when adding suggestions
 - Environment variable: `ANTHROPIC_API_KEY` (secured in `.env.local` and Vercel)
+- Concise suggestions (under 80 characters each)
 
 **Cost**: ~$0.01-0.02 per image analysis
 
