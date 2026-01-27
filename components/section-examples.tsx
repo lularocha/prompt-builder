@@ -186,7 +186,7 @@ export function SectionExamples({
                     </div>
                     <Textarea
                         placeholder="Paste your code or text examples here..."
-                        className="min-h-[120px] resize-none focus-visible:ring-primary/50 font-mono text-xs"
+                        className="min-h-[120px] resize-y focus-visible:ring-primary/50 font-mono text-xs"
                         value={customExamples}
                         onChange={(e) => onCustomExamplesChange(e.target.value)}
                     />

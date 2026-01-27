@@ -114,6 +114,10 @@ export function PromptBuilder() {
             tech: setTech,
         }
 
+        // Categories that should be formatted as list items
+        const listCategories: SuggestionCategory[] = ['constraints', 'requirements', 'tech']
+        const shouldFormatAsList = listCategories.includes(category)
+
         setSelectedSuggestions(prev => {
             const newSet = new Set(prev[category])
             const isSelected = newSet.has(index)
@@ -122,7 +126,12 @@ export function PromptBuilder() {
             if (isSelected) {
                 newSet.delete(index)
                 setter(prevVal => {
-                    const lines = prevVal.split('\n').filter(line => line.trim() !== suggestion.trim())
+                    // Remove the suggestion, handling both with and without "- " prefix
+                    const lines = prevVal.split('\n').filter(line => {
+                        const trimmedLine = line.trim()
+                        const withoutPrefix = trimmedLine.replace(/^-\s*/, '')
+                        return withoutPrefix !== suggestion.trim() && trimmedLine !== suggestion.trim()
+                    })
                     return lines.join('\n')
                 })
             } else {
@@ -130,10 +139,20 @@ export function PromptBuilder() {
                 setter(prevVal => {
                     const trimmed = prevVal.trim()
                     const lines = trimmed.split('\n').map(l => l.trim())
-                    if (lines.includes(suggestion.trim())) {
+
+                    // Check if suggestion already exists (with or without prefix)
+                    const suggestionExists = lines.some(line => {
+                        const withoutPrefix = line.replace(/^-\s*/, '')
+                        return withoutPrefix === suggestion.trim() || line === suggestion.trim()
+                    })
+
+                    if (suggestionExists) {
                         return trimmed
                     }
-                    return trimmed ? `${trimmed}\n${suggestion}` : suggestion
+
+                    // Format as list item if needed
+                    const formattedSuggestion = shouldFormatAsList ? `- ${suggestion}` : suggestion
+                    return trimmed ? `${trimmed}\n${formattedSuggestion}` : formattedSuggestion
                 })
             }
 

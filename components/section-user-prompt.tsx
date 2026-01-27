@@ -36,7 +36,7 @@ export function SectionUserPrompt({
                     </div>
                     <Textarea
                         placeholder="Example: Build a responsive admin dashboard for a SaaS platform..."
-                        className="min-h-[100px] resize-none focus-visible:ring-primary/50"
+                        className="min-h-[100px] resize-y focus-visible:ring-primary/50"
                         value={task}
                         onChange={(e) => onTaskChange(e.target.value)}
                     />
@@ -49,8 +49,8 @@ export function SectionUserPrompt({
                         <span className="block text-sm text-muted-foreground">List functional specifications, features, and behavior.</span>
                     </div>
                     <Textarea
-                        placeholder="Example: - Display real-time analytics&#10;- User authentication with role-based access&#10;- Dark mode support"
-                        className="min-h-[100px] resize-none focus-visible:ring-primary/50"
+                        placeholder={`Examples:\n- Display real-time analytics\n- User authentication with role-based access\n- Dark mode support`}
+                        className="min-h-[100px] resize-y focus-visible:ring-primary/50"
                         value={requirements}
                         onChange={(e) => onRequirementsChange(e.target.value)}
                     />
@@ -63,8 +63,8 @@ export function SectionUserPrompt({
                         <span className="block text-sm text-muted-foreground">List stack, frameworks, libraries, APIs.</span>
                     </div>
                     <Textarea
-                        placeholder="Example: React, Next.js, Tailwind CSS, Prisma, PostgreSQL"
-                        className="min-h-[80px] resize-none focus-visible:ring-primary/50"
+                        placeholder={`Examples:\n- React, Next.js\n- Tailwind CSS\n- Prisma, PostgreSQL`}
+                        className="min-h-[100px] resize-y focus-visible:ring-primary/50"
                         value={tech}
                         onChange={(e) => onTechChange(e.target.value)}
                     />

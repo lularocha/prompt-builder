@@ -32,7 +32,7 @@ export function SectionSystemPrompt({
                     </div>
                     <Textarea
                         placeholder="Example: You are a senior frontend developer specializing in React and TypeScript..."
-                        className="min-h-[100px] resize-none focus-visible:ring-primary/50"
+                        className="min-h-[100px] resize-y focus-visible:ring-primary/50"
                         value={persona}
                         onChange={(e) => onPersonaChange(e.target.value)}
                     />
@@ -46,7 +46,7 @@ export function SectionSystemPrompt({
                     </div>
                     <Textarea
                         placeholder={`Examples:\n- Prioritize readability and accessibility\n- Handle errors gracefully\n- Follow WCAG 2.1 AA standards`}
-                        className="min-h-[100px] resize-none focus-visible:ring-primary/50"
+                        className="min-h-[100px] resize-y focus-visible:ring-primary/50"
                         value={constraints}
                         onChange={(e) => onConstraintsChange(e.target.value)}
                     />
