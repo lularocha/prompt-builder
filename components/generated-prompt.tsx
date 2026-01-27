@@ -25,7 +25,7 @@ export function GeneratedPrompt({ prompt }: GeneratedPromptProps) {
         a.href = url
         const filename = promptTitle.trim()
             ? `${promptTitle.trim().replace(/[^a-z0-9]/gi, '-').toLowerCase()}.md`
-            : 'generated-prompt.md'
+            : 'generated-prompts.md'
         a.download = filename
         document.body.appendChild(a)
         a.click()
