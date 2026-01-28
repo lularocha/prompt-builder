@@ -226,7 +226,7 @@ export function PromptBuilder() {
             {/* Left Column: Input Sections */}
             <div className="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
 
-                <h2 className="text-[1.75rem] font-bold tracking-tight leading-none mb-2">Define what you want to build</h2>
+                <h2 className="text-[1.625rem] md:text-[1.75rem] font-bold tracking-tight leading-none mb-2">Define what you want to build</h2>
 
                 <SectionSystemPrompt
                     persona={persona}
@@ -261,7 +261,7 @@ export function PromptBuilder() {
             {/* Right Column: Preview */}
             <div className="lg:sticky lg:top-8 h-fit space-y-6">
 
-                <h2 className="text-[1.75rem] font-bold tracking-tight leading-none mb-2">Get your project's prompts</h2>
+                <h2 className="text-[1.625rem] md:text-[1.75rem] font-bold tracking-tight leading-none mb-2">Get your project's prompts</h2>
 
                 <GeneratedPrompt prompt={finalPrompt} />
             </div>
