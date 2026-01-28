@@ -2,7 +2,7 @@ import { PromptBuilder } from "@/components/prompt-builder";
 
 export default function Home() {
     return (
-        <main className="flex min-h-screen flex-col items-center p-6 md:p-12 lg:pt-12 max-w-[1600px] mx-auto">
+        <main className="flex min-h-screen flex-col items-center p-5 md:p-12 lg:pt-12 max-w-[1600px] mx-auto">
             <div className="w-full max-w-7xl z-10 flex flex-col gap-12">
 
                 {/* Header */}

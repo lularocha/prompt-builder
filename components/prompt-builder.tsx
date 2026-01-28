@@ -224,7 +224,7 @@ export function PromptBuilder() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
 
             {/* Left Column: Input Sections */}
-            <div className="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-6 overflow-y-auto custom-scrollbar">
 
                 <h2 className="text-[1.625rem] md:text-[1.75rem] font-bold tracking-tight leading-none mb-2">Define what you want to build</h2>
 
