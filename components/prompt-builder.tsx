@@ -221,12 +221,12 @@ export function PromptBuilder() {
 
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full">
 
             {/* Left Column: Input Sections */}
             <div className="space-y-6 overflow-y-auto custom-scrollbar">
 
-                <h2 className="text-[1.625rem] md:text-[1.75rem] font-bold tracking-tight leading-none mb-2">Define what you want to build</h2>
+                <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">Define what you want to build</h2>
 
                 <SectionSystemPrompt
                     persona={persona}
@@ -261,7 +261,7 @@ export function PromptBuilder() {
             {/* Right Column: Preview */}
             <div className="lg:sticky lg:top-8 h-fit space-y-6">
 
-                <h2 className="text-[1.625rem] md:text-[1.75rem] font-bold tracking-tight leading-none mb-2">Get your project's prompts</h2>
+                <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">Get your project's prompts</h2>
 
                 <GeneratedPrompt prompt={finalPrompt} />
             </div>

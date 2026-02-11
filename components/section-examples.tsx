@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Textarea } from "./ui/textarea"
 import { Badge } from "./ui/badge"
 import { Upload, FileText, BrainCircuit, X } from "lucide-react"
@@ -68,7 +68,10 @@ export function SectionExamples({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem] -mb-4">Examples</CardTitle>
+                <CardTitle className="text-[1.5rem]">Examples</CardTitle>
+                <CardDescription className="pb-8">
+                    Provide reference files and code to guide AI understanding.
+                </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
 
@@ -117,7 +120,7 @@ export function SectionExamples({
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <BrainCircuit className="w-5 h-5 text-blue-400" />
-                            <h4 className="text-base font-bold text-blue-300">Agent Analysis</h4>
+                            <h4 className="text-base font-bold text-blue-400">Agent Analysis</h4>
                         </div>
                         {analysisStatus === 'idle' && (
                             <Badge variant="secondary" className="bg-gray-600 text-white border-0 text-sm px-3.5 py-1">
@@ -162,7 +165,7 @@ export function SectionExamples({
                                 <h3 className="text-[1rem] font-bold text-white">1. System Prompt</h3>
                                 {SUGGESTION_GROUPS.filter(({ key }) => key === 'persona' || key === 'constraints').map(({ key, label }) => (
                                     <div key={key}>
-                                        <h4 className="text-xl font-semibold text-blue-300 mb-2">{label}</h4>
+                                        <h4 className="text-xl font-semibold text-blue-400 mb-2">{label}</h4>
                                         <div className="space-y-2">
                                             {visualContextSuggestions[key].map((s, i) => (
                                                 <label key={i} className="flex items-start gap-2 cursor-pointer group">
@@ -188,7 +191,7 @@ export function SectionExamples({
                                 <h3 className="text-[1rem] font-bold text-white">2. User Prompt</h3>
                                 {SUGGESTION_GROUPS.filter(({ key }) => key === 'task' || key === 'requirements' || key === 'tech').map(({ key, label }) => (
                                     <div key={key}>
-                                        <h4 className="text-xl font-semibold text-blue-300 mb-2">{label}</h4>
+                                        <h4 className="text-xl font-semibold text-blue-400 mb-2">{label}</h4>
                                         <div className="space-y-2">
                                             {visualContextSuggestions[key].map((s, i) => (
                                                 <label key={i} className="flex items-start gap-2 cursor-pointer group">
@@ -211,7 +214,7 @@ export function SectionExamples({
 
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-bold text-blue-300 mt-12 block">Paste Code Snippets</h4>
+                        <h4 className="text-xl font-bold text-blue-400 mt-12 block">Paste Code Snippets</h4>
                         <span className="block text-sm text-muted-foreground">Demo usage or existing code patterns.</span>
                     </div>
                     <Textarea

@@ -22,7 +22,7 @@ export function SectionUserPrompt({
         <Card>
             <CardHeader>
                 <CardTitle className="text-[1.5rem]">2. User Prompt</CardTitle>
-                <CardDescription>
+                <CardDescription className="pb-8">
                     Define the specific task, requirements, and technologies.
                 </CardDescription>
             </CardHeader>
@@ -31,7 +31,7 @@ export function SectionUserPrompt({
                 {/* Task */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-bold text-blue-300">Task</h4>
+                        <h4 className="text-xl font-bold text-blue-400">Task</h4>
                         <span className="block text-sm text-muted-foreground">Tell AI what you want to build.</span>
                     </div>
                     <Textarea
@@ -45,7 +45,7 @@ export function SectionUserPrompt({
                 {/* Requirements */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-bold text-blue-300">Requirements</h4>
+                        <h4 className="text-xl font-bold text-blue-400">Requirements</h4>
                         <span className="block text-sm text-muted-foreground">List functional specifications, features, and behavior.</span>
                     </div>
                     <Textarea
@@ -59,7 +59,7 @@ export function SectionUserPrompt({
                 {/* Tech */}
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
-                        <h4 className="text-xl font-bold text-blue-300">Tech</h4>
+                        <h4 className="text-xl font-bold text-blue-400">Tech</h4>
                         <span className="block text-sm text-muted-foreground">List stack, frameworks, libraries, APIs.</span>
                     </div>
                     <Textarea
