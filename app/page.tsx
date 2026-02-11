@@ -14,7 +14,7 @@ export default function Home() {
                         Create high-quality AI prompts with (System Prompt + User Prompt).
                     </p>
                     <p className="text-sm text-[#ffaa00] !mt-2">
-                        Latest update: January 27, 2026
+                        Last update: February 11, 2026
                     </p>
                 </div>
 
