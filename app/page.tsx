@@ -7,7 +7,7 @@ export default function Home() {
 
                 {/* Header */}
                 <div className="text-left space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-white">
+                    <h1 className="text-4xl md:text-6xl font-semibold md:font-normal tracking-tighter text-white">
                         Prompt Builder
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
