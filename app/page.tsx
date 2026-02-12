@@ -1,4 +1,5 @@
 import { PromptBuilder } from "@/components/prompt-builder";
+import { InfoModal } from "@/components/info-modal";
 
 export default function Home() {
     return (
@@ -7,9 +8,12 @@ export default function Home() {
 
                 {/* Header */}
                 <div className="text-left space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-semibold md:font-normal tracking-tighter text-white">
-                        Prompt Builder
-                    </h1>
+                    <div className="flex justify-between items-start">
+                        <h1 className="text-4xl md:text-6xl font-semibold md:font-normal tracking-tighter text-white">
+                            Prompt Builder
+                        </h1>
+                        <InfoModal />
+                    </div>
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
                         Create high-quality AI prompts with (System Prompt + User Prompt).
                     </p>
