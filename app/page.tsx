@@ -18,7 +18,7 @@ export default function Home() {
                         Create high-quality AI prompts with (System Prompt + User Prompt).
                     </p>
                     <p className="text-sm text-[#ffaa00] !mt-2">
-                        Last update: February 11, 2026
+                        Last update: February 12, 2026
                     </p>
                 </div>
 
@@ -26,7 +26,7 @@ export default function Home() {
                 <PromptBuilder />
 
                 {/* Footer */}
-                <footer className="text-center text-sm text-muted-foreground mt-4 pb-8 space-y-2">
+                <footer className="text-left text-sm text-muted-foreground mt-4 pb-8 space-y-2">
                     <div className="font-bold">Created by Lula Rocha + Claude</div>
                     <div>
                         Claude has an AI powered{" "}
