@@ -15,7 +15,7 @@ export default function Home() {
                         <InfoModal />
                     </div>
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
-                        Create high-quality AI System and User Prompts.
+                        Create high-quality System and User Prompts with AI.
                     </p>
                 </div>
 
