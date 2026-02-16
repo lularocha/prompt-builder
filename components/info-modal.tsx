@@ -68,8 +68,11 @@ export function InfoModal() {
 
                             <div>
                                 <h3 className="text-lg font-semibold mb-2 text-orange-500">Learn by doing</h3>
+                                <p className="mb-3">
+                                    There are many prompt techniques out there, and the best way to learn is to experiment yourself.
+                                </p>
                                 <p>
-                                    There are many prompt techniques out there, and the best way to learn is to experiment yourself. Note that CLAUDE.md files are commonly used to create both System and User Prompts.
+                                    Note that CLAUDE.md files are commonly used to create both System and User Prompts.
                                 </p>
                             </div>
 
