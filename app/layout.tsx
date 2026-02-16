@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Prompt Builder",
-    description: "Create high-quality AI prompts with System Prompt + User Prompt.",
+    description: "Create high-quality AI System and User Prompts.",
     icons: {
         icon: "/favicon-pb.png",
     },
