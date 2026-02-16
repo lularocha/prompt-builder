@@ -17,9 +17,6 @@ export default function Home() {
                     <p className="text-lg text-muted-foreground max-w-[1200px]">
                         Create high-quality AI prompts with (System Prompt + User Prompt).
                     </p>
-                    <p className="text-sm text-[#ffaa00] !mt-2">
-                        Last update: February 12, 2026
-                    </p>
                 </div>
 
                 {/* Builder Interface */}
@@ -39,6 +36,9 @@ export default function Home() {
                             Prompt Tool
                         </a>
                         {" "}in the Developer Platform (requires API account with credits).
+                    </div>
+                    <div className="text-[#ffaa00]">
+                        Last update: February 15, 2026
                     </div>
                 </footer>
 
