@@ -53,21 +53,21 @@ export function InfoModal() {
 
                         <div className="space-y-4">
                             <div>
-                                <h3 className="text-lg font-semibold mb-2">System Prompt</h3>
+                                <h3 className="text-lg font-semibold mb-2 text-orange-500">System Prompt</h3>
                                 <p>
                                     Define reusable AI behavior: expertise and rules that apply across tasks.
                                 </p>
                             </div>
 
                             <div>
-                                <h3 className="text-lg font-semibold mb-2">User Prompt</h3>
+                                <h3 className="text-lg font-semibold mb-2 text-orange-500">User Prompt</h3>
                                 <p>
                                     Define the specific task, requirements, and technologies.
                                 </p>
                             </div>
 
                             <div>
-                                <h3 className="text-lg font-semibold mb-2">Learn by doing</h3>
+                                <h3 className="text-lg font-semibold mb-2 text-orange-500">Learn by doing</h3>
                                 <p>
                                     There are many prompt techniques out there, and the best way to learn is to experiment yourself. Note that CLAUDE.md files are commonly used to create both System and User Prompts.
                                 </p>
