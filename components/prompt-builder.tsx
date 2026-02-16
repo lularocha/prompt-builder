@@ -228,6 +228,18 @@ export function PromptBuilder() {
 
                 <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">Define what you want to build</h2>
 
+                <SectionExamples
+                    uploadedFiles={uploadedFiles}
+                    onFilesUpload={handleFilesUpload}
+                    onFileRemove={handleFileRemove}
+                    customExamples={customExamples}
+                    onCustomExamplesChange={setCustomExamples}
+                    analysisStatus={analysisStatus}
+                    visualContextSuggestions={visualContextSuggestions}
+                    selectedSuggestions={selectedSuggestions}
+                    onToggleSuggestion={handleToggleSuggestion}
+                />
+
                 <SectionSystemPrompt
                     persona={persona}
                     onPersonaChange={setPersona}
@@ -242,18 +254,6 @@ export function PromptBuilder() {
                     onRequirementsChange={setRequirements}
                     tech={tech}
                     onTechChange={setTech}
-                />
-
-                <SectionExamples
-                    uploadedFiles={uploadedFiles}
-                    onFilesUpload={handleFilesUpload}
-                    onFileRemove={handleFileRemove}
-                    customExamples={customExamples}
-                    onCustomExamplesChange={setCustomExamples}
-                    analysisStatus={analysisStatus}
-                    visualContextSuggestions={visualContextSuggestions}
-                    selectedSuggestions={selectedSuggestions}
-                    onToggleSuggestion={handleToggleSuggestion}
                 />
 
             </div>

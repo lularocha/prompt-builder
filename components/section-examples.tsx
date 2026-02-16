@@ -143,8 +143,8 @@ export function SectionExamples({
                     </div>
                     {!visualContextSuggestions && (
                         <>
-                            <div className="text-sm text-white">
-                                Upload examples to have the agent extract patterns and suggest improvements for Persona, Constraints, Task, Requirements, and Tech.
+                            <div className="text-sm text-white font-bold">
+                                Upload examples to have the agent extract patterns and make suggestions for Persona, Constraints, Task, Requirements, and Tech fields below.
                             </div>
                             <div className="text-sm text-muted-foreground italic">
                                 Suggestions will appear here once AI analysis is completed.
