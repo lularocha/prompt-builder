@@ -52,21 +52,43 @@ export function InfoModal() {
                         </div>
 
                         <div className="space-y-4">
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">System Prompt</h3>
+                                <p>
+                                    Define reusable AI behavior: expertise and rules that apply across tasks.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">User Prompt</h3>
+                                <p>
+                                    Define the specific task, requirements, and technologies.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">Learn by doing</h3>
+                                <p>
+                                    There are many prompt techniques out there, and the best way to learn is to experiment yourself. Note that CLAUDE.md files are commonly used to create both System and User Prompts.
+                                </p>
+                            </div>
+
                             <p>
-                                There are many prompt techniques out there, and the best way to learn is to experiment yourself. Note that CLAUDE.md files are commonly used to create both System and User Prompts.
+                                You can learn more about prompting in my Claude Code Guide website. Check out:
                             </p>
 
                             <p>
-                                You can learn more about prompting in my{" "}
                                 <a
-                                    href="https://ccguide.vercel.app"
+                                    href="https://ccguide.vercel.app/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-500 hover:text-blue-400 hover:underline"
                                 >
                                     Claude Code Guide
                                 </a>
-                                {" "}website. Check out the{" "}
+                            </p>
+
+                            <p>
                                 <a
                                     href="https://ccguide.vercel.app/#advanced/claude-md-guide.md"
                                     target="_blank"
@@ -75,7 +97,9 @@ export function InfoModal() {
                                 >
                                     CLAUDE.md
                                 </a>
-                                {" "}and{" "}
+                            </p>
+
+                            <p>
                                 <a
                                     href="https://ccguide.vercel.app/#reference/prompts.md"
                                     target="_blank"
@@ -84,7 +108,6 @@ export function InfoModal() {
                                 >
                                     Prompts for Beginners
                                 </a>
-                                {" "}pages.
                             </p>
                         </div>
                     </div>

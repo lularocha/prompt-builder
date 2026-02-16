@@ -17,10 +17,7 @@ export function SectionSystemPrompt({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem]">1. System Prompt</CardTitle>
-                <CardDescription className="pb-8">
-                    Define reusable AI behavior: expertise and rules that apply across tasks.
-                </CardDescription>
+                <CardTitle className="text-[1.5rem] pb-4">1. System Prompt</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
 

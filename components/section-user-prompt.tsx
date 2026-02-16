@@ -21,10 +21,7 @@ export function SectionUserPrompt({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem]">2. User Prompt</CardTitle>
-                <CardDescription className="pb-8">
-                    Define the specific task, requirements, and technologies.
-                </CardDescription>
+                <CardTitle className="text-[1.5rem] pb-4">2. User Prompt</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
 
