@@ -26,7 +26,7 @@ export function InfoModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-[#000085] text-white text-lg px-4 py-1 rounded-md transition-colors md:hover:bg-white md:hover:text-[#000085]"
+        className="bg-[#000085] text-white text-sm font-semibold px-4 py-1 rounded-full transition-colors md:hover:bg-white md:hover:text-[#000085]"
       >
         Learn +
       </button>
@@ -58,7 +58,8 @@ export function InfoModal() {
                 </h3>
                 <p>
                   Define reusable AI behavior: expertise and rules that apply
-                  across tasks.
+                  across tasks. System Prompts can also be done with CLAUDE.md
+                  or AGENTS.md files.
                 </p>
               </div>
 
@@ -66,33 +67,21 @@ export function InfoModal() {
                 <h3 className="text-lg font-semibold mb-2 text-orange-500 pt-2">
                   User Prompt
                 </h3>
-                <p>Define the specific task, requirements, and technologies.</p>
+                <p>
+                  Define the specific task, requirements, and technologies. User
+                  Prompts can also be done with PDR.md files.
+                </p>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold mb-2 text-orange-500 pt-2">
                   Learn by doing
                 </h3>
-                <p className="mb-3">
-                  There are many prompt techniques out there, and the best way
-                  to learn is to experiment yourself.
-                </p>
                 <p>
-                  Note that CLAUDE.md files are commonly used to create both
-                  System and User Prompts.
+                  There are many prompt techniques out there, do your own
+                  research and experiment yourself.
                 </p>
               </div>
-
-              <p>
-                <a
-                  href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 hover:underline"
-                >
-                  Claude Prompting Best Practices
-                </a>
-              </p>
             </div>
           </div>
         </div>
