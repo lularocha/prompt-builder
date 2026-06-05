@@ -26,7 +26,7 @@ export function InfoModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-[#000085] text-white text-sm font-semibold px-4 py-1 rounded-full transition-colors md:hover:bg-white md:hover:text-[#000085]"
+        className="bg-[#f80] text-white text-sm font-semibold px-4 py-1 rounded-full transition-colors md:hover:bg-white md:hover:text-[#f80]"
       >
         Learn +
       </button>

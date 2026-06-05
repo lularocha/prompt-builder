@@ -7,7 +7,9 @@ export default function Home() {
       <div className="w-full max-w-7xl z-10 flex flex-col gap-12">
         {/* Header */}
         <div className="text-left space-y-4">
-          <p className="text-[14px]" style={{ color: "#f80" }}>sugiro.ai</p>
+          <p className="text-[16px]" style={{ color: "#f80", fontWeight: 500 }}>
+            sugiro.ai
+          </p>
           <div className="flex justify-between items-start !mt-0">
             <h1 className="text-4xl md:text-6xl font-semibold md:font-normal tracking-tighter text-white">
               Prompt Builder
