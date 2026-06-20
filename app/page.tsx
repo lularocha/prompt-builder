@@ -12,7 +12,7 @@ export default function Home() {
       {/* Header */}
       <div className="text-left">
         <p
-          className="mb-2 text-[16px]"
+          className="md:mb-2 text-[16px]"
           style={{ color: "#f80", fontWeight: 500 }}
         >
           sugiro.ai
