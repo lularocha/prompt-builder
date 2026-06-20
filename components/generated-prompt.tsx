@@ -82,7 +82,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                         onChange={(e) => onPromptChange(e.target.value)}
                         spellCheck={false}
                         placeholder={isGenerating ? "" : "Your AI-generated prompt will appear here. You can edit it freely once it's generated."}
-                        className="h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-sm leading-relaxed text-white placeholder:text-white/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                        className="absolute inset-0 h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-sm leading-relaxed text-white placeholder:text-white/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                     />
                     {isGenerating && (
                         <div className="absolute inset-0 flex items-center justify-center rounded-md bg-[#000085]/80 text-white">
