@@ -1,48 +1,54 @@
-# Implementation Plan (Completed)
+# Implementation Plan (Current State)
 
-> **Status**: This plan has been fully implemented. Kept for historical reference.
+> **Status**: Reflects the app after the 2026 redesign to an AI-generated,
+> provider-agnostic prompt builder with internationalization.
 
 ---
 
 ## Goal Description
-Build a premium, responsive web application that helps users generate high-quality AI prompts based on a 2-part strategy: System Prompt (Persona + Constraints) + User Prompt (Task + Requirements + Tech + Examples), with AI-powered image analysis capabilities.
+A focused web app where the user describes what they want to build (and/or
+uploads a screenshot/mockup or pastes code), and AI **writes a ready-to-use
+prompt** for them. The generated prompt appears in an editable panel on the
+right. The LLM backend is provider-agnostic, and the UI is available in
+English and Brazilian Portuguese.
 
 ## Implementation Summary
 
 ### Tech Stack (Implemented)
 - **Framework**: Next.js 14+ (App Router)
-- **Styling**: Tailwind CSS + Custom CSS (glassmorphism effects)
+- **Styling**: Tailwind CSS + custom CSS
 - **Icons**: Lucide React
 - **Language**: TypeScript
-- **AI Integration**: Anthropic SDK (Claude Sonnet 4 Vision API)
+- **AI Integration**: Provider-agnostic layer — Anthropic SDK (Claude) +
+  OpenAI SDK (OpenRouter, DeepSeek, Moonshot/Kimi, any OpenAI-compatible API)
+- **i18n**: Lightweight custom solution (React context + dictionaries), no deps
 
 ### Directory Structure (Actual)
 ```
 prompt-builder/
   ├── app/
   │   ├── api/
-  │   │   └── analyze-image/
-  │   │       └── route.ts   # Vision API endpoint (Claude Sonnet)
-  │   ├── layout.tsx         # Root layout with dark theme
-  │   ├── page.tsx           # Main application view
-  │   └── globals.css        # Global styles, CSS variables
+  │   │   └── generate-prompt/
+  │   │       └── route.ts       # AI prompt generation (provider-agnostic)
+  │   ├── layout.tsx             # Root layout, wraps app in I18nProvider
+  │   ├── page.tsx               # Header + switcher, PromptBuilder, footer
+  │   └── globals.css            # Global styles, CSS variables
   ├── components/
-  │   ├── prompt-builder.tsx # Main container with state management
-  │   ├── section-persona.tsx
-  │   ├── section-context.tsx
-  │   ├── section-constraints.tsx
-  │   ├── section-examples.tsx
-  │   ├── generated-prompt.tsx
-  │   └── ui/                # Reusable UI components
-  │       ├── badge.tsx
-  │       ├── button.tsx
-  │       ├── card.tsx
-  │       ├── input.tsx
-  │       ├── label.tsx
-  │       └── textarea.tsx
+  │   ├── prompt-builder.tsx     # Main container + generation orchestration
+  │   ├── section-task.tsx       # Task input (top of left column)
+  │   ├── section-upload.tsx     # Image upload + paste-code
+  │   ├── generated-prompt.tsx   # Editable output box, copy/download
+  │   ├── language-switcher.tsx  # EN / BR toggle
+  │   └── ui/                    # Reusable UI primitives (button, card, etc.)
   ├── lib/
-  │   └── utils.ts           # Helper functions (cn utility)
-  ├── backlog/               # Documentation & roadmap
+  │   ├── llm/
+  │   │   └── provider.ts        # Provider-agnostic LLM layer
+  │   ├── i18n/
+  │   │   ├── translations.ts    # EN + PT dictionaries
+  │   │   └── context.tsx        # I18nProvider + useI18n hook
+  │   └── utils.ts               # cn() helper
+  ├── backlog/                   # Documentation & roadmap
+  ├── .env.example               # Documented LLM provider settings
   └── [config files]
 ```
 
@@ -50,41 +56,32 @@ prompt-builder/
 
 | Component | Features |
 |-----------|----------|
-| `prompt-builder.tsx` | State management for all sections, numbered prompt assembly, suggestion checkbox handlers, Vision API integration |
-| `section-system-prompt.tsx` | Persona and Constraints inputs for system-level instructions |
-| `section-user-prompt.tsx` | Task, Requirements, and Tech inputs for user-level instructions |
-| `section-examples.tsx` | File upload + code snippets + Agent Analysis UI with real Vision API integration |
-| `generated-prompt.tsx` | Project title input + formatted output with numbering + copy/download as markdown |
-| `api/analyze-image/route.ts` | Server-side Vision API endpoint using Claude Sonnet 4 with comprehensive suggestion generation |
+| `prompt-builder.tsx` | Holds task/code/image/output state; reads images to base64; POSTs to `/api/generate-prompt`; Generate button with loading + inline errors |
+| `section-task.tsx` | "What do you want to build?" textarea |
+| `section-upload.tsx` | Image dropzone, uploaded-file list, paste-code textarea |
+| `generated-prompt.tsx` | Editable `<textarea>` output (blue panel), project title, copy/download, loading + empty states |
+| `language-switcher.tsx` | EN / BR buttons, persists choice to localStorage |
+| `api/generate-prompt/route.ts` | Builds a "senior prompt engineer" system prompt; calls the provider layer; returns `{ prompt }`; matches the user's input language |
+| `lib/llm/provider.ts` | Resolves provider config from env; Anthropic + OpenAI-compatible adapters; per-provider vision handling |
 
 ---
 
 ## What Was Delivered
 
-- Premium dark theme with glassmorphism effects
-- 2-part prompt building interface (System + User Prompt)
-- Numbered prompt structure ("1. System Prompt", "2. User Prompt")
-- Project title feature with automatic inclusion in exports
-- Real-time prompt generation
-- Copy to clipboard and download as markdown (.md)
-- File upload (drag & drop)
-- Responsive design (mobile-friendly)
-- **AI-Powered Agent Analysis (Vision API)**:
-  - Real-time image analysis using Claude Sonnet 4 Vision
-  - AI-generated suggestions grouped into 5 categories (15 total suggestions):
-    - **Persona**: 2 suggestions for ideal developer profile
-    - **Constraints**: 3 suggestions for quality standards and behavioral rules
-    - **Task**: 2 suggestions describing what is being built
-    - **Requirements**: 5 comprehensive suggestions:
-      - 2 describing specific features visible in the design
-      - 1 describing visual style/look and feel
-      - 1 describing layout patterns observed
-      - 1 describing interactions or behavior
-    - **Tech**: 3 specific technology recommendations
-  - Checkbox selection for each suggestion
-  - Auto-population of corresponding sections when checked
-  - Smart duplicate prevention when adding suggestions
-  - Automatic removal from sections when unchecked
-  - Server-side API integration with secure key management
-  - Loading states and error handling
-  - Concise suggestions (under 80 characters each)
+- Task-first input: a prominent "what do you want to build?" field
+- Optional context: image/screenshot upload + paste-code
+- **AI-generated prompts** (no longer client-side concatenation) via a single
+  multimodal call
+- **Editable** output panel (was read-only); copy/download use the edited text
+- **Provider-agnostic LLM backend** configurable by env (Claude, OpenRouter,
+  DeepSeek, Moonshot/Kimi, or any OpenAI-compatible endpoint)
+- Generated prompt **follows the user's input language** (any language)
+- **Internationalization**: English + Brazilian Portuguese UI, EN/BR switcher
+  in the header (replaced the old "Learn +" modal), choice persisted
+- Responsive layout; the output editor uses a 600px min-height so it fills
+  mobile screens without scrolling
+
+## Notes / removed
+- Removed the old form-based flow: System/User prompt sections, the
+  suggestion/checkbox vision flow, and the `analyze-image` route.
+- Removed the "Learn +" info modal.

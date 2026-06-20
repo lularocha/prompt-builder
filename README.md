@@ -1,33 +1,35 @@
 # Prompt Builder
 
-A tool for creating high-quality AI prompts using a structured 2-part strategy: System Prompt (Persona + Constraints) + User Prompt (Task + Requirements + Tech + Examples).
+Describe what you want to build — and/or upload a screenshot or paste code —
+and AI writes a ready-to-use prompt for you. The generated prompt appears in an
+editable panel you can refine, copy, and download. The LLM backend is
+provider-agnostic, and the UI is available in English and Brazilian Portuguese.
 
 ## Features
 
-- **Structured 2-Part Prompt**: Organized into System Prompt and User Prompt sections
-- **Project Naming**: Add custom project titles that are included in exports
-- **Numbered Output**: Generated prompts automatically numbered for clarity
-- **Real-time Assembly**: See your prompt build as you type
-- **Copy & Download**: Export prompts as markdown with project title
-- **File Upload**: Drag & drop reference files (images, PDFs, code)
-- **AI Agent Analysis**: Claude Vision API analyzes uploaded images and generates contextual suggestions:
-  - 2 persona suggestions for ideal developer profile
-  - 3 constraint suggestions for quality standards
-  - 2 task suggestions describing what's being built
-  - 5 requirements suggestions (features, visual style, layout, interactions)
-  - 3 tech stack recommendations
-- **Premium UI**: Glassmorphism design with dark theme
+- **Task-first input**: A "What do you want to build?" field drives generation
+- **Optional context**: Upload a screenshot/mockup or paste code to guide the AI
+- **AI prompt generation**: One cohesive, ready-to-use prompt per request
+- **Editable output**: Tweak the generated prompt before copying/downloading
+- **Provider-agnostic LLM backend**: Claude, OpenRouter, DeepSeek, Moonshot/Kimi,
+  or any OpenAI-compatible endpoint — selected via environment variables
+- **Input-language aware**: The prompt is written in the language you wrote your
+  task in (any language)
+- **Internationalization**: English / Brazilian Portuguese (EN / BR) switcher
+- **Copy & Download**: Export the prompt as markdown with a project title
 - **Responsive**: Works on desktop and mobile
 
 ## Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
-| **Next.js 14+** | App Router framework |
-| **React 18** | Component-based UI |
+| **Next.js 14+** | App Router framework, API routes |
+| **React 18** | Component-based UI, context (i18n) |
 | **TypeScript** | Type safety |
 | **Tailwind CSS** | Utility-first styling |
 | **Lucide React** | Icon library |
+| **Anthropic SDK** | Claude adapter (default provider) |
+| **OpenAI SDK** | Adapter for OpenAI-compatible providers |
 
 ## Project Structure
 
@@ -35,21 +37,23 @@ A tool for creating high-quality AI prompts using a structured 2-part strategy: 
 prompt-builder/
 ├── app/
 │   ├── api/
-│   │   └── analyze-image/  # Vision API endpoint
-│   ├── page.tsx            # Main page with PromptBuilder
-│   ├── layout.tsx          # Root layout, dark theme
-│   └── globals.css         # CSS variables, glassmorphism
+│   │   └── generate-prompt/   # AI prompt-generation endpoint
+│   ├── page.tsx               # Header + switcher, PromptBuilder, footer
+│   ├── layout.tsx             # Root layout, wraps app in I18nProvider
+│   └── globals.css            # CSS variables, theme
 ├── components/
-│   ├── prompt-builder.tsx       # Main state container & API integration
-│   ├── generated-prompt.tsx     # Output display with project title
-│   ├── section-system-prompt.tsx
-│   ├── section-user-prompt.tsx
-│   ├── section-examples.tsx     # File upload & Agent Analysis UI
-│   └── ui/                      # Reusable UI components
+│   ├── prompt-builder.tsx     # Main state container & generation orchestration
+│   ├── section-task.tsx       # Task input
+│   ├── section-upload.tsx     # Image upload + paste-code
+│   ├── generated-prompt.tsx   # Editable output panel
+│   ├── language-switcher.tsx  # EN / BR toggle
+│   └── ui/                    # Reusable UI components
 ├── lib/
-│   └── utils.ts            # cn() helper for class merging
-├── backlog/                # Product roadmap & documentation
-└── public/                 # Static assets
+│   ├── llm/provider.ts        # Provider-agnostic LLM layer
+│   ├── i18n/                  # Translations + context/hook
+│   └── utils.ts               # cn() helper
+├── backlog/                   # Product roadmap & documentation
+└── public/                    # Static assets
 ```
 
 ## Getting Started
@@ -57,6 +61,9 @@ prompt-builder/
 ```bash
 # Install dependencies
 npm install
+
+# Configure your LLM provider
+cp .env.example .env.local   # then edit it (see below)
 
 # Run development server
 npm run dev
@@ -67,8 +74,29 @@ npm run build
 
 Open the localhost URL shown in your terminal.
 
+## Configuration
+
+The LLM backend is configured entirely through environment variables — see
+`.env.example` for the full list. Defaults work with Claude:
+
+```bash
+LLM_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Switch providers without code changes, e.g. DeepSeek:
+
+```bash
+LLM_PROVIDER=deepseek
+LLM_API_KEY=sk-...
+# LLM_MODEL=deepseek-chat   # optional; sensible default per provider
+```
+
+Supported `LLM_PROVIDER` values: `anthropic` (default), `openrouter`,
+`deepseek`, `moonshot`, and `openai-compatible` (requires `LLM_BASE_URL`).
+
 ## Status
 
-**MVP Complete with AI Integration** - The app is fully functional with Claude Vision API integration for image analysis. The Agent Analysis feature uses real AI to extract design patterns and generate contextual suggestions.
-
-See `backlog/product_roadmap.md` for future feature plans.
+Redesigned into an AI-generated, provider-agnostic prompt builder with an
+editable output panel and EN/BR internationalization. See
+`backlog/product_roadmap.md` for future plans.

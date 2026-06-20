@@ -2,166 +2,99 @@
 
 This document tracks the implementation status and future roadmap for the Prompt Builder application.
 
-**Latest update**: Enhanced Agent Analysis with comprehensive suggestion system:
-- Persona: 2 suggestions for developer profile
-- Constraints: 3 suggestions for quality standards
-- Task: 2 suggestions describing what's being built
-- Requirements: 5 suggestions (2 features + 1 visual style + 1 layout + 1 interactions)
-- Tech: 3 technology recommendations
-
-Also added project title feature with numbered prompt structure (1. System Prompt, 2. User Prompt).
+**Latest update**: Major redesign — the app now uses AI to **generate** the
+prompt (rather than assembling form fields), with a provider-agnostic LLM
+backend, an editable output panel, and English/Brazilian-Portuguese i18n.
 
 ---
 
 ## Current Implementation Status
 
-### Completed (MVP)
-- **Premium UI**: Glassmorphism design, dark theme, responsive layout
-- **2-Part Prompt Strategy**: System Prompt (Persona + Constraints) + User Prompt (Task + Requirements + Tech + Examples)
-- **Numbered Prompt Structure**: Generated prompts organized as "1. System Prompt" and "2. User Prompt"
-- **Project Title**: Custom naming with automatic inclusion in exports and display
-- **Prompt Generation**: Real-time assembly of inputs into formatted markdown
-- **Copy & Download**: Export generated prompts as markdown with project title
-- **File Upload**: Drag & drop zone for reference files (images, PDFs, code)
-- **Code Snippets**: Textarea for pasting example code
-- **Agent Analysis (Vision API)**: AI-powered image analysis with Claude Sonnet 4
-  - Upload design screenshots or wireframes
-  - Automatic extraction of visual patterns using Claude Vision
-  - Comprehensive suggestion system:
-    - **Persona**: 2 suggestions for ideal developer profile
-    - **Constraints**: 3 suggestions for behavioral rules and quality standards
-    - **Task**: 2 suggestions describing what is being built
-    - **Requirements**: 5 suggestions covering features (2), visual style (1), layout patterns (1), and interactions (1)
-    - **Tech**: 3 specific technology recommendations
-  - Interactive checkboxes for each suggestion
-  - One-click population of corresponding sections
-  - Automatic duplicate prevention
-  - Real-time analysis status badges (Idle → Analyzing → Complete)
-
-### UI Placeholders (Not Functional)
-These elements exist in the UI but have no backend implementation:
-
-| Element | Location | Current Behavior |
-|---------|----------|------------------|
-| "Make it Specific" button | Persona section | Does nothing (mockup) |
+### Completed
+- **Task-first input**: A prominent "What do you want to build?" field at the
+  top of the left column.
+- **Optional context**: Upload a screenshot/mockup (image) and/or paste code to
+  guide the AI.
+- **AI prompt generation**: A "Generate Prompt" button sends task + images +
+  code to the model, which writes one cohesive, ready-to-use prompt. This is a
+  real AI call (`app/api/generate-prompt`), not client-side concatenation.
+- **Editable output**: The blue output panel is an editable textarea; Copy and
+  Download use the edited text. Includes loading and empty states.
+- **Provider-agnostic LLM backend** (`lib/llm/provider.ts`): configurable via
+  env for Anthropic (Claude, default), OpenRouter, DeepSeek, Moonshot/Kimi, or
+  any OpenAI-compatible endpoint — no code changes to switch.
+  - Anthropic uses `@anthropic-ai/sdk`; all others use the `openai` SDK with a
+    configurable `baseURL`.
+  - Vision is handled per-provider, with a text-only fallback note.
+- **Input-language-aware generation**: The generated prompt is written in the
+  same language the user used in their task/material (any language),
+  independent of the UI language.
+- **Internationalization**: English + Brazilian Portuguese (displayed as
+  "BR"). EN/BR switcher in the header; choice persisted to localStorage.
+- **Responsive UI**: Two-column layout; sticky output on desktop; 600px
+  min-height editor so it fills mobile screens.
+- **Copy & Download**: Export the prompt as markdown with a project title.
 
 ---
 
-## Why AI Features Require Backend Integration
+## Configuration
 
-> **Important**: The current app is fully functional as a static prompt builder. The features below require API integration with AI services, which means:
+The LLM backend is configured through environment variables (see
+`.env.example`):
 
-1. **API Key Security**: AI APIs (OpenAI, Gemini, etc.) require secret keys that cannot be exposed in client-side JavaScript. Anyone viewing browser dev tools could steal exposed keys.
-
-2. **Server-Side Layer**: Next.js API routes (`app/api/*`) provide a secure way to call AI services while keeping keys hidden on the server.
-
-3. **Cost**: AI API calls have usage costs that require an account with credits.
-
-**Bottom Line**: The MVP works perfectly as a prompt-building tool. AI-powered enhancements are a future upgrade that requires backend setup and API credits.
+- `LLM_PROVIDER` — `anthropic` (default) | `openrouter` | `deepseek` |
+  `moonshot` | `openai-compatible`
+- `LLM_MODEL` — model id (sensible default per provider)
+- `LLM_API_KEY` — provider key (falls back to `ANTHROPIC_API_KEY` for Anthropic)
+- `LLM_BASE_URL` — required only for `openai-compatible`; presets for known providers
+- `LLM_SUPPORTS_VISION` — optional override
 
 ---
 
 ## Future Features
 
-### Feature 1: Persona Presets
-**Status**: Not Started
-**Complexity**: Low (no API required)
+### More languages
+**Status**: Not Started · **Complexity**: Low
+Add further locales by extending `lib/i18n/translations.ts` and the switcher.
+The architecture already supports arbitrary locales.
 
-**Goal**: Quick-select common expert roles instead of writing from scratch.
+### Zip / code-archive upload
+**Status**: Not Started · **Complexity**: High
+Allow uploading a `.zip` code archive: parse it, let the user select files, and
+feed them (within token limits) into generation. Deferred from the v1 redesign.
 
-**Implementation**:
-1. Create `lib/personas.ts` with preset objects: `{ id, name, description, systemPrompt }`
-2. Add a dropdown/combobox above the Persona textarea
-3. Selecting a preset fills the textarea (user can still edit)
+### Streaming generation
+**Status**: Not Started · **Complexity**: Medium
+Stream the generated prompt token-by-token into the editor for faster feedback.
 
-**Example Presets**: "Senior Frontend Architect", "Data Scientist", "DevOps Engineer", "Technical Writer"
+### Regenerate / variations
+**Status**: Not Started · **Complexity**: Medium
+A "regenerate" action and the ability to produce alternative prompt variations,
+ideally preserving the user's manual edits.
 
----
-
-### Feature 2: AI-Powered "Make it Specific"
-**Status**: Partial (Context has dictionary fallback, Persona is mockup)
-**Complexity**: Medium (requires API)
-
-**Goal**: Use an LLM to intelligently refine vague user input.
-
-**Implementation**:
-1. Create `app/api/enhance/route.ts`
-2. Integrate LLM SDK (OpenAI or Google Generative AI)
-3. Prompt: "You are an expert PM. Rewrite this vague requirement to be specific, actionable, and technical: [User Input]"
-4. Update frontend to call API with loading state
-
-**Security**: API keys stored in `.env.local`, never exposed to client.
-
----
-
-### Feature 3: Smart Constraints & Tech Suggestions
-**Status**: Not Started
-**Complexity**: Medium
-
-**Goal**: Suggest technologies based on project context and persona.
-
-**Implementation (Phased)**:
-- **Phase 1 (Rules)**: Keyword mapping (e.g., "mobile" -> suggest React Native, Expo)
-- **Phase 2 (AI)**: Send context to API that returns recommended stack as JSON
-
-**UI**: "Recommended Stack" panel with one-click add buttons.
-
----
-
-### Feature 4: Agent Analysis (Multimodal Vision) ✅ COMPLETED
-**Status**: Fully Implemented
-**Complexity**: High (Vision API)
-
-**Goal**: Automatically analyze uploaded design screenshots/wireframes to extract visual context.
-
-**What It Does**:
-1. User uploads a design screenshot or wireframe (PNG, JPG, etc.)
-2. Claude Sonnet 4 Vision API analyzes the image
-3. Extracts patterns: layout structure, component types, visual context, interactions
-4. Returns AI-generated suggestions in five categories:
-   - **Persona**: 2 suggestions for ideal developer profile (e.g., "Senior frontend developer with React and data visualization experience")
-   - **Constraints**: 3 suggestions for behavioral rules or quality standards (e.g., "Follow accessibility standards for data-heavy interfaces")
-   - **Task**: 2 suggestions describing what is being built (e.g., "Build a real-time analytics dashboard")
-   - **Requirements**: 5 comprehensive suggestions:
-     - 2 describing specific features visible in the design (e.g., "Display metrics in card grid layout")
-     - 1 describing the visual style/look and feel (e.g., "Modern minimalist design with subtle shadows")
-     - 1 describing layout patterns observed (e.g., "Sidebar navigation with main content area")
-     - 1 describing interactions or behavior (e.g., "Hover states on interactive elements")
-   - **Tech**: 3 specific technology recommendations (e.g., "React", "Tailwind CSS", "Chart.js")
-5. Interactive checkboxes allow users to select which suggestions to add
-6. Selected suggestions automatically populate corresponding sections
-7. Automatic duplicate prevention and removal when unchecked
-
-**Technical Implementation**:
-- Server-side API route: `app/api/analyze-image/route.ts`
-- Uses `@anthropic-ai/sdk` with Claude Sonnet 4 (model: claude-sonnet-4-20250514)
-- Client converts images to base64 and sends to API
-- Structured JSON response with 15 total suggestions across 5 categories
-- Loading states: Idle → Analyzing → Complete
-- Smart duplicate prevention when adding suggestions
-- Environment variable: `ANTHROPIC_API_KEY` (secured in `.env.local` and Vercel)
-- Concise suggestions (under 80 characters each)
-
-**Cost**: ~$0.01-0.02 per image analysis
-
----
-
-## Implementation Priority
-
-For someone wanting to add remaining AI features, recommended order:
-
-1. **Persona Presets** - No API needed, improves UX immediately
-2. **AI "Make it Specific"** - Single API route, high value
-3. **Smart Suggestions** - Can start with rule-based (no API)
-4. ~~**Agent Analysis**~~ - ✅ **COMPLETED**
+### Provider/model picker in the UI
+**Status**: Not Started · **Complexity**: Medium
+Expose provider/model selection in the UI (currently env-only) so users can
+switch models without redeploying.
 
 ---
 
 ## Technical Notes
 
 - **Framework**: Next.js 14+ with App Router
-- **API Routes**: Use `app/api/` directory for server-side endpoints
-- **AI Provider**: Anthropic (Claude Sonnet 4) for Vision API
+- **API Routes**: `app/api/generate-prompt` for server-side generation
+- **AI Provider**: Pluggable via `lib/llm/provider.ts`
 - **Environment Variables**: Store keys in `.env.local` (gitignored) and Vercel
-- **State Management**: React hooks in PromptBuilder component
+- **State Management**: React hooks in `PromptBuilder`; i18n via React context
 - **Image Processing**: Client-side base64 conversion, server-side API calls
+
+---
+
+## History (superseded)
+
+The original app was a static, form-based prompt builder: a 2-part
+System/User prompt structure with Persona/Constraints/Task/Requirements/Tech
+fields, a checkbox-based "Agent Analysis" vision suggestion flow
+(`analyze-image` route), and a read-only generated-prompt preview assembled
+client-side. That flow — along with the "Learn +" info modal — was removed in
+the redesign described above.
