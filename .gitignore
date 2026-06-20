@@ -17,6 +17,9 @@ build
 .DS_Store
 *.pem
 
+# local reference material (not part of the app)
+prompt-examples/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

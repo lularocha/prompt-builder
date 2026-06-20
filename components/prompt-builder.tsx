@@ -5,7 +5,7 @@ import { SectionTask } from "./section-task";
 import { SectionUpload } from "./section-upload";
 import { GeneratedPrompt } from "./generated-prompt";
 import { Button } from "./ui/button";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles, Loader2, AlertTriangle } from "lucide-react";
 import { useI18n } from "@/lib/i18n/context";
 
 interface UploadedImage {
@@ -35,7 +35,7 @@ export function PromptBuilder() {
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [model, setModel] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
 
   const handleFilesUpload = async (files: File[]) => {
     const imageFiles = files.filter((f) => f.type.startsWith("image/"));
@@ -59,7 +59,7 @@ export function PromptBuilder() {
 
   const handleGenerate = async () => {
     setIsGenerating(true);
-    setError(null);
+    setErrorCode(null);
     try {
       const response = await fetch("/api/generate-prompt", {
         method: "POST",
@@ -73,17 +73,27 @@ export function PromptBuilder() {
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.error || "Generation failed");
+        setErrorCode(result.code || "unknown");
+        return;
       }
       setGeneratedPrompt(result.prompt);
       setModel(result.model ?? null);
     } catch (err) {
       console.error("Generation error:", err);
-      setError(err instanceof Error ? err.message : "Generation failed");
+      setErrorCode("unknown");
     } finally {
       setIsGenerating(false);
     }
   };
+
+  const errorKey =
+    errorCode === "rate_limited"
+      ? "error.rateLimited"
+      : errorCode === "overloaded"
+        ? "error.overloaded"
+        : errorCode === "config"
+          ? "error.config"
+          : "error.unknown";
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full">
@@ -102,7 +112,23 @@ export function PromptBuilder() {
           onCodeChange={setCode}
         />
 
-        <div className="space-y-2">
+        <div className="space-y-3">
+          {errorCode && (
+            <div className="flex items-start gap-3 rounded-md border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+              <div className="flex-1 space-y-2">
+                <p>{t(errorKey)}</p>
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={isGenerating}
+                  className="font-medium text-red-200 underline underline-offset-2 hover:text-white disabled:opacity-50"
+                >
+                  {t("error.retry")}
+                </button>
+              </div>
+            </div>
+          )}
           <Button
             size="lg"
             className="w-full bg-[#f80] text-white hover:bg-[#f60]"
@@ -121,7 +147,6 @@ export function PromptBuilder() {
               </>
             )}
           </Button>
-          {error && <p className="text-sm text-red-400">{error}</p>}
         </div>
       </div>
 
