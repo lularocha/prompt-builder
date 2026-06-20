@@ -118,7 +118,7 @@ export function SectionUpload({
           </div>
           <Textarea
             placeholder={t("upload.pastePlaceholder")}
-            className="min-h-[120px] focus-visible:ring-primary/50 font-mono text-xs"
+            className="min-h-[120px] focus-visible:ring-primary/50 font-mono text-base md:text-xs"
             value={code}
             onChange={(e) => onCodeChange(e.target.value)}
           />
