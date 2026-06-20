@@ -87,10 +87,6 @@ export function PromptBuilder() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full">
       {/* Left Column: Inputs */}
       <div className="space-y-6 overflow-y-auto custom-scrollbar">
-        <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
-          {t("left.heading")}
-        </h2>
-
         <SectionTask task={task} onTaskChange={setTask} />
 
         <SectionUpload
@@ -129,10 +125,6 @@ export function PromptBuilder() {
 
       {/* Right Column: Output */}
       <div className="lg:sticky lg:top-8 h-fit space-y-6">
-        <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
-          {t("right.heading")}
-        </h2>
-
         <GeneratedPrompt
           prompt={generatedPrompt}
           onPromptChange={setGeneratedPrompt}

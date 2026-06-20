@@ -15,7 +15,7 @@ export function SectionTask({ task, onTaskChange }: SectionTaskProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem]">{t("task.title")}</CardTitle>
+                <CardTitle className="text-[1.5rem] text-blue-400">{t("task.title")}</CardTitle>
                 <CardDescription className="pb-4">
                     {t("task.description")}
                 </CardDescription>

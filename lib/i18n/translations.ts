@@ -11,8 +11,6 @@ export const translations = {
     "header.tagline": "Create System and User Prompts with AI.",
     "footer.developedBy": "developed by Lula Rocha /",
 
-    "left.heading": "Define what you want to build",
-    "right.heading": "Get your prompt",
     "generate.button": "Generate Prompt",
     "generate.loading": "Generating...",
 
@@ -46,8 +44,6 @@ export const translations = {
     "header.tagline": "Crie prompts de sistema e de usuário com IA.",
     "footer.developedBy": "desenvolvido por Lula Rocha /",
 
-    "left.heading": "Defina o que você quer construir",
-    "right.heading": "Obtenha seu prompt",
     "generate.button": "Gerar Prompt",
     "generate.loading": "Gerando...",
 
