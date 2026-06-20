@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Prompt Builder",
-  description: "Create System and User Prompts with AI.",
+  description: "Crie prompts de sistema e de usuário com IA.",
   icons: {
     icon: "/favicon-pb.png",
   },
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`${inter.className} min-h-screen bg-background antialiased selection:bg-primary/20`}
       >

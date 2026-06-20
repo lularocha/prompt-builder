@@ -24,9 +24,10 @@ interface I18nContextValue {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  // Always start as "en" so server and client first render match; read the
-  // stored preference after mount to avoid hydration mismatches.
-  const [locale, setLocaleState] = useState<Locale>("en");
+  // Default to Portuguese (BR). Server and client first render use this same
+  // value so there's no hydration mismatch; a stored preference (if any) is
+  // applied after mount.
+  const [locale, setLocaleState] = useState<Locale>("pt");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
