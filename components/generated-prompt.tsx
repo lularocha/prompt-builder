@@ -191,7 +191,7 @@ export function GeneratedPrompt({
   );
 
   return (
-    <Card className="min-h-[600px] flex flex-col">
+    <Card className="flex flex-col">
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-2">
         <CardTitle className="text-[1.5rem] leading-none tracking-tight text-blue-400">
           {t("output.title")}
@@ -211,7 +211,7 @@ export function GeneratedPrompt({
         </div>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col pt-4 space-y-3">
-        <div className="relative flex-1 min-h-[600px] lg:min-h-[600px]">
+        <div className="relative flex-1 min-h-[600px] lg:min-h-[770px]">
           <textarea
             value={prompt}
             onChange={(e) => onPromptChange(e.target.value)}
@@ -245,7 +245,7 @@ export function GeneratedPrompt({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 bg-white p-3 text-gray-600">
-                <h2 className="px-1 text-lg font-semibold text-gray-900">
+                <h2 className="px-1 text-lg font-bold tracking-[-0.05rem] text-[#f80]">
                   {t("output.title")}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2">

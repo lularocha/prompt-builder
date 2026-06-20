@@ -105,7 +105,7 @@ export function PromptBuilder() {
         <div className="space-y-2">
           <Button
             size="lg"
-            className="w-full"
+            className="w-full bg-[#f80] text-white hover:bg-[#f60]"
             disabled={!canGenerate}
             onClick={handleGenerate}
           >
