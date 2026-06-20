@@ -43,7 +43,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
     }
 
     return (
-        <Card className="min-h-[400px] flex flex-col">
+        <Card className="min-h-[600px] flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-[1.5rem] tracking-tight">Generated Prompt</CardTitle>
                 <div className="flex gap-2">
@@ -76,7 +76,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                     onChange={(e) => setPromptTitle(e.target.value)}
                     className="focus-visible:ring-primary/50"
                 />
-                <div className="relative flex-1 min-h-[400px]">
+                <div className="relative flex-1 min-h-[600px] lg:min-h-[600px]">
                     <textarea
                         value={prompt}
                         onChange={(e) => onPromptChange(e.target.value)}
