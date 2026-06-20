@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
-import { Copy, Check, Download, Loader2 } from "lucide-react"
+import { Copy, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useI18n } from "@/lib/i18n/context"
 
@@ -36,6 +36,34 @@ async function copyText(text: string): Promise<boolean> {
     }
 }
 
+// Save a blob via the native share sheet when possible (reliable on iOS),
+// falling back to a download link on desktop.
+async function saveFile(blob: Blob, filename: string, mimeType: string) {
+    const file = new File([blob], filename, { type: mimeType })
+    if (
+        typeof navigator.canShare === "function" &&
+        navigator.canShare({ files: [file] })
+    ) {
+        try {
+            await navigator.share({ files: [file] })
+            return
+        } catch (err) {
+            // User cancelled — don't also trigger a download.
+            if (err instanceof DOMException && err.name === "AbortError") return
+            // Otherwise fall through to the download fallback.
+        }
+    }
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+}
+
 interface GeneratedPromptProps {
     prompt: string
     onPromptChange: (value: string) => void
@@ -46,6 +74,7 @@ interface GeneratedPromptProps {
 export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }: GeneratedPromptProps) {
     const { t } = useI18n()
     const [copied, setCopied] = useState(false)
+    const [buildingDocx, setBuildingDocx] = useState(false)
 
     const handleCopy = async () => {
         const ok = await copyText(prompt)
@@ -55,8 +84,8 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
         }
     }
 
-    // Derive a filename from the prompt's first markdown heading, if any.
-    const deriveFilename = () => {
+    // Base filename from the prompt's first markdown heading, if any.
+    const deriveBaseName = () => {
         const heading = prompt.match(/^\s*#{1,6}\s+(.+?)\s*$/m)?.[1]
         const slug = (heading ?? "")
             .normalize("NFD")
@@ -64,57 +93,55 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
             .replace(/[^a-z0-9]+/gi, "-")
             .toLowerCase()
             .replace(/^-+|-+$/g, "")
-        return slug ? `${slug}.md` : "generated-prompt.md"
+        return slug || "generated-prompt"
     }
 
-    const handleDownload = async () => {
-        const filename = deriveFilename()
+    const handleDownloadMd = () => {
         // Prepend a UTF-8 BOM so viewers (e.g. on Android) detect the encoding
         // and render Unicode math symbols correctly.
-        const content = "﻿" + prompt
-        const blob = new Blob([content], { type: "text/markdown;charset=utf-8" })
+        const blob = new Blob(["﻿" + prompt], { type: "text/markdown;charset=utf-8" })
+        return saveFile(blob, `${deriveBaseName()}.md`, "text/markdown")
+    }
 
-        // Prefer the native share sheet on mobile (iOS Safari can't reliably
-        // save a blob via the download attribute — Drive rejects it).
-        const file = new File([blob], filename, { type: "text/markdown" })
-        if (
-            typeof navigator.canShare === "function" &&
-            navigator.canShare({ files: [file] })
-        ) {
-            try {
-                await navigator.share({ files: [file] })
-                return
-            } catch (err) {
-                // User cancelled — don't also trigger a download.
-                if (err instanceof DOMException && err.name === "AbortError") return
-                // Otherwise fall through to the download fallback.
-            }
+    const handleDownloadDocx = async () => {
+        if (!prompt || buildingDocx) return
+        setBuildingDocx(true)
+        try {
+            const { markdownToDocxBlob } = await import("@/lib/markdown-to-docx")
+            const blob = await markdownToDocxBlob(prompt)
+            await saveFile(
+                blob,
+                `${deriveBaseName()}.docx`,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            )
+        } finally {
+            setBuildingDocx(false)
         }
-
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
     }
 
     return (
         <Card className="min-h-[600px] flex flex-col">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-2">
                 <CardTitle className="text-[1.5rem] leading-none tracking-tight text-blue-400">{t("output.title")}</CardTitle>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <Button
                         size="sm"
                         variant="ghost"
                         className="hover:bg-primary/20 hover:text-blue-400"
-                        onClick={handleDownload}
+                        onClick={handleDownloadMd}
                         disabled={!prompt}
                     >
-                        <Download className="w-4 h-4 mr-2" />
-                        {t("output.download")}
+                        .md
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        className="hover:bg-primary/20 hover:text-blue-400"
+                        onClick={handleDownloadDocx}
+                        disabled={!prompt || buildingDocx}
+                    >
+                        {buildingDocx && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                        .docx
                     </Button>
                     <Button
                         size="sm"

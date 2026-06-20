@@ -31,7 +31,6 @@ export const translations = {
     "upload.pastePlaceholder": "Paste your code or text examples here...",
 
     "output.title": "Generated Prompt",
-    "output.download": "Download",
     "output.copy": "Copy",
     "output.copied": "Copied",
     "output.placeholder":
@@ -64,7 +63,6 @@ export const translations = {
     "upload.pastePlaceholder": "Cole seu código ou exemplos de texto aqui...",
 
     "output.title": "Prompt Gerado",
-    "output.download": "Baixar",
     "output.copy": "Copiar",
     "output.copied": "Copiado",
     "output.placeholder":
