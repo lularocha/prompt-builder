@@ -1,284 +1,141 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { SectionSystemPrompt } from "./section-system-prompt";
-import { SectionUserPrompt } from "./section-user-prompt";
-import { SectionExamples } from "./section-examples";
+import { useState } from "react";
+import { SectionTask } from "./section-task";
+import { SectionUpload } from "./section-upload";
 import { GeneratedPrompt } from "./generated-prompt";
+import { Button } from "./ui/button";
+import { Sparkles, Loader2 } from "lucide-react";
 
-interface FileMetadata {
+interface UploadedImage {
   name: string;
   size: number;
+  data: string; // base64, no data: prefix
+  mediaType: string;
 }
 
-interface VisualContextSuggestions {
-  constraints: string[];
-  task: string[];
-  requirements: string[];
-  tech: string[];
+function readAsBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      resolve(result.split(",")[1]);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
-
-type SuggestionCategory = "constraints" | "task" | "requirements" | "tech";
 
 export function PromptBuilder() {
-  // State
-  const [constraints, setConstraints] = useState("");
   const [task, setTask] = useState("");
-  const [requirements, setRequirements] = useState("");
-  const [tech, setTech] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState<FileMetadata[]>([]);
-  const [customExamples, setCustomExamples] = useState("");
-  const [analysisStatus, setAnalysisStatus] = useState<
-    "idle" | "analyzing" | "complete"
-  >("idle");
-  const [visualContextSuggestions, setVisualContextSuggestions] =
-    useState<VisualContextSuggestions | null>(null);
-  const [selectedSuggestions, setSelectedSuggestions] = useState<
-    Record<SuggestionCategory, Set<number>>
-  >({
-    constraints: new Set(),
-    task: new Set(),
-    requirements: new Set(),
-    tech: new Set(),
-  });
+  const [code, setCode] = useState("");
+  const [images, setImages] = useState<UploadedImage[]>([]);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Handlers
   const handleFilesUpload = async (files: File[]) => {
-    const fileMetadata = files.map((f) => ({ name: f.name, size: f.size }));
-    setUploadedFiles((prev) => [...prev, ...fileMetadata]);
-
-    // Find the first image file for analysis
-    const imageFile = files.find((f) => f.type.startsWith("image/"));
-
-    if (!imageFile) {
-      return;
-    }
-
-    // Start analysis
-    setAnalysisStatus("analyzing");
-    setVisualContextSuggestions(null);
-    setSelectedSuggestions({
-      constraints: new Set(),
-      task: new Set(),
-      requirements: new Set(),
-      tech: new Set(),
-    });
-
-    try {
-      // Read image as base64
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result as string;
-          const base64Data = result.split(",")[1];
-          resolve(base64Data);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(imageFile);
-      });
-
-      // Call API
-      const response = await fetch("/api/analyze-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          image: base64,
-          mediaType: imageFile.type,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Analysis failed");
-      }
-
-      const suggestions = await response.json();
-      setAnalysisStatus("complete");
-      setVisualContextSuggestions(suggestions);
-    } catch (error) {
-      console.error("Analysis error:", error);
-      setAnalysisStatus("idle");
-    }
+    const imageFiles = files.filter((f) => f.type.startsWith("image/"));
+    const newImages = await Promise.all(
+      imageFiles.map(async (f) => ({
+        name: f.name,
+        size: f.size,
+        data: await readAsBase64(f),
+        mediaType: f.type,
+      })),
+    );
+    setImages((prev) => [...prev, ...newImages]);
   };
 
   const handleFileRemove = (index: number) => {
-    setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleToggleSuggestion = (
-    category: SuggestionCategory,
-    index: number,
-    suggestion: string,
-  ) => {
-    const setterMap: Record<
-      SuggestionCategory,
-      React.Dispatch<React.SetStateAction<string>>
-    > = {
-      constraints: setConstraints,
-      task: setTask,
-      requirements: setRequirements,
-      tech: setTech,
-    };
+  const canGenerate =
+    !isGenerating && (task.trim() || code.trim() || images.length > 0);
 
-    // Categories that should be formatted as list items
-    const listCategories: SuggestionCategory[] = [
-      "constraints",
-      "requirements",
-      "tech",
-    ];
-    const shouldFormatAsList = listCategories.includes(category);
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/generate-prompt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task,
+          code,
+          images: images.map(({ data, mediaType }) => ({ data, mediaType })),
+        }),
+      });
 
-    setSelectedSuggestions((prev) => {
-      const newSet = new Set(prev[category]);
-      const isSelected = newSet.has(index);
-      const setter = setterMap[category];
-
-      if (isSelected) {
-        newSet.delete(index);
-        setter((prevVal) => {
-          // Remove the suggestion, handling both with and without "- " prefix
-          const lines = prevVal.split("\n").filter((line) => {
-            const trimmedLine = line.trim();
-            const withoutPrefix = trimmedLine.replace(/^-\s*/, "");
-            return (
-              withoutPrefix !== suggestion.trim() &&
-              trimmedLine !== suggestion.trim()
-            );
-          });
-          return lines.join("\n");
-        });
-      } else {
-        newSet.add(index);
-        setter((prevVal) => {
-          const trimmed = prevVal.trim();
-          const lines = trimmed.split("\n").map((l) => l.trim());
-
-          // Check if suggestion already exists (with or without prefix)
-          const suggestionExists = lines.some((line) => {
-            const withoutPrefix = line.replace(/^-\s*/, "");
-            return (
-              withoutPrefix === suggestion.trim() || line === suggestion.trim()
-            );
-          });
-
-          if (suggestionExists) {
-            return trimmed;
-          }
-
-          // Format as list item if needed
-          const formattedSuggestion = shouldFormatAsList
-            ? `- ${suggestion}`
-            : suggestion;
-          return trimmed
-            ? `${trimmed}\n${formattedSuggestion}`
-            : formattedSuggestion;
-        });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || "Generation failed");
       }
-
-      return { ...prev, [category]: newSet };
-    });
+      setGeneratedPrompt(result.prompt);
+    } catch (err) {
+      console.error("Generation error:", err);
+      setError(err instanceof Error ? err.message : "Generation failed");
+    } finally {
+      setIsGenerating(false);
+    }
   };
-
-  // Derived State: Generated Prompt
-  const finalPrompt = useMemo(() => {
-    const systemParts: string[] = [];
-    const userParts: string[] = [];
-
-    // --- SYSTEM PROMPT ---
-    if (constraints.trim()) {
-      systemParts.push(`## Behavior & Constraints\n${constraints.trim()}`);
-    } else {
-      systemParts.push(
-        `## Behavior & Constraints\n(No information provided yet)`,
-      );
-    }
-
-    // --- USER PROMPT ---
-    if (task.trim()) {
-      userParts.push(`## Task\n${task.trim()}`);
-    } else {
-      userParts.push(`## Task\n(No information provided yet)`);
-    }
-
-    if (requirements.trim()) {
-      userParts.push(`## Requirements\n${requirements.trim()}`);
-    } else {
-      userParts.push(`## Requirements\n(No information provided yet)`);
-    }
-
-    if (tech.trim()) {
-      userParts.push(`## Tech\n${tech.trim()}`);
-    } else {
-      userParts.push(`## Tech\n(No information provided yet)`);
-    }
-
-    // Examples
-    if (uploadedFiles.length > 0 || customExamples.trim()) {
-      const exParts: string[] = [];
-      if (customExamples.trim()) {
-        exParts.push(`**Code Snippets:**\n${customExamples.trim()}`);
-      }
-      if (uploadedFiles.length > 0) {
-        exParts.push(
-          `**Uploaded Files:**\n${uploadedFiles.map((f) => `- ${f.name}`).join("\n")}`,
-        );
-      }
-      userParts.push(`## Examples\n${exParts.join("\n\n")}`);
-    } else {
-      userParts.push(`## Examples\n(No information provided yet)`);
-    }
-
-    // Assemble final prompt
-    const parts: string[] = [];
-    parts.push(`# 1. System Prompt\n\n${systemParts.join("\n\n")}`);
-    parts.push(`---`);
-    parts.push(`# 2. User Prompt\n\n${userParts.join("\n\n")}`);
-
-    return parts.join("\n\n");
-  }, [constraints, task, requirements, tech, uploadedFiles, customExamples]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full">
-      {/* Left Column: Input Sections */}
+      {/* Left Column: Inputs */}
       <div className="space-y-6 overflow-y-auto custom-scrollbar">
         <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
           Define what you want to build
         </h2>
 
-        <SectionExamples
-          uploadedFiles={uploadedFiles}
+        <SectionTask task={task} onTaskChange={setTask} />
+
+        <SectionUpload
+          uploadedFiles={images.map((img) => ({
+            name: img.name,
+            size: img.size,
+          }))}
           onFilesUpload={handleFilesUpload}
           onFileRemove={handleFileRemove}
-          customExamples={customExamples}
-          onCustomExamplesChange={setCustomExamples}
-          analysisStatus={analysisStatus}
-          visualContextSuggestions={visualContextSuggestions}
-          selectedSuggestions={selectedSuggestions}
-          onToggleSuggestion={handleToggleSuggestion}
+          code={code}
+          onCodeChange={setCode}
         />
 
-        <SectionSystemPrompt
-          constraints={constraints}
-          onConstraintsChange={setConstraints}
-        />
-
-        <SectionUserPrompt
-          task={task}
-          onTaskChange={setTask}
-          requirements={requirements}
-          onRequirementsChange={setRequirements}
-          tech={tech}
-          onTechChange={setTech}
-        />
+        <div className="space-y-2">
+          <Button
+            size="lg"
+            className="w-full"
+            disabled={!canGenerate}
+            onClick={handleGenerate}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5 mr-2" />
+                Generate Prompt
+              </>
+            )}
+          </Button>
+          {error && <p className="text-sm text-red-400">{error}</p>}
+        </div>
       </div>
 
-      {/* Right Column: Preview */}
+      {/* Right Column: Output */}
       <div className="lg:sticky lg:top-8 h-fit space-y-6">
         <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
-          Get your project's prompts
+          Get your prompt
         </h2>
 
-        <GeneratedPrompt prompt={finalPrompt} />
+        <GeneratedPrompt
+          prompt={generatedPrompt}
+          onPromptChange={setGeneratedPrompt}
+          isGenerating={isGenerating}
+        />
       </div>
     </div>
   );
