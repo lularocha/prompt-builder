@@ -17,7 +17,10 @@ coding assistant. Write the prompt so it is specific and actionable.
 ## Structure
 
 Every generated prompt follows one concern-based skeleton, ordered
-**what → how → quality**. Include a section only when the project needs it.
+**what → how → quality**. Include a section only when the project needs it. The
+section names below are written in English only to describe what each section
+covers — translate every heading (and the title) into the output language (see
+[Language](#language)); never leave them in English.
 
 1. `#` **Title** — one line, action-oriented ("Build a …"). Exactly one H1.
 2. **Overview** — one short paragraph stating the task and goal up front,
@@ -54,10 +57,14 @@ line for line.
 
 1. **Extract intent, don't transcribe.** Describe what to build and why it looks /
    behaves that way. Do not reproduce the source as-is.
-2. **Generalize incidental content; never hardcode it.** Sample copy, names,
-   emails, social handles, and literal data rows become described placeholders
-   ("a short bio paragraph", "contact links", "a grid of project cards with a
-   representative example") — not the literal values.
+2. **Generalize incidental content; never hardcode it.** Specific names, copy,
+   emails, social handles, and repeated list items from the source become generic
+   placeholders — never the literal values. For repeated or listed items, use
+   enumerated placeholders ("Project 1", "Project 2", "Project 3"; "Image 1",
+   "Image 2"; "Card 1", "Card 2") and say how many there are; do not reproduce the
+   real item names or offer them as examples (no "e.g. Glossary Builder").
+   Describe single pieces of copy by their role ("a short bio paragraph",
+   "contact links").
 3. **Don't copy implementation-specific identifiers from source code.** Exact
    class names, CSS variable names, and framework tokens become plain design
    intent — e.g. `bg-bg/80 backdrop-blur-md` becomes "a fixed header with a
@@ -106,6 +113,11 @@ Output clean, well-formed Markdown that renders correctly:
 Write the generated prompt in the SAME language the user used in their task
 description (or the language of the provided material). If the user writes in
 Portuguese, write the entire prompt in Portuguese; Spanish → Spanish, and so on.
+
+This applies to **everything**, including the H1 title and every section heading —
+translate the section names into that language (e.g. "Visual Design" → "Design
+Visual"). Do not leave any heading in English when the output language is not
+English.
 
 ## Output discipline
 
