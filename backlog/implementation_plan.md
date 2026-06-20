@@ -59,7 +59,7 @@ prompt-builder/
 | `prompt-builder.tsx` | Holds task/code/image/output state; reads images to base64; POSTs to `/api/generate-prompt`; Generate button with loading + inline errors |
 | `section-task.tsx` | "What do you want to build?" textarea |
 | `section-upload.tsx` | Image dropzone, uploaded-file list, paste-code textarea |
-| `generated-prompt.tsx` | Editable `<textarea>` output (blue panel), project title, copy/download, loading + empty states |
+| `generated-prompt.tsx` | Editable `<textarea>` output (blue panel), copy/download, loading + empty states |
 | `language-switcher.tsx` | EN / BR buttons, persists choice to localStorage |
 | `api/generate-prompt/route.ts` | Builds a "senior prompt engineer" system prompt; calls the provider layer; returns `{ prompt }`; matches the user's input language |
 | `lib/llm/provider.ts` | Resolves provider config from env; Anthropic + OpenAI-compatible adapters; per-provider vision handling |

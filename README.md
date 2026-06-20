@@ -16,7 +16,7 @@ provider-agnostic, and the UI is available in English and Brazilian Portuguese.
 - **Input-language aware**: The prompt is written in the language you wrote your
   task in (any language)
 - **Internationalization**: English / Brazilian Portuguese (EN / BR) switcher
-- **Copy & Download**: Export the prompt as markdown with a project title
+- **Copy & Download**: Export the prompt as markdown
 - **Responsive**: Works on desktop and mobile
 
 ## Tech Stack

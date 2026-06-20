@@ -33,7 +33,7 @@ backend, an editable output panel, and English/Brazilian-Portuguese i18n.
   "BR"). EN/BR switcher in the header; choice persisted to localStorage.
 - **Responsive UI**: Two-column layout; sticky output on desktop; 600px
   min-height editor so it fills mobile screens.
-- **Copy & Download**: Export the prompt as markdown with a project title.
+- **Copy & Download**: Export the prompt as markdown.
 
 ---
 

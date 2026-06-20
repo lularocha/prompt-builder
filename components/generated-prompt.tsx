@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
-import { Input } from "./ui/input"
 import { Copy, Check, Download, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useI18n } from "@/lib/i18n/context"
@@ -17,28 +16,19 @@ interface GeneratedPromptProps {
 export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }: GeneratedPromptProps) {
     const { t } = useI18n()
     const [copied, setCopied] = useState(false)
-    const [promptTitle, setPromptTitle] = useState("")
-
-    const composed = () => {
-        const title = promptTitle.trim() || t("output.defaultTitle")
-        return `# ${title}\n\n${prompt}`
-    }
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(composed())
+        navigator.clipboard.writeText(prompt)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
     }
 
     const handleDownload = () => {
-        const blob = new Blob([composed()], { type: 'text/markdown' })
+        const blob = new Blob([prompt], { type: 'text/markdown' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        const filename = promptTitle.trim()
-            ? `${promptTitle.trim().replace(/[^a-z0-9]/gi, '-').toLowerCase()}.md`
-            : 'generated-prompt.md'
-        a.download = filename
+        a.download = 'generated-prompt.md'
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
@@ -73,12 +63,6 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
                 </div>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col pt-4 space-y-3">
-                <Input
-                    placeholder={t("output.nameProject")}
-                    value={promptTitle}
-                    onChange={(e) => setPromptTitle(e.target.value)}
-                    className="focus-visible:ring-primary/50"
-                />
                 <div className="relative flex-1 min-h-[600px] lg:min-h-[600px]">
                     <textarea
                         value={prompt}
