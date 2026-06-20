@@ -68,7 +68,7 @@ export const translations = {
     "output.download": "Baixar",
     "output.copy": "Copiar",
     "output.copied": "Copiado",
-    "output.nameProject": "Nomeie seu projeto",
+    "output.nameProject": "Dê um nome para seu projeto",
     "output.defaultTitle": "Título do Projeto",
     "output.placeholder":
       "Seu prompt gerado por IA aparecerá aqui. Você pode editá-lo livremente após a geração.",
