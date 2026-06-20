@@ -34,6 +34,8 @@ export const translations = {
     "output.title": "Generated Prompt",
     "output.copy": "Copy",
     "output.copied": "Copied",
+    "output.preview": "Preview",
+    "output.close": "Close",
     "output.placeholder":
       "Your AI-generated prompt will appear here. You can edit it freely once it's generated.",
     "output.generating": "Generating your prompt...",
@@ -66,6 +68,8 @@ export const translations = {
     "output.title": "Prompt Gerado",
     "output.copy": "Copiar",
     "output.copied": "Copiado",
+    "output.preview": "Visualizar",
+    "output.close": "Fechar",
     "output.placeholder":
       "Seu prompt gerado por IA aparecerá aqui. Você pode editá-lo livremente após a geração.",
     "output.generating": "Gerando seu prompt...",

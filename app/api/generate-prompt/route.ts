@@ -18,6 +18,15 @@ Write the prompt so it is specific and actionable:
 
 Write the generated prompt in the SAME language the user used in their task description (or in the language of the provided material). For example, if the user writes in Portuguese, write the entire prompt in Portuguese; if in Spanish, respond in Spanish, and so on.
 
+Format the output as clean, well-formed Markdown that renders correctly:
+- Start with a single H1 (#) title, then use H2 (##) for major sections. Do not skip heading levels and use only one H1.
+- Use "-" for every bullet. Never mix bullet markers (-, *, +) and never begin a line with "+".
+- Keep each list item to a single line with real content. Do not output empty bullets or bullets that contain only a label with no value.
+- Nest list items only with two-space indentation under their parent bullet.
+- For any grid, matrix, or row/column data, use a proper Markdown table (header row, a |---| separator row, and | between cells). Never put "|" separators inside a paragraph or a bullet.
+- Use **bold** for inline labels/emphasis and \`backticks\` for code, values, identifiers, or hex colors.
+- Put a blank line between every heading, paragraph, list, and table.
+
 Output ONLY the finished prompt as clean Markdown. Do not include commentary, explanations, or wrap it in code fences.`;
 
 export async function POST(request: NextRequest) {
@@ -29,7 +38,10 @@ export async function POST(request: NextRequest) {
 
     if (!task && !code && images.length === 0) {
       return NextResponse.json(
-        { error: "Provide a task description or upload an example to generate a prompt." },
+        {
+          error:
+            "Provide a task description or upload an example to generate a prompt.",
+        },
         { status: 400 },
       );
     }

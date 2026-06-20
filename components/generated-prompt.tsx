@@ -2,9 +2,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { Copy, Check, Loader2, Download } from "lucide-react";
-import { useState } from "react";
+import { Copy, Check, Loader2, Download, Eye, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useI18n } from "@/lib/i18n/context";
+import styles from "./markdown-preview.module.css";
 
 // Copy text with a clipboard-API path and a legacy execCommand fallback (iOS).
 async function copyText(text: string): Promise<boolean> {
@@ -80,6 +84,22 @@ export function GeneratedPrompt({
   const { t } = useI18n();
   const [copied, setCopied] = useState(false);
   const [buildingDocx, setBuildingDocx] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+
+  // Close the preview on Escape and lock background scroll while it's open.
+  useEffect(() => {
+    if (!previewOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [previewOpen]);
 
   const handleCopy = async () => {
     const ok = await copyText(prompt);
@@ -126,51 +146,68 @@ export function GeneratedPrompt({
     }
   };
 
+  // Export/copy actions, reused in the card header and the preview modal.
+  const actionButtons = (
+    <>
+      <Button
+        size="sm"
+        variant="ghost"
+        className="hover:bg-primary/20 hover:text-blue-400"
+        onClick={handleDownloadMd}
+        disabled={!prompt}
+      >
+        <Download className="w-4 h-4 mr-2" />
+        .md
+      </Button>
+      <Button
+        size="sm"
+        variant="ghost"
+        className="hover:bg-primary/20 hover:text-blue-400"
+        onClick={handleDownloadDocx}
+        disabled={!prompt || buildingDocx}
+      >
+        {buildingDocx ? (
+          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+        ) : (
+          <Download className="w-4 h-4 mr-2" />
+        )}
+        .docx
+      </Button>
+      <Button
+        size="sm"
+        variant="ghost"
+        className="hover:bg-primary/20 hover:text-blue-400"
+        onClick={handleCopy}
+        disabled={!prompt}
+      >
+        {copied ? (
+          <Check className="w-4 h-4 mr-2" />
+        ) : (
+          <Copy className="w-4 h-4 mr-2" />
+        )}
+        {copied ? t("output.copied") : t("output.copy")}
+      </Button>
+    </>
+  );
+
   return (
-    <Card className="min-h-[600px] flex flex-col lg:border-t-0 lg:pt-0">
+    <Card className="min-h-[600px] flex flex-col">
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-2">
         <CardTitle className="text-[1.5rem] leading-none tracking-tight text-blue-400">
           {t("output.title")}
         </CardTitle>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-0">
           <Button
             size="sm"
             variant="ghost"
             className="hover:bg-primary/20 hover:text-blue-400"
-            onClick={handleDownloadMd}
+            onClick={() => setPreviewOpen(true)}
             disabled={!prompt}
           >
-            <Download className="w-4 h-4 mr-2" />
-            .md
+            <Eye className="w-4 h-4 mr-2" />
+            {t("output.preview")}
           </Button>
-          <Button
-            size="sm"
-            variant="ghost"
-            className="hover:bg-primary/20 hover:text-blue-400"
-            onClick={handleDownloadDocx}
-            disabled={!prompt || buildingDocx}
-          >
-            {buildingDocx ? (
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              <Download className="w-4 h-4 mr-2" />
-            )}
-            .docx
-          </Button>
-          <Button
-            size="sm"
-            variant="ghost"
-            className="hover:bg-primary/20 hover:text-blue-400"
-            onClick={handleCopy}
-            disabled={!prompt}
-          >
-            {copied ? (
-              <Check className="w-4 h-4 mr-2" />
-            ) : (
-              <Copy className="w-4 h-4 mr-2" />
-            )}
-            {copied ? t("output.copied") : t("output.copy")}
-          </Button>
+          {actionButtons}
         </div>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col pt-4 space-y-3">
@@ -195,6 +232,46 @@ export function GeneratedPrompt({
           </p>
         )}
       </CardContent>
+
+      {previewOpen &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 animate-fade-in sm:p-8"
+            onClick={() => setPreviewOpen(false)}
+          >
+            <div
+              className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 bg-white p-3 text-gray-600">
+                <h2 className="px-1 text-lg font-semibold text-gray-900">
+                  {t("output.title")}
+                </h2>
+                <div className="flex flex-wrap items-center gap-2">
+                  {actionButtons}
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="hover:bg-gray-100 hover:text-gray-900"
+                    onClick={() => setPreviewOpen(false)}
+                    aria-label={t("output.close")}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="overflow-auto bg-white px-8 py-10 sm:px-14 sm:py-12">
+                <article className={styles.preview}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {prompt}
+                  </ReactMarkdown>
+                </article>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
     </Card>
   );
 }

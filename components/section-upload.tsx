@@ -51,10 +51,10 @@ export function SectionUpload({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-[1.5rem] leading-none text-blue-400">{t("upload.title")}</CardTitle>
-        <CardDescription className="pb-8">
-          {t("upload.description")}
-        </CardDescription>
+        <CardTitle className="text-[1.5rem] leading-none text-blue-400">
+          {t("upload.title")}
+        </CardTitle>
+        <CardDescription>{t("upload.description")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <input
@@ -74,9 +74,7 @@ export function SectionUpload({
             <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary" />
           </div>
           <h4 className="text-sm font-medium mb-1">{t("upload.cta")}</h4>
-          <p className="text-xs text-muted-foreground">
-            {t("upload.formats")}
-          </p>
+          <p className="text-xs text-muted-foreground">{t("upload.formats")}</p>
         </div>
 
         {uploadedFiles.length > 0 && (
@@ -118,7 +116,7 @@ export function SectionUpload({
           </div>
           <Textarea
             placeholder={t("upload.pastePlaceholder")}
-            className="min-h-[120px] focus-visible:ring-primary/50 font-mono text-base md:text-lg"
+            className="focus-visible:ring-primary/50 font-mono text-base md:text-lg"
             value={code}
             onChange={(e) => onCodeChange(e.target.value)}
           />
