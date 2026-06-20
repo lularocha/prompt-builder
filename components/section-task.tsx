@@ -13,7 +13,7 @@ export function SectionTask({ task, onTaskChange }: SectionTaskProps) {
     const { t } = useI18n()
 
     return (
-        <Card>
+        <Card className="border-t-0 pt-0">
             <CardHeader>
                 <CardTitle className="text-[1.5rem] text-blue-400">{t("task.title")}</CardTitle>
                 <CardDescription className="pb-4">
