@@ -52,13 +52,13 @@ export async function POST(request: NextRequest) {
       `Write the single best prompt to accomplish this. Output only the prompt.`,
     );
 
-    const prompt = await generateText({
+    const { text, model } = await generateText({
       system: SYSTEM_PROMPT,
       text: parts.join("\n\n"),
       images,
     });
 
-    return NextResponse.json({ prompt: prompt.trim() });
+    return NextResponse.json({ prompt: text.trim(), model });
   } catch (error) {
     console.error("Prompt generation error:", error);
 

@@ -71,6 +71,8 @@ const PRESETS: Record<ProviderId, ProviderPreset> = {
 interface ResolvedConfig {
   provider: ProviderId;
   model: string;
+  /** Human-friendly label for display (LLM_MODEL_LABEL, falls back to model id). */
+  label: string;
   apiKey: string;
   baseURL?: string;
   supportsVision: boolean;
@@ -118,11 +120,21 @@ function resolveConfig(): ResolvedConfig {
       ? process.env.LLM_SUPPORTS_VISION === "true"
       : preset.supportsVision;
 
-  return { provider, model, apiKey, baseURL, supportsVision };
+  const label = process.env.LLM_MODEL_LABEL || model;
+
+  return { provider, model, label, apiKey, baseURL, supportsVision };
 }
 
-/** Generate text from the configured provider. Returns the model's text output. */
-export async function generateText(options: GenerateOptions): Promise<string> {
+export interface GenerateResult {
+  text: string;
+  /** Display label of the model that produced the text. */
+  model: string;
+}
+
+/** Generate text from the configured provider. */
+export async function generateText(
+  options: GenerateOptions,
+): Promise<GenerateResult> {
   const config = resolveConfig();
   const maxTokens = options.maxTokens ?? 4096;
   const images = config.supportsVision ? options.images ?? [] : [];
@@ -134,14 +146,16 @@ export async function generateText(options: GenerateOptions): Promise<string> {
     text += `\n\n(Note: ${options.images!.length} image(s) were uploaded but the configured model is text-only, so they could not be analyzed.)`;
   }
 
-  if (config.provider === "anthropic") {
-    return generateWithAnthropic(config, { ...options, text, images }, maxTokens);
-  }
-  return generateWithOpenAICompatible(
-    config,
-    { ...options, text, images },
-    maxTokens,
-  );
+  const generated =
+    config.provider === "anthropic"
+      ? await generateWithAnthropic(config, { ...options, text, images }, maxTokens)
+      : await generateWithOpenAICompatible(
+          config,
+          { ...options, text, images },
+          maxTokens,
+        );
+
+  return { text: generated, model: config.label };
 }
 
 async function generateWithAnthropic(

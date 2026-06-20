@@ -33,6 +33,7 @@ export function PromptBuilder() {
   const [code, setCode] = useState("");
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
+  const [model, setModel] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -75,6 +76,7 @@ export function PromptBuilder() {
         throw new Error(result.error || "Generation failed");
       }
       setGeneratedPrompt(result.prompt);
+      setModel(result.model ?? null);
     } catch (err) {
       console.error("Generation error:", err);
       setError(err instanceof Error ? err.message : "Generation failed");
@@ -129,6 +131,7 @@ export function PromptBuilder() {
           prompt={generatedPrompt}
           onPromptChange={setGeneratedPrompt}
           isGenerating={isGenerating}
+          model={model}
         />
       </div>
     </div>

@@ -11,9 +11,10 @@ interface GeneratedPromptProps {
     prompt: string
     onPromptChange: (value: string) => void
     isGenerating: boolean
+    model?: string | null
 }
 
-export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: GeneratedPromptProps) {
+export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }: GeneratedPromptProps) {
     const { t } = useI18n()
     const [copied, setCopied] = useState(false)
     const [promptTitle, setPromptTitle] = useState("")
@@ -93,6 +94,11 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                         </div>
                     )}
                 </div>
+                {prompt && model && (
+                    <p className="text-left text-xs text-muted-foreground">
+                        {t("output.generatedBy")} {model}
+                    </p>
+                )}
             </CardContent>
         </Card>
     )
