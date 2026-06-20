@@ -51,7 +51,7 @@ export function SectionUpload({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-[1.5rem] leading-none text-blue-400">{t("upload.title")}</CardTitle>
+        <CardTitle className="text-[1.5rem] leading-[1.15] text-blue-400">{t("upload.title")}</CardTitle>
         <CardDescription className="pb-8">
           {t("upload.description")}
         </CardDescription>
