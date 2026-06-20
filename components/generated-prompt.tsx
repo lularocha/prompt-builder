@@ -48,7 +48,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
     return (
         <Card className="min-h-[600px] flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-[1.5rem] tracking-tight text-blue-400">{t("output.title")}</CardTitle>
+                <CardTitle className="text-[1.5rem] leading-none tracking-tight text-blue-400">{t("output.title")}</CardTitle>
                 <div className="flex gap-2">
                     <Button
                         size="sm"
