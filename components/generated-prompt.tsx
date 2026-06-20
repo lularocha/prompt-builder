@@ -127,7 +127,7 @@ export function GeneratedPrompt({
   };
 
   return (
-    <Card className="min-h-[600px] flex flex-col">
+    <Card className="min-h-[600px] flex flex-col lg:border-t-0 lg:pt-0">
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-2">
         <CardTitle className="text-[1.5rem] leading-none tracking-tight text-blue-400">
           {t("output.title")}
@@ -180,7 +180,7 @@ export function GeneratedPrompt({
             onChange={(e) => onPromptChange(e.target.value)}
             spellCheck={false}
             placeholder={isGenerating ? "" : t("output.placeholder")}
-            className="absolute inset-0 h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-base md:text-lg leading-relaxed text-white placeholder:text-white/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            className="absolute inset-0 h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-base leading-relaxed text-white placeholder:text-white/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           />
           {isGenerating && (
             <div className="absolute inset-0 flex items-center justify-center rounded-md bg-[#000085]/80 text-white">

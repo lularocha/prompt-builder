@@ -20,14 +20,15 @@ export const translations = {
     "task.placeholder":
       "Example: Build a responsive admin dashboard for a SaaS platform with real-time analytics, user management, and dark mode.",
 
-    "upload.title": "Add context (optional)",
+    "upload.title": "Add context",
     "upload.description":
-      "Upload a screenshot or mockup, or paste code, to guide the AI.",
+      "Upload a screenshot or mockup, or paste code, to guide the AI. (Optional)",
     "upload.cta": "Upload a screenshot or mockup",
     "upload.formats": "Images (PNG, JPG, GIF, SVG, WebP)",
     "upload.uploadedFiles": "Uploaded Files:",
     "upload.pasteTitle": "Paste Code Snippets",
-    "upload.pasteDescription": "Existing code or patterns the AI should follow.",
+    "upload.pasteDescription":
+      "Existing code or patterns the AI should follow. (Optional)",
     "upload.pastePlaceholder": "Paste your code or text examples here...",
 
     "output.title": "Generated Prompt",
@@ -51,15 +52,15 @@ export const translations = {
     "task.placeholder":
       "Exemplo: Crie um painel administrativo responsivo para uma plataforma SaaS com análises em tempo real, gerenciamento de usuários e modo escuro.",
 
-    "upload.title": "Adicione contexto (opcional)",
+    "upload.title": "Adicione contexto",
     "upload.description":
-      "Envie uma captura de tela ou mockup, ou cole código, para guiar a IA.",
+      "Envie uma captura de tela ou mockup, ou cole código, para guiar a IA. (Opcional)",
     "upload.cta": "Envie uma captura de tela ou mockup",
     "upload.formats": "Imagens (PNG, JPG, GIF, SVG, WebP)",
     "upload.uploadedFiles": "Arquivos enviados:",
     "upload.pasteTitle": "Cole trechos de código",
     "upload.pasteDescription":
-      "Código existente ou padrões que a IA deve seguir.",
+      "Código existente ou padrões que a IA deve seguir. (Opcional)",
     "upload.pastePlaceholder": "Cole seu código ou exemplos de texto aqui...",
 
     "output.title": "Prompt Gerado",
