@@ -6,6 +6,7 @@ import { SectionUpload } from "./section-upload";
 import { GeneratedPrompt } from "./generated-prompt";
 import { Button } from "./ui/button";
 import { Sparkles, Loader2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface UploadedImage {
   name: string;
@@ -27,6 +28,7 @@ function readAsBase64(file: File): Promise<string> {
 }
 
 export function PromptBuilder() {
+  const { t } = useI18n();
   const [task, setTask] = useState("");
   const [code, setCode] = useState("");
   const [images, setImages] = useState<UploadedImage[]>([]);
@@ -86,7 +88,7 @@ export function PromptBuilder() {
       {/* Left Column: Inputs */}
       <div className="space-y-6 overflow-y-auto custom-scrollbar">
         <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
-          Define what you want to build
+          {t("left.heading")}
         </h2>
 
         <SectionTask task={task} onTaskChange={setTask} />
@@ -112,12 +114,12 @@ export function PromptBuilder() {
             {isGenerating ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Generating...
+                {t("generate.loading")}
               </>
             ) : (
               <>
                 <Sparkles className="w-5 h-5 mr-2" />
-                Generate Prompt
+                {t("generate.button")}
               </>
             )}
           </Button>
@@ -128,7 +130,7 @@ export function PromptBuilder() {
       {/* Right Column: Output */}
       <div className="lg:sticky lg:top-8 h-fit space-y-6">
         <h2 className="text-[1.625rem] md:text-[1.75rem] tracking-tight leading-none mb-2 text-blue-400">
-          Get your prompt
+          {t("right.heading")}
         </h2>
 
         <GeneratedPrompt

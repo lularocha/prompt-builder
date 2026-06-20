@@ -1,5 +1,8 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Textarea } from "./ui/textarea"
+import { useI18n } from "@/lib/i18n/context"
 
 interface SectionTaskProps {
     task: string
@@ -7,17 +10,19 @@ interface SectionTaskProps {
 }
 
 export function SectionTask({ task, onTaskChange }: SectionTaskProps) {
+    const { t } = useI18n()
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-[1.5rem]">What do you want to build?</CardTitle>
+                <CardTitle className="text-[1.5rem]">{t("task.title")}</CardTitle>
                 <CardDescription className="pb-4">
-                    Describe your project, feature, or task. AI will write the prompt for you.
+                    {t("task.description")}
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <Textarea
-                    placeholder="Example: Build a responsive admin dashboard for a SaaS platform with real-time analytics, user management, and dark mode."
+                    placeholder={t("task.placeholder")}
                     className="min-h-[120px] focus-visible:ring-primary/50"
                     value={task}
                     onChange={(e) => onTaskChange(e.target.value)}

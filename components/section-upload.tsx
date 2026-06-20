@@ -10,6 +10,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Upload, FileText, X } from "lucide-react";
 import { useRef } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
 interface FileMetadata {
   name: string;
@@ -31,6 +32,7 @@ export function SectionUpload({
   code,
   onCodeChange,
 }: SectionUploadProps) {
+  const { t } = useI18n();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -49,9 +51,9 @@ export function SectionUpload({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-[1.5rem]">Add context (optional)</CardTitle>
+        <CardTitle className="text-[1.5rem]">{t("upload.title")}</CardTitle>
         <CardDescription className="pb-8">
-          Upload a screenshot or mockup, or paste code, to guide the AI.
+          {t("upload.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -71,18 +73,16 @@ export function SectionUpload({
           <div className="p-4 rounded-full bg-white/5 mb-4 group-hover:scale-110 transition-transform duration-300">
             <Upload className="w-6 h-6 text-gray-400 group-hover:text-primary" />
           </div>
-          <h4 className="text-sm font-medium mb-1">
-            Upload a screenshot or mockup
-          </h4>
+          <h4 className="text-sm font-medium mb-1">{t("upload.cta")}</h4>
           <p className="text-xs text-muted-foreground">
-            Images (PNG, JPG, GIF, SVG, WebP)
+            {t("upload.formats")}
           </p>
         </div>
 
         {uploadedFiles.length > 0 && (
           <div className="space-y-2">
             <h4 className="text-sm font-medium text-muted-foreground">
-              Uploaded Files:
+              {t("upload.uploadedFiles")}
             </h4>
             {uploadedFiles.map((file, index) => (
               <div
@@ -110,14 +110,14 @@ export function SectionUpload({
         <div className="space-y-3">
           <div className="flex flex-col gap-1">
             <h4 className="text-xl font-bold text-blue-400 mt-8 block">
-              Paste Code Snippets
+              {t("upload.pasteTitle")}
             </h4>
             <span className="block text-sm text-muted-foreground">
-              Existing code or patterns the AI should follow.
+              {t("upload.pasteDescription")}
             </span>
           </div>
           <Textarea
-            placeholder="Paste your code or text examples here..."
+            placeholder={t("upload.pastePlaceholder")}
             className="min-h-[120px] focus-visible:ring-primary/50 font-mono text-xs"
             value={code}
             onChange={(e) => onCodeChange(e.target.value)}

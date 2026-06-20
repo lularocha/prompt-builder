@@ -1,7 +1,12 @@
+"use client";
+
 import { PromptBuilder } from "@/components/prompt-builder";
-import { InfoModal } from "@/components/info-modal";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function Home() {
+  const { t } = useI18n();
+
   return (
     <main className="flex min-h-screen flex-col items-center p-5 md:p-12 lg:pt-12 max-w-[1600px] mx-auto">
       <div className="w-full max-w-7xl z-10 flex flex-col gap-12">
@@ -14,10 +19,10 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-semibold md:font-normal tracking-tighter text-white">
               Prompt Builder
             </h1>
-            <InfoModal />
+            <LanguageSwitcher />
           </div>
           <p className="text-lg text-muted-foreground max-w-[1200px]">
-            Create System and User Prompts with AI.
+            {t("header.tagline")}
           </p>
         </div>
 
@@ -28,7 +33,7 @@ export default function Home() {
         <footer className="text-center text-sm text-muted-foreground mt-4 pb-8">
           <p>
             <span style={{ color: "rgb(250, 250, 250)" }}>
-              developed by Lula Rocha /
+              {t("footer.developedBy")}
             </span>{" "}
             <a
               href="https://sugiro.ai"

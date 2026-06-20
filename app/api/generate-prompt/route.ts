@@ -16,6 +16,8 @@ Write the prompt so it is specific and actionable:
 - Include relevant behavioral constraints and quality standards (accessibility, responsiveness, error handling) where they make sense.
 - If code was provided, respect its existing patterns and conventions.
 
+Write the generated prompt in the SAME language the user used in their task description (or in the language of the provided material). For example, if the user writes in Portuguese, write the entire prompt in Portuguese; if in Spanish, respond in Spanish, and so on.
+
 Output ONLY the finished prompt as clean Markdown. Do not include commentary, explanations, or wrap it in code fences.`;
 
 export async function POST(request: NextRequest) {

@@ -5,6 +5,7 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Copy, Check, Download, Loader2 } from "lucide-react"
 import { useState } from "react"
+import { useI18n } from "@/lib/i18n/context"
 
 interface GeneratedPromptProps {
     prompt: string
@@ -13,11 +14,12 @@ interface GeneratedPromptProps {
 }
 
 export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: GeneratedPromptProps) {
+    const { t } = useI18n()
     const [copied, setCopied] = useState(false)
     const [promptTitle, setPromptTitle] = useState("")
 
     const composed = () => {
-        const title = promptTitle.trim() || "Project Title"
+        const title = promptTitle.trim() || t("output.defaultTitle")
         return `# ${title}\n\n${prompt}`
     }
 
@@ -45,7 +47,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
     return (
         <Card className="min-h-[600px] flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-[1.5rem] tracking-tight">Generated Prompt</CardTitle>
+                <CardTitle className="text-[1.5rem] tracking-tight">{t("output.title")}</CardTitle>
                 <div className="flex gap-2">
                     <Button
                         size="sm"
@@ -55,7 +57,7 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                         disabled={!prompt}
                     >
                         <Download className="w-4 h-4 mr-2" />
-                        Download
+                        {t("output.download")}
                     </Button>
                     <Button
                         size="sm"
@@ -65,13 +67,13 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                         disabled={!prompt}
                     >
                         {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-                        {copied ? "Copied" : "Copy"}
+                        {copied ? t("output.copied") : t("output.copy")}
                     </Button>
                 </div>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col pt-4 space-y-3">
                 <Input
-                    placeholder="Name your Project"
+                    placeholder={t("output.nameProject")}
                     value={promptTitle}
                     onChange={(e) => setPromptTitle(e.target.value)}
                     className="focus-visible:ring-primary/50"
@@ -81,13 +83,13 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating }: Genera
                         value={prompt}
                         onChange={(e) => onPromptChange(e.target.value)}
                         spellCheck={false}
-                        placeholder={isGenerating ? "" : "Your AI-generated prompt will appear here. You can edit it freely once it's generated."}
+                        placeholder={isGenerating ? "" : t("output.placeholder")}
                         className="absolute inset-0 h-full w-full rounded-md bg-[#000085] p-4 overflow-auto font-mono text-sm leading-relaxed text-white placeholder:text-white/50 resize-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                     />
                     {isGenerating && (
                         <div className="absolute inset-0 flex items-center justify-center rounded-md bg-[#000085]/80 text-white">
                             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                            Generating your prompt...
+                            {t("output.generating")}
                         </div>
                     )}
                 </div>
