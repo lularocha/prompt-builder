@@ -109,7 +109,7 @@ export function SectionUpload({
 
         <div className="space-y-3">
           <div className="flex flex-col gap-1">
-            <h4 className="text-xl font-bold text-blue-400 mt-8 block">
+            <h4 className="text-xl font-bold text-blue-400 mt-3 block">
               {t("upload.pasteTitle")}
             </h4>
             <span className="block text-sm text-muted-foreground">
