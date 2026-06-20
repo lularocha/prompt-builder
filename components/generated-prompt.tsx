@@ -23,12 +23,24 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
         setTimeout(() => setCopied(false), 2000)
     }
 
+    // Derive a filename from the prompt's first markdown heading, if any.
+    const deriveFilename = () => {
+        const heading = prompt.match(/^\s*#{1,6}\s+(.+?)\s*$/m)?.[1]
+        const slug = (heading ?? "")
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "") // strip accents
+            .replace(/[^a-z0-9]+/gi, "-")
+            .toLowerCase()
+            .replace(/^-+|-+$/g, "")
+        return slug ? `${slug}.md` : "generated-prompt.md"
+    }
+
     const handleDownload = () => {
         const blob = new Blob([prompt], { type: 'text/markdown' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'generated-prompt.md'
+        a.download = deriveFilename()
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
