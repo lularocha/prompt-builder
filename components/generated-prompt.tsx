@@ -6,6 +6,36 @@ import { Copy, Check, Download, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useI18n } from "@/lib/i18n/context"
 
+// Copy text with a clipboard-API path and a legacy execCommand fallback (iOS).
+async function copyText(text: string): Promise<boolean> {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text)
+            return true
+        }
+    } catch {
+        // fall through to the legacy path
+    }
+    try {
+        const ta = document.createElement("textarea")
+        ta.value = text
+        ta.setAttribute("readonly", "")
+        ta.style.position = "fixed"
+        ta.style.top = "0"
+        ta.style.left = "0"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.focus()
+        ta.select()
+        ta.setSelectionRange(0, text.length)
+        const ok = document.execCommand("copy")
+        document.body.removeChild(ta)
+        return ok
+    } catch {
+        return false
+    }
+}
+
 interface GeneratedPromptProps {
     prompt: string
     onPromptChange: (value: string) => void
@@ -17,10 +47,12 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
     const { t } = useI18n()
     const [copied, setCopied] = useState(false)
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(prompt)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2000)
+    const handleCopy = async () => {
+        const ok = await copyText(prompt)
+        if (ok) {
+            setCopied(true)
+            setTimeout(() => setCopied(false), 2000)
+        }
     }
 
     // Derive a filename from the prompt's first markdown heading, if any.
@@ -35,12 +67,34 @@ export function GeneratedPrompt({ prompt, onPromptChange, isGenerating, model }:
         return slug ? `${slug}.md` : "generated-prompt.md"
     }
 
-    const handleDownload = () => {
-        const blob = new Blob([prompt], { type: 'text/markdown' })
+    const handleDownload = async () => {
+        const filename = deriveFilename()
+        // Prepend a UTF-8 BOM so viewers (e.g. on Android) detect the encoding
+        // and render Unicode math symbols correctly.
+        const content = "﻿" + prompt
+        const blob = new Blob([content], { type: "text/markdown;charset=utf-8" })
+
+        // Prefer the native share sheet on mobile (iOS Safari can't reliably
+        // save a blob via the download attribute — Drive rejects it).
+        const file = new File([blob], filename, { type: "text/markdown" })
+        if (
+            typeof navigator.canShare === "function" &&
+            navigator.canShare({ files: [file] })
+        ) {
+            try {
+                await navigator.share({ files: [file] })
+                return
+            } catch (err) {
+                // User cancelled — don't also trigger a download.
+                if (err instanceof DOMException && err.name === "AbortError") return
+                // Otherwise fall through to the download fallback.
+            }
+        }
+
         const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
+        const a = document.createElement("a")
         a.href = url
-        a.download = deriveFilename()
+        a.download = filename
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
