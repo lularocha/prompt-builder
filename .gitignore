@@ -20,6 +20,10 @@ build
 # local reference material (not part of the app)
 prompt-examples/
 
+# design sources / Illustrator artifacts
+*.ai
+~ai-*.tmp
+
 # debug
 npm-debug.log*
 yarn-debug.log*
