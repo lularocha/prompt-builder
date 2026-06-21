@@ -5,12 +5,15 @@ This document tracks the implementation status and future roadmap for the Prompt
 **Latest update**: Major redesign — the app now uses AI to **generate** the
 prompt (rather than assembling form fields), with a provider-agnostic LLM
 backend, an editable output panel, and English/Brazilian-Portuguese i18n.
+Since then: rule-driven generation (`PROMPT_RULES.md`), a Notion-style preview
+modal, `.md`/`.docx` export, and graceful error handling.
 
 ---
 
 ## Current Implementation Status
 
 ### Completed
+
 - **Task-first input**: A prominent "What do you want to build?" field at the
   top of the left column.
 - **Optional context**: Upload a screenshot/mockup (image) and/or paste code to
@@ -18,8 +21,16 @@ backend, an editable output panel, and English/Brazilian-Portuguese i18n.
 - **AI prompt generation**: A "Generate Prompt" button sends task + images +
   code to the model, which writes one cohesive, ready-to-use prompt. This is a
   real AI call (`app/api/generate-prompt`), not client-side concatenation.
+- **Rule-driven output**: Generation follows `PROMPT_RULES.md` — a single
+  source-of-truth for structure, scope discipline, formatting, and language
+  (mirrored into the system prompt).
 - **Editable output**: The blue output panel is an editable textarea; Copy and
   Download use the edited text. Includes loading and empty states.
+- **Formatted preview**: A preview modal renders the prompt in a Notion-style
+  formatted view (react-markdown + remark-gfm).
+- **Graceful error handling**: Rate-limit, overloaded, credit/quota, and config
+  errors are classified server-side and shown as a translated inline banner
+  with a Retry action.
 - **Provider-agnostic LLM backend** (`lib/llm/provider.ts`): configurable via
   env for Anthropic (Claude, default), OpenRouter, DeepSeek, Moonshot/Kimi, or
   any OpenAI-compatible endpoint — no code changes to switch.
@@ -33,7 +44,8 @@ backend, an editable output panel, and English/Brazilian-Portuguese i18n.
   "BR"). EN/BR switcher in the header; choice persisted to localStorage.
 - **Responsive UI**: Two-column layout; sticky output on desktop; 600px
   min-height editor so it fills mobile screens.
-- **Copy & Download**: Export the prompt as markdown.
+- **Copy & Download**: Copy, or export the prompt as Markdown (`.md`) or
+  Word (`.docx`).
 
 ---
 
@@ -54,25 +66,30 @@ The LLM backend is configured through environment variables (see
 ## Future Features
 
 ### More languages
+
 **Status**: Not Started · **Complexity**: Low
 Add further locales by extending `lib/i18n/translations.ts` and the switcher.
 The architecture already supports arbitrary locales.
 
 ### Zip / code-archive upload
+
 **Status**: Not Started · **Complexity**: High
 Allow uploading a `.zip` code archive: parse it, let the user select files, and
 feed them (within token limits) into generation. Deferred from the v1 redesign.
 
 ### Streaming generation
+
 **Status**: Not Started · **Complexity**: Medium
 Stream the generated prompt token-by-token into the editor for faster feedback.
 
 ### Regenerate / variations
+
 **Status**: Not Started · **Complexity**: Medium
 A "regenerate" action and the ability to produce alternative prompt variations,
 ideally preserving the user's manual edits.
 
 ### Provider/model picker in the UI
+
 **Status**: Not Started · **Complexity**: Medium
 Expose provider/model selection in the UI (currently env-only) so users can
 switch models without redeploying.

@@ -10,26 +10,33 @@ provider-agnostic, and the UI is available in English and Brazilian Portuguese.
 - **Task-first input**: A "What do you want to build?" field drives generation
 - **Optional context**: Upload a screenshot/mockup or paste code to guide the AI
 - **AI prompt generation**: One cohesive, ready-to-use prompt per request
+- **Rule-driven output**: Generation follows `PROMPT_RULES.md` (consistent
+  structure, scope discipline, formatting, language)
 - **Editable output**: Tweak the generated prompt before copying/downloading
+- **Formatted preview**: Open the prompt in a Notion-style formatted modal
 - **Provider-agnostic LLM backend**: Claude, OpenRouter, DeepSeek, Moonshot/Kimi,
   or any OpenAI-compatible endpoint — selected via environment variables
-- **Input-language aware**: The prompt is written in the language you wrote your
-  task in (any language)
+- **Input-language aware**: The prompt (headings included) is written in the
+  language you wrote your task in (any language)
 - **Internationalization**: English / Brazilian Portuguese (EN / BR) switcher
-- **Copy & Download**: Export the prompt as markdown
+- **Copy & Download**: Copy, or export as Markdown (`.md`) or Word (`.docx`)
+- **Graceful error handling**: Friendly, translated messages for rate limits,
+  busy/credit issues, with a Retry action
 - **Responsive**: Works on desktop and mobile
 
 ## Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **Next.js 14+** | App Router framework, API routes |
-| **React 18** | Component-based UI, context (i18n) |
-| **TypeScript** | Type safety |
-| **Tailwind CSS** | Utility-first styling |
-| **Lucide React** | Icon library |
-| **Anthropic SDK** | Claude adapter (default provider) |
-| **OpenAI SDK** | Adapter for OpenAI-compatible providers |
+| Technology                      | Purpose                                       |
+| ------------------------------- | --------------------------------------------- |
+| **Next.js 14+**                 | App Router framework, API routes              |
+| **React 18**                    | Component-based UI, context (i18n)            |
+| **TypeScript**                  | Type safety                                   |
+| **Tailwind CSS**                | Utility-first styling                         |
+| **Lucide React**                | Icon library                                  |
+| **react-markdown + remark-gfm** | Formatted Markdown preview (tables, GFM)      |
+| **docx**                        | Word (`.docx`) export of the generated prompt |
+| **Anthropic SDK**               | Claude adapter (default provider)             |
+| **OpenAI SDK**                  | Adapter for OpenAI-compatible providers       |
 
 ## Project Structure
 
@@ -45,13 +52,16 @@ prompt-builder/
 │   ├── prompt-builder.tsx     # Main state container & generation orchestration
 │   ├── section-task.tsx       # Task input
 │   ├── section-upload.tsx     # Image upload + paste-code
-│   ├── generated-prompt.tsx   # Editable output panel
+│   ├── generated-prompt.tsx   # Editable output panel, preview modal, .md/.docx export
+│   ├── markdown-preview.module.css # Notion-style preview styles
 │   ├── language-switcher.tsx  # EN / BR toggle
 │   └── ui/                    # Reusable UI components
 ├── lib/
 │   ├── llm/provider.ts        # Provider-agnostic LLM layer
+│   ├── markdown-to-docx.ts    # Markdown → Word (.docx) conversion
 │   ├── i18n/                  # Translations + context/hook
 │   └── utils.ts               # cn() helper
+├── PROMPT_RULES.md            # Source-of-truth rules for prompt generation
 ├── backlog/                   # Product roadmap & documentation
 └── public/                    # Static assets
 ```
