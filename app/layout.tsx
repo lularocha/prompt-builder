@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: "Crie prompts de alta qualidade com IA.",
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
       { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
       { url: "/favicon-512.png", sizes: "512x512", type: "image/png" },
