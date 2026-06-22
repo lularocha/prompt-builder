@@ -43,7 +43,7 @@ const Textarea = React.forwardRef<
   return (
     <textarea
       className={cn(
-        "flex min-h-[100px] w-full rounded-md bg-[#1e1e23] px-4 pt-3 pb-4 text-base md:text-lg placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden resize-none",
+        "flex min-h-[120px] w-full rounded-md bg-[#1e1e23] px-4 pt-3 pb-4 text-base md:text-lg placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden resize-none",
         className,
       )}
       ref={internalRef}
