@@ -12,7 +12,7 @@ export const translations = {
     "footer.developedBy": "developed by Lula Rocha /",
     "footer.promptRules": "Prompt Rules",
 
-    "promptRules.title": "Prompt Rules",
+    "promptRules.title": "Prompt Generation Rules",
     "promptRules.developedBy": "Developed by Lula Rocha /",
     "promptRules.close": "Close",
 
@@ -60,7 +60,7 @@ export const translations = {
     "footer.developedBy": "desenvolvido por Lula Rocha /",
     "footer.promptRules": "Regras do Prompt",
 
-    "promptRules.title": "Regras do Prompt",
+    "promptRules.title": "Regras para Geração do Prompt",
     "promptRules.developedBy": "Desenvolvido por Lula Rocha /",
     "promptRules.close": "Fechar",
 
