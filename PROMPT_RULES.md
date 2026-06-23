@@ -18,7 +18,7 @@ Every generated prompt follows one concern-based skeleton, ordered
 **what → how → quality**. Include a section only when the project needs it. The
 section names below are written in English only to describe what each section
 covers — translate every heading (and the title) into the output language (see
-[Language](#language)); never leave them in English.
+the Language section); never leave them in English.
 
 1. `#` **Title** — one line, action-oriented ("Build a …"). Exactly one H1.
 2. **Overview** — one short paragraph stating the task and goal up front,
