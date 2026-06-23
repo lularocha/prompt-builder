@@ -10,6 +10,11 @@ export const translations = {
   en: {
     "header.tagline": "Create high quality prompts with AI.",
     "footer.developedBy": "developed by Lula Rocha /",
+    "footer.promptRules": "Prompt Rules",
+
+    "promptRules.title": "Prompt Rules",
+    "promptRules.developedBy": "Developed by Lula Rocha /",
+    "promptRules.close": "Close",
 
     "generate.button": "Generate Prompt",
     "generate.loading": "Generating...",
@@ -53,6 +58,11 @@ export const translations = {
   pt: {
     "header.tagline": "Crie prompts de alta qualidade com IA.",
     "footer.developedBy": "desenvolvido por Lula Rocha /",
+    "footer.promptRules": "Regras do Prompt",
+
+    "promptRules.title": "Regras do Prompt",
+    "promptRules.developedBy": "Desenvolvido por Lula Rocha /",
+    "promptRules.close": "Fechar",
 
     "generate.button": "Gerar Prompt",
     "generate.loading": "Gerando...",
