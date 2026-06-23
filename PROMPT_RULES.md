@@ -29,8 +29,12 @@ the Language section); never leave them in English.
    Per-region detail (header, hero, panels) goes here as bullets / sub-bullets,
    not as new top-level sections.
 5. `##` **Functional Requirements** — features and behavior.
-6. `##` **Tech Stack** _(conditional)_ — only when the user names a stack or one
-   is clearly implied; otherwise omit and keep tech recommendations light.
+6. `##` **Tech Stack** _(always include)_ — recommend the simplest stack that can
+   ship a working MVP. If the user named a stack, respect it; otherwise pick
+   sensible, widely-used defaults. List each major piece as its own bullet with a
+   very brief, plain-language reason it was chosen (one short clause — e.g. why
+   this framework, why this database). Favor few, mature, well-documented tools
+   over clever or novel ones.
 7. `##` **Technical Implementation** — architecture, state, libraries, edge
    cases, integrations.
 8. `##` **Accessibility & Quality** _(where it makes sense)_ — contrast, ARIA,
@@ -44,8 +48,9 @@ Two governing principles:
   becomes a bullet group under Layout & Structure — never its own H2.
 - **Adapt the section set to the project type; keep the order logic constant.** A
   non-UI project (script, API, data pipeline) drops Visual Design / Layout /
-  UI-accessibility and leads with Functional Requirements → Data Model → API →
-  Technical Implementation. The what → how → quality flow never changes.
+  UI-accessibility and leads with Functional Requirements → Tech Stack → Data
+  Model → API → Technical Implementation. The what → how → quality flow never
+  changes.
 
 ## Scope discipline — what to include vs. exclude
 
