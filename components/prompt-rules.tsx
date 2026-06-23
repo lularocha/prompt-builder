@@ -74,19 +74,19 @@ export function PromptRulesLink() {
                     {promptRulesContent[locale]}
                   </ReactMarkdown>
                 </article>
-              </div>
 
-              <div className="border-t border-gray-200 bg-white px-8 py-4 text-center text-sm text-gray-600 sm:px-14">
-                <span>{t("promptRules.developedBy")}</span>{" "}
-                <a
-                  href="https://sugiro.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                  style={{ color: "#f80", fontWeight: 500 }}
-                >
-                  sugiro.ai
-                </a>
+                <div className="mt-10 border-t border-gray-200 pt-4 text-left text-sm text-gray-600">
+                  <span>{t("promptRules.developedBy")}</span>{" "}
+                  <a
+                    href="https://sugiro.ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                    style={{ color: "#f80", fontWeight: 500 }}
+                  >
+                    sugiro.ai
+                  </a>
+                </div>
               </div>
             </div>
           </div>,
