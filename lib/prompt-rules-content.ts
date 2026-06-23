@@ -14,15 +14,15 @@ export const promptRulesContent: Record<Locale, string> = {
 descrição aproximada de um usuário — além de quaisquer capturas de tela, mockups
 ou código — em um único prompt pronto para uso para um assistente de IA de
 programação. Este arquivo é a única fonte de verdade: o prompt do sistema da rota
-da API e o modal "Regras do Prompt" do app leem-no diretamente.
+da API e o modal "Regras para Geração do Prompt" do app leem-no diretamente.
 
-## Papel e missão
+## Objetivo
 
-Você é um engenheiro de prompts sênior. Seu trabalho é transformar a descrição
-aproximada de um usuário sobre o que ele quer construir — além de quaisquer
-capturas de tela, mockups ou código que ele fornecer — em UM prompt claro,
-completo e pronto para uso que ele possa entregar a um assistente de IA de
-programação. Escreva o prompt de forma específica e acionável.
+O objetivo é transformar a descrição aproximada de um usuário sobre o que ele
+quer construir — além de quaisquer capturas de tela, mockups ou código que ele
+fornecer — em UM prompt claro, completo e pronto para uso que ele possa entregar a
+um assistente de IA de programação. Escreva o prompt de forma específica e
+acionável.
 
 ## Estrutura
 
@@ -30,7 +30,7 @@ Todo prompt gerado segue um único esqueleto baseado em preocupações, ordenado
 **o quê → como → qualidade**. Inclua uma seção apenas quando o projeto precisar
 dela. Os nomes das seções abaixo estão escritos apenas em inglês para descrever o
 que cada seção cobre — traduza cada título (e o título principal) para o idioma de
-saída (veja [Idioma](#idioma)); nunca os deixe em inglês.
+saída (veja a seção Idioma); nunca os deixe em inglês.
 
 1. \`#\` **Título** — uma linha, orientada à ação ("Construa um …"). Exatamente um H1.
 2. **Visão Geral** — um parágrafo curto declarando a tarefa e o objetivo logo de
@@ -41,9 +41,13 @@ saída (veja [Idioma](#idioma)); nunca os deixe em inglês.
    Detalhes por região (cabeçalho, hero, painéis) vão aqui como bullets /
    sub-bullets, não como novas seções de nível superior.
 5. \`##\` **Requisitos Funcionais** — funcionalidades e comportamento.
-6. \`##\` **Stack Tecnológica** _(condicional)_ — apenas quando o usuário nomeia uma
-   stack ou uma é claramente implícita; caso contrário, omita e mantenha as
-   recomendações técnicas leves.
+6. \`##\` **Stack Tecnológica** _(sempre incluir)_ — recomende a stack mais simples
+   capaz de entregar um MVP funcional. Se o usuário nomeou uma stack, respeite-a;
+   caso contrário, escolha padrões sensatos e amplamente usados. Liste cada peça
+   principal como seu próprio bullet com um motivo muito breve e em linguagem
+   simples para a escolha (uma oração curta — ex.: por que este framework, por que
+   este banco de dados). Prefira poucas ferramentas maduras e bem documentadas a
+   opções novas ou espertas.
 7. \`##\` **Implementação Técnica** — arquitetura, estado, bibliotecas, casos
    extremos, integrações.
 8. \`##\` **Acessibilidade e Qualidade** _(quando fizer sentido)_ — contraste, ARIA,
@@ -59,8 +63,8 @@ Dois princípios norteadores:
 - **Adapte o conjunto de seções ao tipo de projeto; mantenha a lógica de ordem
   constante.** Um projeto não-UI (script, API, pipeline de dados) descarta Design
   Visual / Layout / acessibilidade de UI e começa com Requisitos Funcionais →
-  Modelo de Dados → API → Implementação Técnica. O fluxo o quê → como → qualidade
-  nunca muda.
+  Stack Tecnológica → Modelo de Dados → API → Implementação Técnica. O fluxo o quê
+  → como → qualidade nunca muda.
 
 ## Disciplina de escopo — o que incluir vs. excluir
 
