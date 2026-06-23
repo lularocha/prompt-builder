@@ -2,10 +2,8 @@
 
 Source-of-truth rules for how the generator turns a user's rough description —
 plus any screenshots, mockups, or code — into one ready-to-use prompt for an AI
-coding assistant.
-
-> **Keep in sync:** `SYSTEM_PROMPT` in `app/api/generate-prompt/route.ts` mirrors
-> this document. Edit this file first, then update the system prompt to match.
+coding assistant. This file is the single source of truth: the API route's
+system prompt and the in-app "Prompt Rules" modal both read it directly.
 
 ## Role & mission
 
