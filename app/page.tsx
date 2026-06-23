@@ -2,6 +2,7 @@
 
 import { PromptBuilder } from "@/components/prompt-builder";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { PromptRulesLink } from "@/components/prompt-rules";
 import { useI18n } from "@/lib/i18n/context";
 
 export default function Home() {
@@ -46,6 +47,8 @@ export default function Home() {
           >
             sugiro.ai
           </a>
+          <span className="px-2 text-muted-foreground">·</span>
+          <PromptRulesLink />
         </p>
       </footer>
     </main>
