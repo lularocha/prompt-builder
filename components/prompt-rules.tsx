@@ -53,8 +53,8 @@ export function PromptRulesLink() {
               className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between gap-2 border-b border-gray-200 bg-white p-3 text-gray-600">
-                <h1 className="px-1 text-2xl font-bold tracking-[-0.05rem] text-[#f80]">
+              <div className="flex items-center justify-between gap-2 border-b border-gray-200 bg-white pb-3 pl-8 pr-3 pt-6 text-gray-600 sm:pl-14">
+                <h1 className="text-2xl font-bold tracking-[-0.05rem] text-[#f80]">
                   {t("promptRules.title")}
                 </h1>
                 <Button
