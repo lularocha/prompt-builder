@@ -1,6 +1,6 @@
 # Prompt Generation Rules
 
-Source-of-truth rules for how the generator turns a user's rough description —
+These rules define how the generator turns a user's rough description —
 plus any screenshots, mockups, or code — into one ready-to-use prompt for an AI
 coding assistant. This file is the single source of truth: the API route's
 system prompt and the in-app "Prompt Rules" modal both read it directly.

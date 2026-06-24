@@ -2,19 +2,24 @@ import type { Locale } from "./i18n/translations";
 import promptRules from "@/PROMPT_RULES.md";
 
 // English content is sourced directly from PROMPT_RULES.md (the single source of
-// truth). Its leading H1 is stripped because the modal header supplies the
-// title. Portuguese is a maintained translation — keep it in step with the
-// English source when the rules change.
-const enContent = promptRules.replace(/^#[^\n]*\r?\n+/, "");
+// truth). For display we drop the leading H1 (the modal header supplies the
+// title) and the file-plumbing sentence about how the rules are consumed, which
+// is meta-context the reader doesn't need. The file and the API system prompt
+// keep that sentence. Portuguese is a maintained translation — keep it in step
+// with the English source when the rules change.
+const enContent = promptRules
+  .replace(/^#[^\n]*\r?\n+/, "")
+  .replace(
+    /\s+This file is the single source of truth:[\s\S]*?read it directly\./,
+    "",
+  );
 
 export const promptRulesContent: Record<Locale, string> = {
   en: enContent,
 
-  pt: `Regras que servem como fonte de verdade para como o gerador transforma a
-descrição aproximada de um usuário — além de quaisquer capturas de tela, mockups
-ou código — em um único prompt pronto para uso para um assistente de IA de
-programação. Este arquivo é a única fonte de verdade: o prompt do sistema da rota
-da API e o modal "Regras para Geração do Prompt" do app leem-no diretamente.
+  pt: `Estas regras definem como o gerador transforma a descrição aproximada de um
+usuário — além de quaisquer capturas de tela, mockups ou código — em um único
+prompt pronto para uso para um assistente de IA de programação.
 
 ## Objetivo
 
@@ -45,7 +50,7 @@ saída (veja a seção Idioma); nunca os deixe em inglês.
    capaz de entregar um MVP funcional. Se o usuário nomeou uma stack, respeite-a;
    caso contrário, escolha padrões sensatos e amplamente usados. Liste cada peça
    principal como seu próprio bullet com um motivo muito breve e em linguagem
-   simples para a escolha (uma oração curta — ex.: por que este framework, por que
+   simples para a escolha (uma frase curta — ex.: por que este framework, por que
    este banco de dados). Prefira poucas ferramentas maduras e bem documentadas a
    opções novas ou espertas.
 7. \`##\` **Implementação Técnica** — arquitetura, estado, bibliotecas, casos
