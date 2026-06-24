@@ -267,6 +267,12 @@ export function GeneratedPrompt({
                     {prompt}
                   </ReactMarkdown>
                 </article>
+
+                {model && (
+                  <div className="mt-10 border-t border-gray-200 pt-4 text-left text-xs text-gray-500">
+                    {t("output.generatedBy")} {model}
+                  </div>
+                )}
               </div>
             </div>
           </div>,
