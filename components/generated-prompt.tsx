@@ -244,8 +244,8 @@ export function GeneratedPrompt({
               className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 bg-white p-3 text-gray-600">
-                <h2 className="px-1 text-lg font-bold tracking-[-0.05rem] text-[#f80]">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 bg-white px-3 pb-3 pt-6 text-gray-600">
+                <h2 className="px-1 text-3xl font-bold tracking-[-0.05rem] text-[#f80]">
                   {t("output.title")}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2">
