@@ -1,14 +1,11 @@
 # Prompt Generation Rules
 
-These rules define how the generator turns a user's rough description —
-plus any screenshots, mockups, or code — into one ready-to-use prompt for an AI
-coding assistant. This file is the single source of truth: the API route's
-system prompt and the in-app "Prompt Rules" modal both read it directly.
+This file is the single source of truth for prompt generation.
 
 ## Goal
 
-The goal is to turn a user's rough description of what they want to build — plus
-any screenshots, mockups, or code they provide — into ONE clear, complete,
+Turn a user's rough description of what they want to build — plus any
+screenshots, mockups, or code they provide — into ONE clear, complete,
 ready-to-use prompt that they can hand to an AI coding assistant. Write the
 prompt so it is specific and actionable.
 
