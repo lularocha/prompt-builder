@@ -21,7 +21,7 @@ export const translations = {
 
     "task.title": "What do you want to build?",
     "task.description":
-      "Describe your project, feature, or task. AI will write the prompt for you.",
+      "Describe your project, feature, or task.",
     "task.placeholder":
       "Example: Build a responsive admin dashboard for a SaaS platform with real-time analytics, user management, and dark mode.",
 
@@ -69,7 +69,7 @@ export const translations = {
 
     "task.title": "O que você quer construir?",
     "task.description":
-      "Descreva seu projeto, funcionalidade ou tarefa. A IA vai escrever o prompt para você.",
+      "Descreva seu projeto, funcionalidade ou tarefa.",
     "task.placeholder":
       "Exemplo: Crie um painel administrativo responsivo para uma plataforma SaaS com análises em tempo real, gerenciamento de usuários e modo escuro.",
 
