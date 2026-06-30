@@ -45,7 +45,7 @@ body {
     left: 0;
     right: 0;
     height: env(safe-area-inset-top);
-    background-color: #60a5fa;
+    background-color: #000085;
     z-index: 50;
   }
 }

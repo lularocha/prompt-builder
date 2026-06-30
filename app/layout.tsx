@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   // top status-bar background relies on. themeColor tints the status bar on
   // Android/Chrome PWAs to match the iOS bar below.
   viewportFit: "cover",
-  themeColor: "#60a5fa",
+  themeColor: "#000085",
 };
 
 export default function RootLayout({
