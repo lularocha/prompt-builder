@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/context";
@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  // viewport-fit=cover is required for the env(safe-area-inset-*) values the
+  // top status-bar background relies on. themeColor tints the status bar on
+  // Android/Chrome PWAs to match the iOS bar below.
+  viewportFit: "cover",
+  themeColor: "#60a5fa",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +42,10 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <meta name="apple-mobile-web-app-title" content="Prompt Builder" />
         <link rel="apple-touch-icon" href="/favicon-180.png" />
       </head>
