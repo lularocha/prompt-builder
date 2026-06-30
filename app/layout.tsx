@@ -15,7 +15,6 @@ export const metadata: Metadata = {
       { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
       { url: "/favicon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: { url: "/favicon-180.png", sizes: "180x180", type: "image/png" },
   },
 };
 
@@ -26,6 +25,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      {/*
+        These iOS PWA tags are rendered as literal JSX in <head> instead of via
+        the metadata export. Next 15 streams late metadata into <body>, where
+        iOS's Add-to-Home-Screen parser can't see them.
+      */}
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Prompt Builder" />
+        <link rel="apple-touch-icon" href="/favicon-180.png" />
+      </head>
       <body
         className={`${inter.className} min-h-screen bg-background antialiased selection:bg-primary/20`}
       >
