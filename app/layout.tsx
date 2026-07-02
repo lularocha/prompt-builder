@@ -11,9 +11,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
 };
@@ -23,7 +24,7 @@ export const viewport: Viewport = {
   // top status-bar background relies on. themeColor tints the status bar on
   // Android/Chrome PWAs to match the iOS bar below.
   viewportFit: "cover",
-  themeColor: "#000085",
+  themeColor: "#0000ff",
 };
 
 export default function RootLayout({
@@ -39,7 +40,10 @@ export default function RootLayout({
         iOS's Add-to-Home-Screen parser can't see them.
       */}
       <head>
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#0000ff" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta
@@ -47,7 +51,11 @@ export default function RootLayout({
           content="black-translucent"
         />
         <meta name="apple-mobile-web-app-title" content="Prompt Builder" />
-        <link rel="apple-touch-icon" href="/favicon-180.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
       </head>
       <body
         className={`${inter.className} min-h-screen bg-background antialiased selection:bg-primary/20`}

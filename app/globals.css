@@ -31,7 +31,7 @@ body {
   In installed-PWA (standalone) mode the iOS status bar is translucent
   (apple-mobile-web-app-status-bar-style=black-translucent), so web content
   flows under it. Push the content below the status bar and paint that top
-  safe-area with the prompt-box blue so the previously-white strip is colored.
+  safe-area with the app icon blue so the previously-white strip is colored.
 */
 @media (display-mode: standalone) {
   body {
@@ -45,7 +45,7 @@ body {
     left: 0;
     right: 0;
     height: env(safe-area-inset-top);
-    background-color: #000085;
+    background-color: #0000ff;
     z-index: 50;
   }
 }
