@@ -3,23 +3,21 @@ import promptRules from "@/PROMPT_RULES.md";
 
 // English content is sourced directly from PROMPT_RULES.md (the single source of
 // truth). For display we drop the leading H1 (the modal header supplies the
-// title) and the file-plumbing sentence about how the rules are consumed, which
-// is meta-context the reader doesn't need. The file and the API system prompt
-// keep that sentence. Portuguese is a maintained translation — keep it in step
-// with the English source when the rules change.
+// title) and the "single source of truth" file-plumbing sentence, which is
+// meta-context the reader doesn't need. The file and the API system prompt keep
+// that sentence. Portuguese is a maintained translation — keep it in step with
+// the English source when the rules change.
 const enContent = promptRules
   .replace(/^#[^\n]*\r?\n+/, "")
   .replace(
-    /\s+This file is the single source of truth:[\s\S]*?read it directly\./,
+    /^This file is the single source of truth for prompt generation\.\r?\n+/,
     "",
   );
 
 export const promptRulesContent: Record<Locale, string> = {
   en: enContent,
 
-  pt: `Este arquivo é a única fonte de verdade para a geração de prompts.
-
-## Objetivo
+  pt: `## Objetivo
 
 O objetivo é transformar a descrição aproximada de um usuário sobre o que ele
 quer construir — além de quaisquer capturas de tela, mockups ou código que ele
