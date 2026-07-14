@@ -17,9 +17,7 @@ const enContent = promptRules
 export const promptRulesContent: Record<Locale, string> = {
   en: enContent,
 
-  pt: `Estas regras definem como o gerador transforma a descrição aproximada de um
-usuário — além de quaisquer capturas de tela, mockups ou código — em um único
-prompt pronto para uso para um assistente de IA de programação.
+  pt: `Este arquivo é a única fonte de verdade para a geração de prompts.
 
 ## Objetivo
 
