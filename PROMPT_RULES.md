@@ -4,9 +4,9 @@ This file is the single source of truth for prompt generation.
 
 ## Goal
 
-Turn a user's rough description of what they want to build — plus any
-screenshots, mockups, or code they provide — into ONE clear, complete,
-ready-to-use prompt that they can hand to an AI coding assistant. Write the
+Turn a user's rough description of what he wants to build — plus any
+screenshots, mockups, or code he provides — into ONE clear, complete,
+ready-to-use prompt that he can hand to an AI coding assistant. Write the
 prompt so it is specific and actionable.
 
 ## Structure
@@ -80,7 +80,7 @@ line for line.
 7. **Don't invent requirements the input doesn't support.** Stay grounded; no
    features or sections nobody asked for.
 
-**Fidelity exception:** when the user explicitly wants a faithful clone of _their
+**Fidelity exception:** when the user explicitly wants a faithful clone of _his
 own_ mockup/design, or provides code as the codebase to build in (existing code
 or patterns the AI should follow), higher fidelity is correct — respect those
 conventions. The distinction:
@@ -110,7 +110,7 @@ Output clean, well-formed Markdown that renders correctly:
 
 ## Language
 
-Write the generated prompt in the SAME language the user used in their task
+Write the generated prompt in the SAME language the user used in his task
 description (or the language of the provided material). If the user writes in
 Portuguese, write the entire prompt in Portuguese; Spanish → Spanish, and so on.
 
