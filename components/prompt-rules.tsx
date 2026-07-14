@@ -46,11 +46,11 @@ export function PromptRulesLink() {
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 animate-fade-in sm:p-8"
+            className="fixed inset-0 z-50 flex h-[100dvh] items-center justify-center bg-black/70 p-4 animate-fade-in sm:p-8"
             onClick={() => setOpen(false)}
           >
             <div
-              className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
+              className="relative flex max-h-[90dvh] w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between gap-2 border-b border-gray-200 bg-zinc-100 pb-3 pl-8 pr-3 pt-6 text-gray-600 sm:pl-14">
