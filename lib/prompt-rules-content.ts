@@ -12,6 +12,10 @@ const enContent = promptRules
   .replace(
     /^This file is the single source of truth for prompt generation\.\r?\n+/,
     "",
+  )
+  .replace(
+    /\s+Write\s+the\s+prompt\s+so\s+it\s+is\s+specific\s+and\s+actionable\./,
+    "",
   );
 
 export const promptRulesContent: Record<Locale, string> = {
@@ -22,8 +26,7 @@ export const promptRulesContent: Record<Locale, string> = {
 O objetivo é transformar a descrição aproximada de um usuário sobre o que ele
 quer construir — além de quaisquer capturas de tela, mockups ou código que ele
 fornecer — em UM prompt claro, completo e pronto para uso que ele possa entregar a
-um assistente de IA de programação. Escreva o prompt de forma específica e
-acionável.
+um assistente de IA de programação.
 
 ## Estrutura
 
