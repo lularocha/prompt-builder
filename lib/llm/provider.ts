@@ -192,6 +192,16 @@ async function generateWithAnthropic(
   return block.text;
 }
 
+/**
+ * Some OpenAI-compatible thinking models (e.g. MiniMax-M3, whose adaptive
+ * thinking is on by default) inject reasoning as <think>...</think> inside
+ * the content field instead of a separate reasoning field. Strip it so only
+ * the final answer reaches the UI. Also tolerates a truncated, unclosed tag.
+ */
+function stripThinking(text: string): string {
+  return text.replace(/<think>[\s\S]*?(<\/think>|$)\s*/g, "").trim();
+}
+
 async function generateWithOpenAICompatible(
   config: ResolvedConfig,
   options: GenerateOptions,
@@ -218,8 +228,9 @@ async function generateWithOpenAICompatible(
   });
 
   const message = response.choices[0]?.message?.content;
-  if (!message) {
+  const stripped = message ? stripThinking(message) : "";
+  if (!stripped) {
     throw new Error("No text response from the model.");
   }
-  return message;
+  return stripped;
 }
