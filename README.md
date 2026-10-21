@@ -28,8 +28,8 @@ provider-agnostic, and the UI is available in English and Brazilian Portuguese.
 
 | Technology                      | Purpose                                       |
 | ------------------------------- | --------------------------------------------- |
-| **Next.js 14+**                 | App Router framework, API routes              |
-| **React 18**                    | Component-based UI, context (i18n)            |
+| **Next.js 16**                  | App Router framework, API routes              |
+| **React 19**                    | Component-based UI, context (i18n)            |
 | **TypeScript**                  | Type safety                                   |
 | **Tailwind CSS**                | Utility-first styling                         |
 | **Lucide React**                | Icon library                                  |
